@@ -1,0 +1,98 @@
+/* ::selection{
+    background-color: #fff;
+    color: #000;
+} */
+
+
+
+body{
+    background-color: #fdf6ea !important;
+}
+
+.bg-cs-primary {
+    background-color: #fdf6ea !important;
+}
+
+.bg-cs-secondary{
+    background-color: #f5e9d4 !important; 
+}
+
+.bg-cs-footer1{
+    background-color: #f8e7d1 !important;
+}
+
+.bg-cs-footer2{
+    background-color: #838c48;
+}
+
+.text-cs-primary{
+    color: #fdf6ea !important ;
+}
+
+.text-cs-heading{
+    color: #2e2e2e !important ;
+}
+
+.text-subheading{
+    color: #4a4a4a !important;
+}
+
+.text-body{
+    color: #6e6e6e !important;
+}
+
+.small-text{
+    color: #9d9d9d;
+}
+
+.text-footer{
+    color: #b48113 !important;
+}
+
+.text-footer2{
+    color: #15673e;
+}
+
+.text-footer2:hover{
+    color: #15673e;
+}
+
+.text-footer2:active{
+    color: #15673e;
+}
+
+.w-55{
+    width:55%;
+}
+
+/* #################################### 
+                header              
+#######################################*/
+
+.header{
+    z-index: 2;
+    box-shadow: inset 0px 50px 60px -10px #151411;
+}
+
+/* #################################### 
+                Main
+#######################################*/
+
+/* banner */
+.home-banner {
+    height: 90vh;
+    background-image: url('../assets/images/banner.jpeg');
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: #3b45156b;
+    background-blend-mode: color;
+}
+
+/* How it works */
+.how-card {
+    height: 85%;
+}
+

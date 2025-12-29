@@ -1,0 +1,58 @@
+{
+  "hash": "1d2a25a0",
+  "configHash": "38a5a956",
+  "lockfileHash": "0534b71f",
+  "browserHash": "c4025dc1",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "4996d679",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "e568f886",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "03599c07",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "be932852",
+      "needsInterop": false
+    },
+    "@mui/material/TextField": {
+      "src": "../../node_modules/@mui/material/esm/TextField/index.js",
+      "file": "@mui_material_TextField.js",
+      "fileHash": "7689579e",
+      "needsInterop": false
+    },
+    "@mui/material/Autocomplete": {
+      "src": "../../node_modules/@mui/material/esm/Autocomplete/index.js",
+      "file": "@mui_material_Autocomplete.js",
+      "fileHash": "2da88314",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-5L3UUVNM": {
+      "file": "chunk-5L3UUVNM.js"
+    },
+    "chunk-3EA7UPNO": {
+      "file": "chunk-3EA7UPNO.js"
+    },
+    "chunk-7JEA3LLI": {
+      "file": "chunk-7JEA3LLI.js"
+    },
+    "chunk-DC5AMYBS": {
+      "file": "chunk-DC5AMYBS.js"
+    }
+  }
+}

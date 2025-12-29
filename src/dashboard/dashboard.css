@@ -1,0 +1,177 @@
+:root {
+    --activity-color:#461e11;
+    --bg-cs-primary:#fdf6ea;
+    --bg-cs-secondary:#f5e9d4;
+    --bg-cs-tertory:#e8d9c5;
+    --bg-cs-footer: #f8e7d1;
+    --hover-active-color: #3F7F7A;
+    --bg-profile: #e8d9c5;
+}
+
+.text-cs-primary{
+    color: var(--bg-cs-primary);
+}
+
+.bg-cs-primary1{
+    background-color: var(--bg-cs-primary);
+}
+
+.bg-cs-footer01{
+    background-color: #0b473b;
+}
+
+.bg-cs-secondary1{
+    background-color: var(--bg-cs-secondary);
+}
+
+.bg-cs-tertory1{
+    background-color: var(--bg-cs-tertory);
+}
+
+.bg-cs-profile {
+    background-color: var(--bg-profile);
+}
+
+.text-brown{
+    color: var(--activity-color);
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.transition-2 {
+    transition: all 0.2s linear;
+}
+
+.transition-02{
+    transition: all 0.2s linear;
+}
+
+.transition-02:hover{
+    transform: scale(1.015);
+}
+
+.border-brown{
+    border: 3px solid var(--activity-color);
+}
+
+.h-130px{
+    height: 140px;
+}
+
+
+/* ######################### 
+            header
+############################*/
+
+.header-dash {
+    background-color: var(--bg-cs-footer);
+}
+
+/* #### sidebar #### */
+
+#navbar .nav-link {
+    color: #2F3E3C;
+    position: relative;
+    padding-bottom: 6px;
+    transition: color 0.25s ease;
+}
+
+#navbar .nav-link:hover {
+    color: var(--hover-active-color) !important;
+
+}
+
+/* hover: left → right */
+#navbar .nav-link:hover::after {
+    width: 60%;
+}
+
+/* bottom line (hidden by default) */
+#navbar .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2.5px;
+    background-color: var(--hover-active-color);
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+
+#navbar .nav-link.active {
+    color: var(--hover-active-color) !important;
+}
+
+/* sidebar link active after */
+#navbar .nav-link.active::after {
+    width: 60%;
+}
+
+/* #### profile #### */
+.profile-ul {
+    width: 250px;
+}
+
+.update:hover {
+    color: #198754;
+    background-color: #19875420;
+}
+
+.log-del:hover {
+    color: #dc3545;
+    background-color: #fef2f2;
+}
+
+
+
+/* ######################### 
+            main
+############################*/
+
+
+/* banner - activity */
+
+.dash-banner {
+    position: relative;
+    height: 275px;
+    background-image: url("../assets/images/dash-banner.png"),
+        linear-gradient(126deg, #cc9432 33%, #0b473b 65%);
+    background-size: cover;
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+/* banner MQ */
+@media (max-width: 768px) {
+
+    .dash-banner{
+        height: 250px;
+    }
+
+  .dash-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    background: linear-gradient(
+      180deg,
+      #00000066,
+      #00000099
+    );
+  }
+
+  .dash-banner * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* upcoming events */
+.icon-span{
+    width: 40px;
+    height: 40px;
+}

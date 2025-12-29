@@ -1,0 +1,54 @@
+.bg-cs-primary {
+    background-color: #fdf6ea !important;
+}
+
+.bg-cs-secondary {
+    background-color: #f5e9d4 !important;
+}
+
+
+.login-form-wrapper {
+    max-width: 95% !important;
+    margin: 150px auto 0 !important;
+    box-shadow: 0px 0px 3px #00000095;
+}
+
+.login-card input {
+
+    width: 100%;
+    outline: none;
+    color: #1b1818;
+    font-size: 19px;
+}
+
+.forgot-link{
+    cursor: pointer;
+}
+
+
+
+/* ########### MQ ################ */
+
+@media (min-width:576px) {
+    .login-form-wrapper{
+        max-width: 65% !important;
+    }
+}
+
+@media (min-width:768px) {
+    .login-form-wrapper{
+        max-width: 50% !important;
+    }
+}
+
+@media (min-width:992px) {
+    .login-form-wrapper{
+        max-width: 45% !important;
+    }
+}
+
+@media (min-width:1200px) {
+    .login-form-wrapper{
+        max-width: 500px !important;
+    }
+}

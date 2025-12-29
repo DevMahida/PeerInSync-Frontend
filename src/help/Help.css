@@ -1,0 +1,40 @@
+.bg-cs-footer1{
+    background-color: #f8e7d1 !important;
+}
+
+.bg-cs-footer2{
+    background-color: #838c48;
+}
+
+.help-form-wrapper {
+    max-width: 95% !important;
+    margin: 80px auto 80px !important;
+}
+
+
+
+/* ########### MQ ################ */
+
+@media (min-width:576px) {
+    .help-form-wrapper{
+        max-width: 75% !important;
+    }
+}
+
+@media (min-width:768px) {
+    .help-form-wrapper{
+        max-width: 70% !important;
+    }
+}
+
+@media (min-width:992px) {
+    .help-form-wrapper{
+        max-width: 65% !important;
+    }
+}
+
+@media (min-width:1200px) {
+    .help-form-wrapper{
+        max-width: 700px !important;
+    }
+}

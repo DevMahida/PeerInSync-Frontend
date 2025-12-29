@@ -1,0 +1,49 @@
+.text-cs-primary{
+    color: #fdf6ea !important ;
+}
+
+.bg-cs-secondary{
+    background-color: #f5e9d4 !important; 
+}
+
+.text-cs-heading{
+    color: #2e2e2e !important ;
+}
+
+.text-subheading{
+    color: #4a4a4a !important;
+}
+
+.text-body{
+    color: #6e6e6e !important;
+}
+
+.bg-cs-footer1{
+    background-color: #f8e7d1 !important;
+}
+
+.bg-cs-footer2{
+    background-color: #838c48;
+}
+
+.bg-cs-banner{
+    background-color: #E8D9C5;
+}
+
+/* Who we are section */
+
+
+.who-data p{
+    text-align: justify;
+}
+
+.who-data img{
+    width: 70%;
+}
+
+
+/* vision */
+
+.vision-data p{
+    text-align: justify;
+}
