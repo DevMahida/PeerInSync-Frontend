@@ -206,11 +206,11 @@ const Registration = () => {
                                     <label className='fs-5 mb-1' htmlFor="current_year_of_study">Current Year of Studying:</label><br />
                                     <select className="form-select" name="current_year_of_study" id="current_year_of_study" value={formData.current_year_of_study} onChange={handleChange} required>
                                         <option >Year of Studying</option>
-                                        <option value="1st year">1st Year</option>
-                                        <option value="2nd year">2nd Year</option>
-                                        <option value="3rd year">3rd Year</option>
-                                        <option value="4th year">4th Year</option>
-                                        <option value="graduated">Graduated</option>
+                                        <option value="1">1st Year</option>
+                                        <option value="2">2nd Year</option>
+                                        <option value="3">3rd Year</option>
+                                        <option value="4">4th Year</option>
+                                        <option value="grad">Graduated</option>
                                     </select>
                                 </div>
                             </div>

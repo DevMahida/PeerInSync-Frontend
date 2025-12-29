@@ -1,12 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+
 import pis_logo1 from '../assets/images/PIS-logo.png';
 import profile from '../assets/images/profile.png';
 import man from '../assets/images/man.png';
 import man1 from '../assets/images/man1.png';
+
 import './dashboard.css';
 
 const Dashboard = () => {
+
+    const [userData, setUserData] = useState({
+
+        uniqid: '',
+        name: '',
+        email: ''
+    });
 
     useEffect(() => {
         const scrollSpy = new window.bootstrap.ScrollSpy(
@@ -17,8 +28,81 @@ const Dashboard = () => {
             }
         );
 
+        let userinfo = localStorage.getItem('userinfo');
+        //console.log(userinfo);
+
+        if (userinfo) {
+            try {
+                setUserData(JSON.parse(userinfo));
+            }
+            catch (err) {
+                console.error("Error parsing localStorage data:", err.message);
+                setUserData({ name: '[Invalid data]' });
+            }
+        }
+
         return () => scrollSpy.dispose();
     }, []);
+
+    // const logout = (e) => { localStorage.removeItem('userinfo'); window.location.href = '/'; }
+
+    const logout = (e) => {
+
+        localStorage.removeItem('userinfo');
+        toast.success("Logged out successfully");
+
+        setTimeout(() => {
+            navigate("/");
+        }, 1200); // enough time for toast to appear
+    };
+
+    // const deleteAccount = async (e) => {
+
+    //     await axios.delete('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/delete/' + userData.uniqid)
+    //         .then(() => {
+    //             window.alert("Account Deleted Successfully");
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //             window.alert("Unexpected Error" + err.message);
+    //         });
+    // }
+
+    const deleteAccount = async (e) => {
+
+        const confirmDelete = window.confirm(
+            "Are you sure you want to delete your account? This action cannot be undone."
+        );
+
+        if (!confirmDelete) return;
+
+        await axios
+            .delete(
+                'https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/delete/' +
+                userData.uniqid
+            )
+            .then(() => {
+                // keep existing behavior
+                // window.alert("Account Deleted Successfully");
+
+                // cleanup
+                localStorage.removeItem("userinfo");
+
+                // toast added
+                toast.success("Account deleted successfully");
+
+                // redirect after toast
+                setTimeout(() => {
+                    navigate("/");
+                }, 1500);
+            })
+            .catch((err) => {
+                console.log(err);
+                window.alert("Unexpected Error " + err.message);
+
+                toast.error("Failed to delete account");
+            });
+    };
 
     return (
         <>
@@ -100,8 +184,8 @@ const Dashboard = () => {
                                         <img className="d-inline-blockn" src={profile} alt="" width="40px" />
                                     </div>
                                     <div>
-                                        <span className="h5">User</span><br />
-                                        <span>example@gmail.com</span>
+                                        <span className="h5">{userData.name}</span><br />
+                                        <span>{userData.email}</span>
                                     </div>
                                 </li>
 
@@ -121,7 +205,7 @@ const Dashboard = () => {
 
                                 {/* LogOut */}
                                 <li>
-                                    <Link className="text-decoration-none" to='/'>
+                                    <Link className="text-decoration-none" to='/' onClick={logout}>
                                         <div className="dropdown-item log-del pointer rounded-1 transition-2 d-flex gap-2 align-items-center px-3 py-2">
                                             <span className="fs-5 text-danger">
                                                 <i className="ri-logout-box-r-line"></i>
@@ -135,7 +219,7 @@ const Dashboard = () => {
 
                                 {/* Delete */}
                                 <li>
-                                    <Link className="text-decoration-none" to='/'>
+                                    <Link className="text-decoration-none" to='/' onClick={deleteAccount}>
                                         <div className="dropdown-item log-del pointer rounded-1 transition-2 d-flex gap-2 align-items-center px-3 py-2">
                                             <span className="fs-5 text-danger">
                                                 <i className="ri-delete-bin-6-line"></i>
@@ -217,7 +301,7 @@ const Dashboard = () => {
                             <div className="col-lg-8">
                                 <div className="dash-banner transition-02 rounded-4 d-flex align-items-center">
                                     <div className="ms-3 text-cs-primary">
-                                        <p className="h1">Welcome, Student!</p>
+                                        <p className="h1">Welcome, {userData.name}</p>
                                         <span className="h5">Every connection opens a new door!</span>
                                     </div>
                                 </div>

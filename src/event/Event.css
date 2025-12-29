@@ -1,0 +1,70 @@
+:root {
+    --activity-color:#461e11;
+    --bg-cs-primary:#fdf6ea;
+    --bg-cs-secondary:#f5e9d4;
+    --bg-cs-tertory:#e8d9c5;
+    --bg-cs-footer: #f8e7d1;
+    --hover-active-color: #3F7F7A;
+    --bg-profile: #e8d9c5;
+}
+
+.text-cs-primary{
+    color: var(--bg-cs-primary);
+}
+
+.bg-cs-primary1{
+    background-color: var(--bg-cs-primary);
+}
+
+.bg-cs-footer01{
+    background-color: #0b473b;
+}
+
+.bg-cs-secondary1{
+    background-color: var(--bg-cs-secondary);
+}
+
+.bg-cs-tertory1{
+    background-color: var(--bg-cs-tertory);
+}
+
+.bg-cs-profile {
+    background-color: var(--bg-profile);
+}
+
+.text-brown{
+    color: var(--activity-color);
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.transition-2 {
+    transition: all 0.2s linear;
+}
+
+.transition-02{
+    transition: all 0.2s linear;
+}
+
+.transition-02:hover{
+    transform: scale(1.015);
+}
+
+.border-brown{
+    border: 3px solid var(--activity-color);
+}
+
+.hight-275px{
+    height: 275px;
+}
+
+
+
+.event-banner {
+    height: 275px;
+    background: #CC9432;
+    background: radial-gradient(circle, #cc9432 0%, #0b473b 100%);
+    border-radius: 10px;
+}

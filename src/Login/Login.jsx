@@ -1,11 +1,20 @@
 // import react from "react";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Login/Login.css';
+import axios from 'axios';
 
 const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false);
+
+    const navigate = useNavigate();
+
+    const initialFormData = {
+        email: '',
+        password: ''
+    };
+
 
 
     const [formData, setFormData] = useState({
@@ -16,7 +25,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        axios.post('https://peerinsync-backend-server.onrender.com/loginRegister/login', JSON.stringify(formData), {
+        axios.post('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/login', JSON.stringify(formData), {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -26,7 +35,7 @@ const Login = () => {
             console.log("Form submitted:", JSON.stringify(formData));
 
             localStorage.setItem('userinfo', JSON.stringify(response.data));
-            
+
             navigate('/Dashboard');
             setFormData(initialFormData);
         })
@@ -92,7 +101,7 @@ const Login = () => {
                             <p className='forgot-link mt-4 text-primary link-primary'>Forgot Password</p>
 
                             <div className='text-center'>
-                                <Link to="/Dashboard"><button className='btn btn-dark px-3'  type='submit'>Login</button></Link>
+                                <button className='btn btn-dark px-3' type='submit'>Login</button>
                             </div>
                         </div>
 
