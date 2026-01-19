@@ -15,12 +15,7 @@ const Login = () => {
         password: ''
     };
 
-
-
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
+    const [formData, setFormData] = useState(initialFormData);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,13 +23,14 @@ const Login = () => {
         axios.post('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/login', JSON.stringify(formData), {
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            withCredentials: true
         })
         .then((response) => {
             window.alert("Logged in Successfully");
             console.log("Form submitted:", JSON.stringify(formData));
 
-            localStorage.setItem('userinfo', JSON.stringify(response.data));
+            // localStorage.setItem('userinfo', JSON.stringify(response.data));
 
             navigate('/Dashboard');
             setFormData(initialFormData);

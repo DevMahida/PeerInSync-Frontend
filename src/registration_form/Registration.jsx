@@ -280,7 +280,6 @@ const Registration = () => {
                 </section>
             </main>
 
-
         </>
     );
 

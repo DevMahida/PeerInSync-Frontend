@@ -1,9 +1,12 @@
 import {
+  clsx_default
+} from "./chunk-2KHBIA62.js";
+import {
   require_react_dom
-} from "./chunk-3EA7UPNO.js";
+} from "./chunk-XNLU4CTU.js";
 import {
   require_react
-} from "./chunk-7JEA3LLI.js";
+} from "./chunk-O2Q6JZ3H.js";
 import {
   __commonJS,
   __publicField,
@@ -818,7 +821,7 @@ var require_react_jsx_runtime_development = __commonJS({
             case REACT_PORTAL_TYPE:
               return "Portal";
             case REACT_CONTEXT_TYPE:
-              return type.displayName || "Context";
+              return (type.displayName || "Context") + ".Provider";
             case REACT_CONSUMER_TYPE:
               return (type._context.displayName || "Context") + ".Consumer";
             case REACT_FORWARD_REF_TYPE:
@@ -906,8 +909,8 @@ var require_react_jsx_runtime_development = __commonJS({
         componentName = this.props.ref;
         return void 0 !== componentName ? componentName : null;
       }
-      function ReactElement(type, key, props, owner, debugStack, debugTask) {
-        var refProp = props.ref;
+      function ReactElement(type, key, self, source, owner, props, debugStack, debugTask) {
+        self = props.ref;
         type = {
           $$typeof: REACT_ELEMENT_TYPE,
           type,
@@ -915,7 +918,7 @@ var require_react_jsx_runtime_development = __commonJS({
           props,
           _owner: owner
         };
-        null !== (void 0 !== refProp ? refProp : null) ? Object.defineProperty(type, "ref", {
+        null !== (void 0 !== self ? self : null) ? Object.defineProperty(type, "ref", {
           enumerable: false,
           get: elementRefGetterWithDeprecationWarning
         }) : Object.defineProperty(type, "ref", { enumerable: false, value: null });
@@ -947,7 +950,7 @@ var require_react_jsx_runtime_development = __commonJS({
         Object.freeze && (Object.freeze(type.props), Object.freeze(type));
         return type;
       }
-      function jsxDEVImpl(type, config, maybeKey, isStaticChildren, debugStack, debugTask) {
+      function jsxDEVImpl(type, config, maybeKey, isStaticChildren, source, self, debugStack, debugTask) {
         var children2 = config.children;
         if (void 0 !== children2)
           if (isStaticChildren)
@@ -989,53 +992,58 @@ var require_react_jsx_runtime_development = __commonJS({
         return ReactElement(
           type,
           children2,
-          maybeKey,
+          self,
+          source,
           getOwner(),
+          maybeKey,
           debugStack,
           debugTask
         );
       }
       function validateChildKeys(node2) {
-        isValidElement7(node2) ? node2._store && (node2._store.validated = 1) : "object" === typeof node2 && null !== node2 && node2.$$typeof === REACT_LAZY_TYPE && ("fulfilled" === node2._payload.status ? isValidElement7(node2._payload.value) && node2._payload.value._store && (node2._payload.value._store.validated = 1) : node2._store && (node2._store.validated = 1));
+        "object" === typeof node2 && null !== node2 && node2.$$typeof === REACT_ELEMENT_TYPE && node2._store && (node2._store.validated = 1);
       }
-      function isValidElement7(object) {
-        return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
-      }
-      var React46 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = React46.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+      var React53 = require_react(), REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+      Symbol.for("react.provider");
+      var REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference"), ReactSharedInternals = React53.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
         return null;
       };
-      React46 = {
+      React53 = {
         react_stack_bottom_frame: function(callStackForError) {
           return callStackForError();
         }
       };
       var specialPropKeyWarningShown;
       var didWarnAboutElementRef = {};
-      var unknownOwnerDebugStack = React46.react_stack_bottom_frame.bind(
-        React46,
+      var unknownOwnerDebugStack = React53.react_stack_bottom_frame.bind(
+        React53,
         UnknownOwner
       )();
       var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
       var didWarnAboutKeySpread = {};
       exports.Fragment = REACT_FRAGMENT_TYPE;
-      exports.jsx = function(type, config, maybeKey) {
+      exports.jsx = function(type, config, maybeKey, source, self) {
         var trackActualOwner = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
         return jsxDEVImpl(
           type,
           config,
           maybeKey,
           false,
+          source,
+          self,
           trackActualOwner ? Error("react-stack-top-frame") : unknownOwnerDebugStack,
           trackActualOwner ? createTask(getTaskName(type)) : unknownOwnerDebugTask
         );
       };
-      exports.jsxs = function(type, config, maybeKey) {
+      exports.jsxs = function(type, config, maybeKey, source, self) {
         var trackActualOwner = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
         return jsxDEVImpl(
           type,
           config,
           maybeKey,
           true,
+          source,
+          self,
           trackActualOwner ? Error("react-stack-top-frame") : unknownOwnerDebugStack,
           trackActualOwner ? createTask(getTaskName(type)) : unknownOwnerDebugTask
         );
@@ -1347,7 +1355,9 @@ var require_react_is_development3 = __commonJS({
           }
         }
       }
-      var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_VIEW_TRANSITION_TYPE = Symbol.for("react.view_transition"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference");
+      var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+      Symbol.for("react.provider");
+      var REACT_CONSUMER_TYPE = Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = Symbol.for("react.memo"), REACT_LAZY_TYPE = Symbol.for("react.lazy"), REACT_VIEW_TRANSITION_TYPE = Symbol.for("react.view_transition"), REACT_CLIENT_REFERENCE = Symbol.for("react.client.reference");
       exports.ContextConsumer = REACT_CONSUMER_TYPE;
       exports.ContextProvider = REACT_CONTEXT_TYPE;
       exports.Element = REACT_ELEMENT_TYPE;
@@ -1415,22 +1425,6 @@ var require_react_is3 = __commonJS({
     }
   }
 });
-
-// node_modules/clsx/dist/clsx.mjs
-function r(e) {
-  var t, f, n = "";
-  if ("string" == typeof e || "number" == typeof e) n += e;
-  else if ("object" == typeof e) if (Array.isArray(e)) {
-    var o = e.length;
-    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-  } else for (f in e) e[f] && (n && (n += " "), n += f);
-  return n;
-}
-function clsx() {
-  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
-  return n;
-}
-var clsx_default = clsx;
 
 // node_modules/@mui/utils/esm/composeClasses/composeClasses.js
 function composeClasses(slots, getUtilityClass, classes = void 0) {
@@ -1533,12 +1527,235 @@ function generateUtilityClasses(componentName, slots, globalStatePrefix = "Mui")
   return result;
 }
 
+// node_modules/@mui/utils/esm/clamp/clamp.js
+function clamp(val, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
+  return Math.max(min, Math.min(val, max));
+}
+var clamp_default = clamp;
+
+// node_modules/@mui/system/esm/colorManipulator/colorManipulator.js
+function clampWrapper(value, min = 0, max = 1) {
+  if (true) {
+    if (value < min || value > max) {
+      console.error(`MUI: The value provided ${value} is out of range [${min}, ${max}].`);
+    }
+  }
+  return clamp_default(value, min, max);
+}
+function hexToRgb(color2) {
+  color2 = color2.slice(1);
+  const re = new RegExp(`.{1,${color2.length >= 6 ? 2 : 1}}`, "g");
+  let colors = color2.match(re);
+  if (colors && colors[0].length === 1) {
+    colors = colors.map((n) => n + n);
+  }
+  if (true) {
+    if (color2.length !== color2.trim().length) {
+      console.error(`MUI: The color: "${color2}" is invalid. Make sure the color input doesn't contain leading/trailing space.`);
+    }
+  }
+  return colors ? `rgb${colors.length === 4 ? "a" : ""}(${colors.map((n, index) => {
+    return index < 3 ? parseInt(n, 16) : Math.round(parseInt(n, 16) / 255 * 1e3) / 1e3;
+  }).join(", ")})` : "";
+}
+function decomposeColor(color2) {
+  if (color2.type) {
+    return color2;
+  }
+  if (color2.charAt(0) === "#") {
+    return decomposeColor(hexToRgb(color2));
+  }
+  const marker = color2.indexOf("(");
+  const type = color2.substring(0, marker);
+  if (!["rgb", "rgba", "hsl", "hsla", "color"].includes(type)) {
+    throw new Error(true ? `MUI: Unsupported \`${color2}\` color.
+The following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color().` : formatMuiErrorMessage(9, color2));
+  }
+  let values3 = color2.substring(marker + 1, color2.length - 1);
+  let colorSpace;
+  if (type === "color") {
+    values3 = values3.split(" ");
+    colorSpace = values3.shift();
+    if (values3.length === 4 && values3[3].charAt(0) === "/") {
+      values3[3] = values3[3].slice(1);
+    }
+    if (!["srgb", "display-p3", "a98-rgb", "prophoto-rgb", "rec-2020"].includes(colorSpace)) {
+      throw new Error(true ? `MUI: unsupported \`${colorSpace}\` color space.
+The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rgb, rec-2020.` : formatMuiErrorMessage(10, colorSpace));
+    }
+  } else {
+    values3 = values3.split(",");
+  }
+  values3 = values3.map((value) => parseFloat(value));
+  return {
+    type,
+    values: values3,
+    colorSpace
+  };
+}
+var colorChannel = (color2) => {
+  const decomposedColor = decomposeColor(color2);
+  return decomposedColor.values.slice(0, 3).map((val, idx) => decomposedColor.type.includes("hsl") && idx !== 0 ? `${val}%` : val).join(" ");
+};
+var private_safeColorChannel = (color2, warning) => {
+  try {
+    return colorChannel(color2);
+  } catch (error) {
+    if (warning && true) {
+      console.warn(warning);
+    }
+    return color2;
+  }
+};
+function recomposeColor(color2) {
+  const {
+    type,
+    colorSpace
+  } = color2;
+  let {
+    values: values3
+  } = color2;
+  if (type.includes("rgb")) {
+    values3 = values3.map((n, i) => i < 3 ? parseInt(n, 10) : n);
+  } else if (type.includes("hsl")) {
+    values3[1] = `${values3[1]}%`;
+    values3[2] = `${values3[2]}%`;
+  }
+  if (type.includes("color")) {
+    values3 = `${colorSpace} ${values3.join(" ")}`;
+  } else {
+    values3 = `${values3.join(", ")}`;
+  }
+  return `${type}(${values3})`;
+}
+function hslToRgb(color2) {
+  color2 = decomposeColor(color2);
+  const {
+    values: values3
+  } = color2;
+  const h = values3[0];
+  const s = values3[1] / 100;
+  const l = values3[2] / 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n, k = (n + h / 30) % 12) => l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+  let type = "rgb";
+  const rgb = [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
+  if (color2.type === "hsla") {
+    type += "a";
+    rgb.push(values3[3]);
+  }
+  return recomposeColor({
+    type,
+    values: rgb
+  });
+}
+function getLuminance(color2) {
+  color2 = decomposeColor(color2);
+  let rgb = color2.type === "hsl" || color2.type === "hsla" ? decomposeColor(hslToRgb(color2)).values : color2.values;
+  rgb = rgb.map((val) => {
+    if (color2.type !== "color") {
+      val /= 255;
+    }
+    return val <= 0.03928 ? val / 12.92 : ((val + 0.055) / 1.055) ** 2.4;
+  });
+  return Number((0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]).toFixed(3));
+}
+function getContrastRatio(foreground, background) {
+  const lumA = getLuminance(foreground);
+  const lumB = getLuminance(background);
+  return (Math.max(lumA, lumB) + 0.05) / (Math.min(lumA, lumB) + 0.05);
+}
+function alpha(color2, value) {
+  color2 = decomposeColor(color2);
+  value = clampWrapper(value);
+  if (color2.type === "rgb" || color2.type === "hsl") {
+    color2.type += "a";
+  }
+  if (color2.type === "color") {
+    color2.values[3] = `/${value}`;
+  } else {
+    color2.values[3] = value;
+  }
+  return recomposeColor(color2);
+}
+function private_safeAlpha(color2, value, warning) {
+  try {
+    return alpha(color2, value);
+  } catch (error) {
+    if (warning && true) {
+      console.warn(warning);
+    }
+    return color2;
+  }
+}
+function darken(color2, coefficient) {
+  color2 = decomposeColor(color2);
+  coefficient = clampWrapper(coefficient);
+  if (color2.type.includes("hsl")) {
+    color2.values[2] *= 1 - coefficient;
+  } else if (color2.type.includes("rgb") || color2.type.includes("color")) {
+    for (let i = 0; i < 3; i += 1) {
+      color2.values[i] *= 1 - coefficient;
+    }
+  }
+  return recomposeColor(color2);
+}
+function private_safeDarken(color2, coefficient, warning) {
+  try {
+    return darken(color2, coefficient);
+  } catch (error) {
+    if (warning && true) {
+      console.warn(warning);
+    }
+    return color2;
+  }
+}
+function lighten(color2, coefficient) {
+  color2 = decomposeColor(color2);
+  coefficient = clampWrapper(coefficient);
+  if (color2.type.includes("hsl")) {
+    color2.values[2] += (100 - color2.values[2]) * coefficient;
+  } else if (color2.type.includes("rgb")) {
+    for (let i = 0; i < 3; i += 1) {
+      color2.values[i] += (255 - color2.values[i]) * coefficient;
+    }
+  } else if (color2.type.includes("color")) {
+    for (let i = 0; i < 3; i += 1) {
+      color2.values[i] += (1 - color2.values[i]) * coefficient;
+    }
+  }
+  return recomposeColor(color2);
+}
+function private_safeLighten(color2, coefficient, warning) {
+  try {
+    return lighten(color2, coefficient);
+  } catch (error) {
+    if (warning && true) {
+      console.warn(warning);
+    }
+    return color2;
+  }
+}
+function emphasize(color2, coefficient = 0.15) {
+  return getLuminance(color2) > 0.5 ? darken(color2, coefficient) : lighten(color2, coefficient);
+}
+function private_safeEmphasize(color2, coefficient, warning) {
+  try {
+    return emphasize(color2, coefficient);
+  } catch (error) {
+    if (warning && true) {
+      console.warn(warning);
+    }
+    return color2;
+  }
+}
+
 // node_modules/@babel/runtime/helpers/esm/extends.js
 function _extends() {
   return _extends = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
     return n;
   }, _extends.apply(null, arguments);
@@ -1571,7 +1788,7 @@ function createStyleElement(options) {
   tag.setAttribute("data-s", "");
   return tag;
 }
-var StyleSheet = (function() {
+var StyleSheet = function() {
   function StyleSheet2(options) {
     var _this = this;
     this._insertTag = function(tag) {
@@ -1642,7 +1859,7 @@ var StyleSheet = (function() {
     }
   };
   return StyleSheet2;
-})();
+}();
 
 // node_modules/stylis/src/Enum.js
 var MS = "-ms-";
@@ -3527,7 +3744,7 @@ var globalKey;
 var React5 = __toESM(require_react());
 
 // node_modules/@emotion/is-prop-valid/dist/emotion-is-prop-valid.esm.js
-var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|fetchpriority|fetchPriority|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|popover|popoverTarget|popoverTargetAction|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/;
+var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|fetchpriority|fetchPriority|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/;
 var isPropValid = memoize(
   function(prop) {
     return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111 && prop.charCodeAt(1) === 110 && prop.charCodeAt(2) < 91;
@@ -3932,6 +4149,7 @@ true ? StyledEngineProvider.propTypes = {
 } : void 0;
 
 // node_modules/@mui/styled-engine/esm/GlobalStyles/GlobalStyles.js
+var React7 = __toESM(require_react(), 1);
 var import_prop_types3 = __toESM(require_prop_types(), 1);
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 function isEmpty(obj) {
@@ -3980,7 +4198,7 @@ function internal_serializeStyles(styles2) {
 }
 
 // node_modules/@mui/utils/esm/deepmerge/deepmerge.js
-var React7 = __toESM(require_react(), 1);
+var React8 = __toESM(require_react(), 1);
 var import_react_is = __toESM(require_react_is3(), 1);
 function isPlainObject(item) {
   if (typeof item !== "object" || item === null) {
@@ -3990,7 +4208,7 @@ function isPlainObject(item) {
   return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in item) && !(Symbol.iterator in item);
 }
 function deepClone(source) {
-  if (React7.isValidElement(source) || (0, import_react_is.isValidElementType)(source) || !isPlainObject(source)) {
+  if (React8.isValidElement(source) || (0, import_react_is.isValidElementType)(source) || !isPlainObject(source)) {
     return source;
   }
   const output = {};
@@ -4007,7 +4225,7 @@ function deepmerge(target, source, options = {
   } : target;
   if (isPlainObject(target) && isPlainObject(source)) {
     Object.keys(source).forEach((key) => {
-      if (React7.isValidElement(source[key]) || (0, import_react_is.isValidElementType)(source[key])) {
+      if (React8.isValidElement(source[key]) || (0, import_react_is.isValidElementType)(source[key])) {
         output[key] = source[key];
       } else if (isPlainObject(source[key]) && // Avoid prototype pollution
       Object.prototype.hasOwnProperty.call(target, key) && isPlainObject(target[key])) {
@@ -5625,229 +5843,6 @@ function lowercaseFirstLetter(string) {
   return string.charAt(0).toLowerCase() + string.slice(1);
 }
 
-// node_modules/@mui/utils/esm/clamp/clamp.js
-function clamp(val, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER) {
-  return Math.max(min, Math.min(val, max));
-}
-var clamp_default = clamp;
-
-// node_modules/@mui/system/esm/colorManipulator/colorManipulator.js
-function clampWrapper(value, min = 0, max = 1) {
-  if (true) {
-    if (value < min || value > max) {
-      console.error(`MUI: The value provided ${value} is out of range [${min}, ${max}].`);
-    }
-  }
-  return clamp_default(value, min, max);
-}
-function hexToRgb(color2) {
-  color2 = color2.slice(1);
-  const re = new RegExp(`.{1,${color2.length >= 6 ? 2 : 1}}`, "g");
-  let colors = color2.match(re);
-  if (colors && colors[0].length === 1) {
-    colors = colors.map((n) => n + n);
-  }
-  if (true) {
-    if (color2.length !== color2.trim().length) {
-      console.error(`MUI: The color: "${color2}" is invalid. Make sure the color input doesn't contain leading/trailing space.`);
-    }
-  }
-  return colors ? `rgb${colors.length === 4 ? "a" : ""}(${colors.map((n, index) => {
-    return index < 3 ? parseInt(n, 16) : Math.round(parseInt(n, 16) / 255 * 1e3) / 1e3;
-  }).join(", ")})` : "";
-}
-function decomposeColor(color2) {
-  if (color2.type) {
-    return color2;
-  }
-  if (color2.charAt(0) === "#") {
-    return decomposeColor(hexToRgb(color2));
-  }
-  const marker = color2.indexOf("(");
-  const type = color2.substring(0, marker);
-  if (!["rgb", "rgba", "hsl", "hsla", "color"].includes(type)) {
-    throw new Error(true ? `MUI: Unsupported \`${color2}\` color.
-The following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color().` : formatMuiErrorMessage(9, color2));
-  }
-  let values3 = color2.substring(marker + 1, color2.length - 1);
-  let colorSpace;
-  if (type === "color") {
-    values3 = values3.split(" ");
-    colorSpace = values3.shift();
-    if (values3.length === 4 && values3[3].charAt(0) === "/") {
-      values3[3] = values3[3].slice(1);
-    }
-    if (!["srgb", "display-p3", "a98-rgb", "prophoto-rgb", "rec-2020"].includes(colorSpace)) {
-      throw new Error(true ? `MUI: unsupported \`${colorSpace}\` color space.
-The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rgb, rec-2020.` : formatMuiErrorMessage(10, colorSpace));
-    }
-  } else {
-    values3 = values3.split(",");
-  }
-  values3 = values3.map((value) => parseFloat(value));
-  return {
-    type,
-    values: values3,
-    colorSpace
-  };
-}
-var colorChannel = (color2) => {
-  const decomposedColor = decomposeColor(color2);
-  return decomposedColor.values.slice(0, 3).map((val, idx) => decomposedColor.type.includes("hsl") && idx !== 0 ? `${val}%` : val).join(" ");
-};
-var private_safeColorChannel = (color2, warning) => {
-  try {
-    return colorChannel(color2);
-  } catch (error) {
-    if (warning && true) {
-      console.warn(warning);
-    }
-    return color2;
-  }
-};
-function recomposeColor(color2) {
-  const {
-    type,
-    colorSpace
-  } = color2;
-  let {
-    values: values3
-  } = color2;
-  if (type.includes("rgb")) {
-    values3 = values3.map((n, i) => i < 3 ? parseInt(n, 10) : n);
-  } else if (type.includes("hsl")) {
-    values3[1] = `${values3[1]}%`;
-    values3[2] = `${values3[2]}%`;
-  }
-  if (type.includes("color")) {
-    values3 = `${colorSpace} ${values3.join(" ")}`;
-  } else {
-    values3 = `${values3.join(", ")}`;
-  }
-  return `${type}(${values3})`;
-}
-function hslToRgb(color2) {
-  color2 = decomposeColor(color2);
-  const {
-    values: values3
-  } = color2;
-  const h = values3[0];
-  const s = values3[1] / 100;
-  const l = values3[2] / 100;
-  const a = s * Math.min(l, 1 - l);
-  const f = (n, k = (n + h / 30) % 12) => l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-  let type = "rgb";
-  const rgb = [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
-  if (color2.type === "hsla") {
-    type += "a";
-    rgb.push(values3[3]);
-  }
-  return recomposeColor({
-    type,
-    values: rgb
-  });
-}
-function getLuminance(color2) {
-  color2 = decomposeColor(color2);
-  let rgb = color2.type === "hsl" || color2.type === "hsla" ? decomposeColor(hslToRgb(color2)).values : color2.values;
-  rgb = rgb.map((val) => {
-    if (color2.type !== "color") {
-      val /= 255;
-    }
-    return val <= 0.03928 ? val / 12.92 : ((val + 0.055) / 1.055) ** 2.4;
-  });
-  return Number((0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]).toFixed(3));
-}
-function getContrastRatio(foreground, background) {
-  const lumA = getLuminance(foreground);
-  const lumB = getLuminance(background);
-  return (Math.max(lumA, lumB) + 0.05) / (Math.min(lumA, lumB) + 0.05);
-}
-function alpha(color2, value) {
-  color2 = decomposeColor(color2);
-  value = clampWrapper(value);
-  if (color2.type === "rgb" || color2.type === "hsl") {
-    color2.type += "a";
-  }
-  if (color2.type === "color") {
-    color2.values[3] = `/${value}`;
-  } else {
-    color2.values[3] = value;
-  }
-  return recomposeColor(color2);
-}
-function private_safeAlpha(color2, value, warning) {
-  try {
-    return alpha(color2, value);
-  } catch (error) {
-    if (warning && true) {
-      console.warn(warning);
-    }
-    return color2;
-  }
-}
-function darken(color2, coefficient) {
-  color2 = decomposeColor(color2);
-  coefficient = clampWrapper(coefficient);
-  if (color2.type.includes("hsl")) {
-    color2.values[2] *= 1 - coefficient;
-  } else if (color2.type.includes("rgb") || color2.type.includes("color")) {
-    for (let i = 0; i < 3; i += 1) {
-      color2.values[i] *= 1 - coefficient;
-    }
-  }
-  return recomposeColor(color2);
-}
-function private_safeDarken(color2, coefficient, warning) {
-  try {
-    return darken(color2, coefficient);
-  } catch (error) {
-    if (warning && true) {
-      console.warn(warning);
-    }
-    return color2;
-  }
-}
-function lighten(color2, coefficient) {
-  color2 = decomposeColor(color2);
-  coefficient = clampWrapper(coefficient);
-  if (color2.type.includes("hsl")) {
-    color2.values[2] += (100 - color2.values[2]) * coefficient;
-  } else if (color2.type.includes("rgb")) {
-    for (let i = 0; i < 3; i += 1) {
-      color2.values[i] += (255 - color2.values[i]) * coefficient;
-    }
-  } else if (color2.type.includes("color")) {
-    for (let i = 0; i < 3; i += 1) {
-      color2.values[i] += (1 - color2.values[i]) * coefficient;
-    }
-  }
-  return recomposeColor(color2);
-}
-function private_safeLighten(color2, coefficient, warning) {
-  try {
-    return lighten(color2, coefficient);
-  } catch (error) {
-    if (warning && true) {
-      console.warn(warning);
-    }
-    return color2;
-  }
-}
-function emphasize(color2, coefficient = 0.15) {
-  return getLuminance(color2) > 0.5 ? darken(color2, coefficient) : lighten(color2, coefficient);
-}
-function private_safeEmphasize(color2, coefficient, warning) {
-  try {
-    return emphasize(color2, coefficient);
-  } catch (error) {
-    if (warning && true) {
-      console.warn(warning);
-    }
-    return color2;
-  }
-}
-
 // node_modules/@mui/material/esm/colors/common.js
 var common = {
   black: "#000",
@@ -6072,19 +6067,6 @@ function addLightOrDark(intent, direction, shade, tonalOffset) {
     }
   }
 }
-function mixLightOrDark(colorSpace, intent, direction, shade, tonalOffset) {
-  const tonalOffsetLight = tonalOffset.light || tonalOffset;
-  const tonalOffsetDark = tonalOffset.dark || tonalOffset * 1.5;
-  if (!intent[direction]) {
-    if (intent.hasOwnProperty(shade)) {
-      intent[direction] = intent[shade];
-    } else if (direction === "light") {
-      intent.light = `color-mix(in ${colorSpace}, ${intent.main}, #fff ${(tonalOffsetLight * 100).toFixed(0)}%)`;
-    } else if (direction === "dark") {
-      intent.dark = `color-mix(in ${colorSpace}, ${intent.main}, #000 ${(tonalOffsetDark * 100).toFixed(0)}%)`;
-    }
-  }
-}
 function getDefaultPrimary(mode = "light") {
   if (mode === "dark") {
     return {
@@ -6170,15 +6152,11 @@ function getDefaultWarning(mode = "light") {
     dark: orange_default[900]
   };
 }
-function contrastColor(background) {
-  return `oklch(from ${background} var(--__l) 0 h / var(--__a))`;
-}
 function createPalette(palette2) {
   const {
     mode = "light",
     contrastThreshold = 3,
     tonalOffset = 0.2,
-    colorSpace,
     ...other
   } = palette2;
   const primary = palette2.primary || getDefaultPrimary(mode);
@@ -6188,9 +6166,6 @@ function createPalette(palette2) {
   const success = palette2.success || getDefaultSuccess(mode);
   const warning = palette2.warning || getDefaultWarning(mode);
   function getContrastText(background) {
-    if (colorSpace) {
-      return contrastColor(background);
-    }
     const contrastText = getContrastRatio(background, dark.text.primary) >= contrastThreshold ? dark.text.primary : light.text.primary;
     if (true) {
       const contrast = getContrastRatio(background, contrastText);
@@ -6233,13 +6208,8 @@ const theme2 = createTheme({ palette: {
   primary: { main: green[500] },
 } });` : formatMuiErrorMessage(12, name ? ` (${name})` : "", JSON.stringify(color2.main)));
     }
-    if (colorSpace) {
-      mixLightOrDark(colorSpace, color2, "light", lightShade, tonalOffset);
-      mixLightOrDark(colorSpace, color2, "dark", darkShade, tonalOffset);
-    } else {
-      addLightOrDark(color2, "light", lightShade, tonalOffset);
-      addLightOrDark(color2, "dark", darkShade, tonalOffset);
-    }
+    addLightOrDark(color2, "light", lightShade, tonalOffset);
+    addLightOrDark(color2, "dark", darkShade, tonalOffset);
     if (!color2.contrastText) {
       color2.contrastText = getContrastText(color2.main);
     }
@@ -6317,15 +6287,16 @@ const theme2 = createTheme({ palette: {
 }
 
 // node_modules/@mui/system/esm/GlobalStyles/GlobalStyles.js
+var React10 = __toESM(require_react(), 1);
 var import_prop_types6 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/system/esm/useThemeWithoutDefault/useThemeWithoutDefault.js
-var React8 = __toESM(require_react(), 1);
+var React9 = __toESM(require_react(), 1);
 function isObjectEmpty2(obj) {
   return Object.keys(obj).length === 0;
 }
 function useTheme2(defaultTheme5 = null) {
-  const contextTheme = React8.useContext(ThemeContext);
+  const contextTheme = React9.useContext(ThemeContext);
   return !contextTheme || isObjectEmpty2(contextTheme) ? defaultTheme5 : contextTheme;
 }
 var useThemeWithoutDefault_default = useTheme2;
@@ -6565,7 +6536,7 @@ var propToStyleFunction = Object.keys(filterPropsMapping).reduce((acc, styleFnNa
 var import_prop_types7 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/system/esm/createBox/createBox.js
-var React9 = __toESM(require_react(), 1);
+var React11 = __toESM(require_react(), 1);
 var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
 function createBox(options = {}) {
   const {
@@ -6577,7 +6548,7 @@ function createBox(options = {}) {
   const BoxRoot = styled2("div", {
     shouldForwardProp: (prop) => prop !== "theme" && prop !== "sx" && prop !== "as"
   })(styleFunctionSx_default);
-  const Box2 = React9.forwardRef(function Box3(inProps, ref) {
+  const Box2 = React11.forwardRef(function Box3(inProps, ref) {
     const theme = useTheme_default(defaultTheme5);
     const {
       className,
@@ -6706,16 +6677,16 @@ function useThemeProps({
 }
 
 // node_modules/@mui/system/esm/useMediaQuery/useMediaQuery.js
-var React11 = __toESM(require_react(), 1);
+var React13 = __toESM(require_react(), 1);
 
 // node_modules/@mui/utils/esm/useEnhancedEffect/useEnhancedEffect.js
-var React10 = __toESM(require_react(), 1);
-var useEnhancedEffect = typeof window !== "undefined" ? React10.useLayoutEffect : React10.useEffect;
+var React12 = __toESM(require_react(), 1);
+var useEnhancedEffect = typeof window !== "undefined" ? React12.useLayoutEffect : React12.useEffect;
 var useEnhancedEffect_default = useEnhancedEffect;
 
 // node_modules/@mui/system/esm/useMediaQuery/useMediaQuery.js
 function useMediaQueryOld(query, defaultMatches, matchMedia, ssrMatchMedia, noSsr) {
-  const [match2, setMatch] = React11.useState(() => {
+  const [match2, setMatch] = React13.useState(() => {
     if (noSsr && matchMedia) {
       return matchMedia(query).matches;
     }
@@ -6741,12 +6712,12 @@ function useMediaQueryOld(query, defaultMatches, matchMedia, ssrMatchMedia, noSs
   return match2;
 }
 var safeReact2 = {
-  ...React11
+  ...React13
 };
 var maybeReactUseSyncExternalStore = safeReact2.useSyncExternalStore;
 function useMediaQueryNew(query, defaultMatches, matchMedia, ssrMatchMedia, noSsr) {
-  const getDefaultSnapshot = React11.useCallback(() => defaultMatches, [defaultMatches]);
-  const getServerSnapshot = React11.useMemo(() => {
+  const getDefaultSnapshot = React13.useCallback(() => defaultMatches, [defaultMatches]);
+  const getServerSnapshot = React13.useMemo(() => {
     if (noSsr && matchMedia) {
       return () => matchMedia(query).matches;
     }
@@ -6758,7 +6729,7 @@ function useMediaQueryNew(query, defaultMatches, matchMedia, ssrMatchMedia, noSs
     }
     return getDefaultSnapshot;
   }, [getDefaultSnapshot, query, ssrMatchMedia, noSsr, matchMedia]);
-  const [getSnapshot, subscribe] = React11.useMemo(() => {
+  const [getSnapshot, subscribe] = React13.useMemo(() => {
     if (matchMedia === null) {
       return [getDefaultSnapshot, () => () => {
       }];
@@ -6807,7 +6778,7 @@ function unstable_createUseMediaQuery(params = {}) {
     const useMediaQueryImplementation = maybeReactUseSyncExternalStore !== void 0 ? useMediaQueryNew : useMediaQueryOld;
     const match2 = useMediaQueryImplementation(query, defaultMatches, matchMedia, ssrMatchMedia, noSsr);
     if (true) {
-      React11.useDebugValue({
+      React13.useDebugValue({
         query,
         match: match2
       });
@@ -6818,11 +6789,11 @@ function unstable_createUseMediaQuery(params = {}) {
 var useMediaQuery = unstable_createUseMediaQuery();
 
 // node_modules/@mui/system/esm/ThemeProvider/ThemeProvider.js
-var React17 = __toESM(require_react(), 1);
+var React20 = __toESM(require_react(), 1);
 var import_prop_types11 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/private-theming/esm/ThemeProvider/ThemeProvider.js
-var React14 = __toESM(require_react(), 1);
+var React16 = __toESM(require_react(), 1);
 var import_prop_types8 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/utils/esm/exactProp/exactProp.js
@@ -6844,19 +6815,19 @@ function exactProp(propTypes) {
 }
 
 // node_modules/@mui/private-theming/esm/useTheme/ThemeContext.js
-var React12 = __toESM(require_react(), 1);
-var ThemeContext2 = React12.createContext(null);
+var React14 = __toESM(require_react(), 1);
+var ThemeContext2 = React14.createContext(null);
 if (true) {
   ThemeContext2.displayName = "ThemeContext";
 }
 var ThemeContext_default = ThemeContext2;
 
 // node_modules/@mui/private-theming/esm/useTheme/useTheme.js
-var React13 = __toESM(require_react(), 1);
+var React15 = __toESM(require_react(), 1);
 function useTheme4() {
-  const theme = React13.useContext(ThemeContext_default);
+  const theme = React15.useContext(ThemeContext_default);
   if (true) {
-    React13.useDebugValue(theme);
+    React15.useDebugValue(theme);
   }
   return theme;
 }
@@ -6893,7 +6864,7 @@ function ThemeProvider2(props) {
       console.error(["MUI: You are providing a theme function prop to the ThemeProvider component:", "<ThemeProvider theme={outerTheme => outerTheme} />", "", "However, no outer theme is present.", "Make sure a theme is already injected higher in the React tree or provide a theme object."].join("\n"));
     }
   }
-  const theme = React14.useMemo(() => {
+  const theme = React16.useMemo(() => {
     const output = outerTheme === null ? {
       ...localTheme
     } : mergeOuterLocalTheme(outerTheme, localTheme);
@@ -6923,10 +6894,10 @@ if (true) {
 var ThemeProvider_default = ThemeProvider2;
 
 // node_modules/@mui/system/esm/RtlProvider/index.js
-var React15 = __toESM(require_react(), 1);
+var React17 = __toESM(require_react(), 1);
 var import_prop_types9 = __toESM(require_prop_types(), 1);
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-var RtlContext = React15.createContext();
+var RtlContext = React17.createContext();
 function RtlProvider({
   value,
   ...props
@@ -6941,16 +6912,16 @@ true ? RtlProvider.propTypes = {
   value: import_prop_types9.default.bool
 } : void 0;
 var useRtl = () => {
-  const value = React15.useContext(RtlContext);
+  const value = React17.useContext(RtlContext);
   return value ?? false;
 };
 var RtlProvider_default = RtlProvider;
 
 // node_modules/@mui/system/esm/DefaultPropsProvider/DefaultPropsProvider.js
-var React16 = __toESM(require_react(), 1);
+var React18 = __toESM(require_react(), 1);
 var import_prop_types10 = __toESM(require_prop_types(), 1);
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
-var PropsContext = React16.createContext(void 0);
+var PropsContext = React18.createContext(void 0);
 function DefaultPropsProvider({
   value,
   children: children2
@@ -6996,7 +6967,7 @@ function useDefaultProps({
   props,
   name
 }) {
-  const ctx = React16.useContext(PropsContext);
+  const ctx = React18.useContext(PropsContext);
   return getThemeProps2({
     props,
     name,
@@ -7008,6 +6979,7 @@ function useDefaultProps({
 var DefaultPropsProvider_default = DefaultPropsProvider;
 
 // node_modules/@mui/system/esm/ThemeProvider/useLayerOrder.js
+var React19 = __toESM(require_react(), 1);
 var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 function useLayerOrder(theme) {
   const upperTheme = useThemeWithoutDefault_default();
@@ -7054,7 +7026,7 @@ function useLayerOrder(theme) {
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var EMPTY_THEME = {};
 function useThemeScoping(themeId, upperTheme, localTheme, isPrivate = false) {
-  return React17.useMemo(() => {
+  return React20.useMemo(() => {
     const resolvedTheme = themeId ? upperTheme[themeId] || upperTheme : upperTheme;
     if (typeof localTheme === "function") {
       const mergedTheme = localTheme(resolvedTheme);
@@ -7149,14 +7121,15 @@ function unstable_memoTheme(styleFn) {
 }
 
 // node_modules/@mui/system/esm/cssVars/createCssVarsProvider.js
-var React19 = __toESM(require_react(), 1);
+var React23 = __toESM(require_react(), 1);
 var import_prop_types12 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/system/esm/InitColorSchemeScript/InitColorSchemeScript.js
+var React21 = __toESM(require_react(), 1);
 var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 
 // node_modules/@mui/system/esm/cssVars/useCurrentColorScheme.js
-var React18 = __toESM(require_react(), 1);
+var React22 = __toESM(require_react(), 1);
 
 // node_modules/@mui/system/esm/cssVars/createCssVarsProvider.js
 var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
@@ -7264,8 +7237,7 @@ function prepareCssVars(theme, parserConfig = {}) {
   const {
     getSelector = defaultGetSelector,
     disableCssColorScheme,
-    colorSchemeSelector: selector,
-    enableContrastVars
+    colorSchemeSelector: selector
   } = parserConfig;
   const {
     colorSchemes = {},
@@ -7402,17 +7374,6 @@ function prepareCssVars(theme, parserConfig = {}) {
         ...finalCss
       }), finalCss);
     });
-    if (enableContrastVars) {
-      stylesheets.push({
-        ":root": {
-          // use double underscore to indicate that these are private variables
-          "--__l-threshold": "0.7",
-          "--__l": "clamp(0, (l / var(--__l-threshold) - 1) * -infinity, 1)",
-          "--__a": "clamp(0.87, (l / var(--__l-threshold) - 1) * -infinity, 1)"
-          // 0.87 is the default alpha value for black text.
-        }
-      });
-    }
     return stylesheets;
   };
   return {
@@ -7452,11 +7413,11 @@ function createGetColorSchemeSelector(selector) {
 
 // node_modules/@mui/system/esm/version/index.js
 var major = Number("7");
-var minor = Number("3");
-var patch = Number("6");
+var minor = Number("2");
+var patch = Number("0");
 
 // node_modules/@mui/system/esm/Container/createContainer.js
-var React20 = __toESM(require_react(), 1);
+var React24 = __toESM(require_react(), 1);
 var import_prop_types13 = __toESM(require_prop_types(), 1);
 var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 var defaultTheme = createTheme_default();
@@ -7547,7 +7508,7 @@ function createContainer(options = {}) {
       }
     }
   }));
-  const Container2 = React20.forwardRef(function Container3(inProps, ref) {
+  const Container2 = React24.forwardRef(function Container3(inProps, ref) {
     const props = useThemeProps2(inProps);
     const {
       className,
@@ -7644,15 +7605,15 @@ var containerClasses = generateUtilityClasses("MuiContainer", ["root", "disableG
 var import_prop_types16 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/system/esm/Grid/createGrid.js
-var React22 = __toESM(require_react(), 1);
+var React26 = __toESM(require_react(), 1);
 var import_prop_types15 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/utils/esm/isMuiElement/isMuiElement.js
-var React21 = __toESM(require_react(), 1);
+var React25 = __toESM(require_react(), 1);
 function isMuiElement(element, muiNames) {
   var _a, _b, _c;
-  return React21.isValidElement(element) && muiNames.indexOf(
-    // For server components `muiName` is available in element.type._payload.value.muiName
+  return React25.isValidElement(element) && muiNames.indexOf(
+    // For server components `muiName` is avaialble in element.type._payload.value.muiName
     // relevant info - https://github.com/facebook/react/blob/2807d781a08db8e9873687fccc25c0f12b4fb3d4/packages/react/src/ReactLazy.js#L45
     // eslint-disable-next-line no-underscore-dangle
     element.type.muiName ?? ((_c = (_b = (_a = element.type) == null ? void 0 : _a._payload) == null ? void 0 : _b.value) == null ? void 0 : _c.muiName)
@@ -7988,7 +7949,7 @@ function createGrid(options = {}) {
     return parsedProp;
   }
   const GridRoot = createStyledComponent(generateGridColumnsStyles, generateGridColumnSpacingStyles, generateGridRowSpacingStyles, generateGridSizeStyles, generateGridDirectionStyles, generateGridStyles, generateGridOffsetStyles);
-  const Grid2 = React22.forwardRef(function Grid3(inProps, ref) {
+  const Grid2 = React26.forwardRef(function Grid3(inProps, ref) {
     const theme = useTheme6();
     const themeProps = useThemeProps2(inProps);
     const props = extendSxProp(themeProps);
@@ -8035,10 +7996,10 @@ function createGrid(options = {}) {
       ownerState,
       className: clsx_default(classes.root, className),
       ...other,
-      children: React22.Children.map(children2, (child) => {
+      children: React26.Children.map(children2, (child) => {
         var _a;
-        if (React22.isValidElement(child) && isMuiElement(child, ["Grid"]) && container && child.props.container) {
-          return React22.cloneElement(child, {
+        if (React26.isValidElement(child) && isMuiElement(child, ["Grid"]) && container && child.props.container) {
+          return React26.cloneElement(child, {
             unstable_level: ((_a = child.props) == null ? void 0 : _a.unstable_level) ?? level + 1
           });
         }
@@ -8184,7 +8145,7 @@ var gridClasses = generateUtilityClasses("MuiGrid", [
 var import_prop_types18 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/system/esm/Stack/createStack.js
-var React23 = __toESM(require_react(), 1);
+var React27 = __toESM(require_react(), 1);
 var import_prop_types17 = __toESM(require_prop_types(), 1);
 var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
 var defaultTheme3 = createTheme_default();
@@ -8200,11 +8161,11 @@ function useThemePropsDefault3(props) {
   });
 }
 function joinChildren(children2, separator) {
-  const childrenArray = React23.Children.toArray(children2).filter(Boolean);
+  const childrenArray = React27.Children.toArray(children2).filter(Boolean);
   return childrenArray.reduce((output, child, index) => {
     output.push(child);
     if (index < childrenArray.length - 1) {
-      output.push(React23.cloneElement(separator, {
+      output.push(React27.cloneElement(separator, {
         key: `separator-${index}`
       }));
     }
@@ -8298,7 +8259,7 @@ function createStack(options = {}) {
     return composeClasses(slots, (slot) => generateUtilityClass(componentName, slot), {});
   };
   const StackRoot = createStyledComponent(style3);
-  const Stack2 = React23.forwardRef(function Grid2(inProps, ref) {
+  const Stack2 = React27.forwardRef(function Grid2(inProps, ref) {
     const themeProps = useThemeProps2(inProps);
     const props = extendSxProp(themeProps);
     const {
@@ -8647,54 +8608,6 @@ export default theme;`;
 }
 
 // node_modules/@mui/material/esm/styles/createThemeNoVars.js
-function coefficientToPercentage(coefficient) {
-  if (typeof coefficient === "number") {
-    return `${(coefficient * 100).toFixed(0)}%`;
-  }
-  return `calc((${coefficient}) * 100%)`;
-}
-var parseAddition = (str) => {
-  if (!Number.isNaN(+str)) {
-    return +str;
-  }
-  const numbers = str.match(/\d*\.?\d+/g);
-  if (!numbers) {
-    return 0;
-  }
-  let sum = 0;
-  for (let i = 0; i < numbers.length; i += 1) {
-    sum += +numbers[i];
-  }
-  return sum;
-};
-function attachColorManipulators(theme) {
-  Object.assign(theme, {
-    alpha(color2, coefficient) {
-      const obj = this || theme;
-      if (obj.colorSpace) {
-        return `oklch(from ${color2} l c h / ${typeof coefficient === "string" ? `calc(${coefficient})` : coefficient})`;
-      }
-      if (obj.vars) {
-        return `rgba(${color2.replace(/var\(--([^,\s)]+)(?:,[^)]+)?\)+/g, "var(--$1Channel)")} / ${typeof coefficient === "string" ? `calc(${coefficient})` : coefficient})`;
-      }
-      return alpha(color2, parseAddition(coefficient));
-    },
-    lighten(color2, coefficient) {
-      const obj = this || theme;
-      if (obj.colorSpace) {
-        return `color-mix(in ${obj.colorSpace}, ${color2}, #fff ${coefficientToPercentage(coefficient)})`;
-      }
-      return lighten(color2, coefficient);
-    },
-    darken(color2, coefficient) {
-      const obj = this || theme;
-      if (obj.colorSpace) {
-        return `color-mix(in ${obj.colorSpace}, ${color2}, #000 ${coefficientToPercentage(coefficient)})`;
-      }
-      return darken(color2, coefficient);
-    }
-  });
-}
 function createThemeNoVars(options = {}, ...args) {
   const {
     breakpoints: breakpointsInput,
@@ -8704,7 +8617,6 @@ function createThemeNoVars(options = {}, ...args) {
     transitions: transitionsInput = {},
     typography: typographyInput = {},
     shape: shapeInput,
-    colorSpace,
     ...other
   } = options;
   if (options.vars && // The error should throw only for the root theme creation because user is not allowed to use a custom node `vars`.
@@ -8712,10 +8624,7 @@ function createThemeNoVars(options = {}, ...args) {
   options.generateThemeVars === void 0) {
     throw new Error(true ? "MUI: `vars` is a private field used for CSS variables support.\nPlease use another name or follow the [docs](https://mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature." : formatMuiErrorMessage(20));
   }
-  const palette2 = createPalette({
-    ...paletteInput,
-    colorSpace
-  });
+  const palette2 = createPalette(paletteInput);
   const systemTheme = createTheme_default(options);
   let muiTheme = deepmerge(systemTheme, {
     mixins: createMixins(systemTheme.breakpoints, mixinsInput),
@@ -8767,7 +8676,6 @@ function createThemeNoVars(options = {}, ...args) {
     });
   };
   muiTheme.toRuntimeSource = stringifyTheme;
-  attachColorManipulators(muiTheme);
   return muiTheme;
 }
 var createThemeNoVars_default = createThemeNoVars;
@@ -8810,13 +8718,9 @@ function createColorScheme(options) {
     // need to cast to avoid module augmentation test
     opacity,
     overlays,
-    colorSpace,
-    ...other
+    ...rest
   } = options;
-  const palette2 = createPalette({
-    ...paletteInput,
-    colorSpace
-  });
+  const palette2 = createPalette(paletteInput);
   return {
     palette: palette2,
     opacity: {
@@ -8824,7 +8728,7 @@ function createColorScheme(options) {
       ...opacity
     },
     overlays: overlays || getOverlays(palette2.mode),
-    ...other
+    ...rest
   };
 }
 
@@ -8941,7 +8845,7 @@ var silent = (fn) => {
   return void 0;
 };
 var createGetCssVar2 = (cssVarPrefix = "mui") => createGetCssVar(cssVarPrefix);
-function attachColorScheme(colorSpace, colorSchemes, scheme, restTheme, colorScheme) {
+function attachColorScheme(colorSchemes, scheme, restTheme, colorScheme) {
   if (!scheme) {
     return void 0;
   }
@@ -8953,8 +8857,7 @@ function attachColorScheme(colorSpace, colorSchemes, scheme, restTheme, colorSch
       palette: {
         mode,
         ...scheme == null ? void 0 : scheme.palette
-      },
-      colorSpace
+      }
     });
     return void 0;
   }
@@ -8966,8 +8869,7 @@ function attachColorScheme(colorSpace, colorSchemes, scheme, restTheme, colorSch
     palette: {
       mode,
       ...scheme == null ? void 0 : scheme.palette
-    },
-    colorSpace
+    }
   });
   colorSchemes[colorScheme] = {
     ...scheme,
@@ -8988,7 +8890,6 @@ function createThemeWithVars(options = {}, ...args) {
     defaultColorScheme: defaultColorSchemeInput,
     disableCssColorScheme = false,
     cssVarPrefix = "mui",
-    nativeColor = false,
     shouldSkipGeneratingVar: shouldSkipGeneratingVar2 = shouldSkipGeneratingVar,
     colorSchemeSelector: selector = colorSchemesInput.light && colorSchemesInput.dark ? "media" : void 0,
     rootSelector = ":root",
@@ -9013,16 +8914,12 @@ function createThemeWithVars(options = {}, ...args) {
   if (!defaultScheme) {
     throw new Error(true ? `MUI: The \`colorSchemes.${defaultColorScheme}\` option is either missing or invalid.` : formatMuiErrorMessage(21, defaultColorScheme));
   }
-  let colorSpace;
-  if (nativeColor) {
-    colorSpace = "oklch";
-  }
-  const muiTheme = attachColorScheme(colorSpace, colorSchemes, defaultScheme, input, defaultColorScheme);
+  const muiTheme = attachColorScheme(colorSchemes, defaultScheme, input, defaultColorScheme);
   if (builtInLight && !colorSchemes.light) {
-    attachColorScheme(colorSpace, colorSchemes, builtInLight, void 0, "light");
+    attachColorScheme(colorSchemes, builtInLight, void 0, "light");
   }
   if (builtInDark && !colorSchemes.dark) {
-    attachColorScheme(colorSpace, colorSchemes, builtInDark, void 0, "dark");
+    attachColorScheme(colorSchemes, builtInDark, void 0, "dark");
   }
   let theme = {
     defaultColorScheme,
@@ -9054,28 +8951,12 @@ function createThemeWithVars(options = {}, ...args) {
       setColor(palette2.common, "background", "#000");
       setColor(palette2.common, "onBackground", "#fff");
     }
-    function colorMix(method, color2, coefficient) {
-      if (colorSpace) {
-        let mixer;
-        if (method === private_safeAlpha) {
-          mixer = `transparent ${((1 - coefficient) * 100).toFixed(0)}%`;
-        }
-        if (method === private_safeDarken) {
-          mixer = `#000 ${(coefficient * 100).toFixed(0)}%`;
-        }
-        if (method === private_safeLighten) {
-          mixer = `#fff ${(coefficient * 100).toFixed(0)}%`;
-        }
-        return `color-mix(in ${colorSpace}, ${color2}, ${mixer})`;
-      }
-      return method(color2, coefficient);
-    }
     assignNode(palette2, ["Alert", "AppBar", "Avatar", "Button", "Chip", "FilledInput", "LinearProgress", "Skeleton", "Slider", "SnackbarContent", "SpeedDialAction", "StepConnector", "StepContent", "Switch", "TableCell", "Tooltip"]);
     if (palette2.mode === "light") {
-      setColor(palette2.Alert, "errorColor", colorMix(private_safeDarken, palette2.error.light, 0.6));
-      setColor(palette2.Alert, "infoColor", colorMix(private_safeDarken, palette2.info.light, 0.6));
-      setColor(palette2.Alert, "successColor", colorMix(private_safeDarken, palette2.success.light, 0.6));
-      setColor(palette2.Alert, "warningColor", colorMix(private_safeDarken, palette2.warning.light, 0.6));
+      setColor(palette2.Alert, "errorColor", private_safeDarken(palette2.error.light, 0.6));
+      setColor(palette2.Alert, "infoColor", private_safeDarken(palette2.info.light, 0.6));
+      setColor(palette2.Alert, "successColor", private_safeDarken(palette2.success.light, 0.6));
+      setColor(palette2.Alert, "warningColor", private_safeDarken(palette2.warning.light, 0.6));
       setColor(palette2.Alert, "errorFilledBg", setCssVarColor("palette-error-main"));
       setColor(palette2.Alert, "infoFilledBg", setCssVarColor("palette-info-main"));
       setColor(palette2.Alert, "successFilledBg", setCssVarColor("palette-success-main"));
@@ -9084,10 +8965,10 @@ function createThemeWithVars(options = {}, ...args) {
       setColor(palette2.Alert, "infoFilledColor", silent(() => palette2.getContrastText(palette2.info.main)));
       setColor(palette2.Alert, "successFilledColor", silent(() => palette2.getContrastText(palette2.success.main)));
       setColor(palette2.Alert, "warningFilledColor", silent(() => palette2.getContrastText(palette2.warning.main)));
-      setColor(palette2.Alert, "errorStandardBg", colorMix(private_safeLighten, palette2.error.light, 0.9));
-      setColor(palette2.Alert, "infoStandardBg", colorMix(private_safeLighten, palette2.info.light, 0.9));
-      setColor(palette2.Alert, "successStandardBg", colorMix(private_safeLighten, palette2.success.light, 0.9));
-      setColor(palette2.Alert, "warningStandardBg", colorMix(private_safeLighten, palette2.warning.light, 0.9));
+      setColor(palette2.Alert, "errorStandardBg", private_safeLighten(palette2.error.light, 0.9));
+      setColor(palette2.Alert, "infoStandardBg", private_safeLighten(palette2.info.light, 0.9));
+      setColor(palette2.Alert, "successStandardBg", private_safeLighten(palette2.success.light, 0.9));
+      setColor(palette2.Alert, "warningStandardBg", private_safeLighten(palette2.warning.light, 0.9));
       setColor(palette2.Alert, "errorIconColor", setCssVarColor("palette-error-main"));
       setColor(palette2.Alert, "infoIconColor", setCssVarColor("palette-info-main"));
       setColor(palette2.Alert, "successIconColor", setCssVarColor("palette-success-main"));
@@ -9102,41 +8983,41 @@ function createThemeWithVars(options = {}, ...args) {
       setColor(palette2.FilledInput, "bg", "rgba(0, 0, 0, 0.06)");
       setColor(palette2.FilledInput, "hoverBg", "rgba(0, 0, 0, 0.09)");
       setColor(palette2.FilledInput, "disabledBg", "rgba(0, 0, 0, 0.12)");
-      setColor(palette2.LinearProgress, "primaryBg", colorMix(private_safeLighten, palette2.primary.main, 0.62));
-      setColor(palette2.LinearProgress, "secondaryBg", colorMix(private_safeLighten, palette2.secondary.main, 0.62));
-      setColor(palette2.LinearProgress, "errorBg", colorMix(private_safeLighten, palette2.error.main, 0.62));
-      setColor(palette2.LinearProgress, "infoBg", colorMix(private_safeLighten, palette2.info.main, 0.62));
-      setColor(palette2.LinearProgress, "successBg", colorMix(private_safeLighten, palette2.success.main, 0.62));
-      setColor(palette2.LinearProgress, "warningBg", colorMix(private_safeLighten, palette2.warning.main, 0.62));
-      setColor(palette2.Skeleton, "bg", colorSpace ? colorMix(private_safeAlpha, palette2.text.primary, 0.11) : `rgba(${setCssVarColor("palette-text-primaryChannel")} / 0.11)`);
-      setColor(palette2.Slider, "primaryTrack", colorMix(private_safeLighten, palette2.primary.main, 0.62));
-      setColor(palette2.Slider, "secondaryTrack", colorMix(private_safeLighten, palette2.secondary.main, 0.62));
-      setColor(palette2.Slider, "errorTrack", colorMix(private_safeLighten, palette2.error.main, 0.62));
-      setColor(palette2.Slider, "infoTrack", colorMix(private_safeLighten, palette2.info.main, 0.62));
-      setColor(palette2.Slider, "successTrack", colorMix(private_safeLighten, palette2.success.main, 0.62));
-      setColor(palette2.Slider, "warningTrack", colorMix(private_safeLighten, palette2.warning.main, 0.62));
-      const snackbarContentBackground = colorSpace ? colorMix(private_safeDarken, palette2.background.default, 0.6825) : private_safeEmphasize(palette2.background.default, 0.8);
+      setColor(palette2.LinearProgress, "primaryBg", private_safeLighten(palette2.primary.main, 0.62));
+      setColor(palette2.LinearProgress, "secondaryBg", private_safeLighten(palette2.secondary.main, 0.62));
+      setColor(palette2.LinearProgress, "errorBg", private_safeLighten(palette2.error.main, 0.62));
+      setColor(palette2.LinearProgress, "infoBg", private_safeLighten(palette2.info.main, 0.62));
+      setColor(palette2.LinearProgress, "successBg", private_safeLighten(palette2.success.main, 0.62));
+      setColor(palette2.LinearProgress, "warningBg", private_safeLighten(palette2.warning.main, 0.62));
+      setColor(palette2.Skeleton, "bg", `rgba(${setCssVarColor("palette-text-primaryChannel")} / 0.11)`);
+      setColor(palette2.Slider, "primaryTrack", private_safeLighten(palette2.primary.main, 0.62));
+      setColor(palette2.Slider, "secondaryTrack", private_safeLighten(palette2.secondary.main, 0.62));
+      setColor(palette2.Slider, "errorTrack", private_safeLighten(palette2.error.main, 0.62));
+      setColor(palette2.Slider, "infoTrack", private_safeLighten(palette2.info.main, 0.62));
+      setColor(palette2.Slider, "successTrack", private_safeLighten(palette2.success.main, 0.62));
+      setColor(palette2.Slider, "warningTrack", private_safeLighten(palette2.warning.main, 0.62));
+      const snackbarContentBackground = private_safeEmphasize(palette2.background.default, 0.8);
       setColor(palette2.SnackbarContent, "bg", snackbarContentBackground);
-      setColor(palette2.SnackbarContent, "color", silent(() => colorSpace ? dark.text.primary : palette2.getContrastText(snackbarContentBackground)));
+      setColor(palette2.SnackbarContent, "color", silent(() => palette2.getContrastText(snackbarContentBackground)));
       setColor(palette2.SpeedDialAction, "fabHoverBg", private_safeEmphasize(palette2.background.paper, 0.15));
       setColor(palette2.StepConnector, "border", setCssVarColor("palette-grey-400"));
       setColor(palette2.StepContent, "border", setCssVarColor("palette-grey-400"));
       setColor(palette2.Switch, "defaultColor", setCssVarColor("palette-common-white"));
       setColor(palette2.Switch, "defaultDisabledColor", setCssVarColor("palette-grey-100"));
-      setColor(palette2.Switch, "primaryDisabledColor", colorMix(private_safeLighten, palette2.primary.main, 0.62));
-      setColor(palette2.Switch, "secondaryDisabledColor", colorMix(private_safeLighten, palette2.secondary.main, 0.62));
-      setColor(palette2.Switch, "errorDisabledColor", colorMix(private_safeLighten, palette2.error.main, 0.62));
-      setColor(palette2.Switch, "infoDisabledColor", colorMix(private_safeLighten, palette2.info.main, 0.62));
-      setColor(palette2.Switch, "successDisabledColor", colorMix(private_safeLighten, palette2.success.main, 0.62));
-      setColor(palette2.Switch, "warningDisabledColor", colorMix(private_safeLighten, palette2.warning.main, 0.62));
-      setColor(palette2.TableCell, "border", colorMix(private_safeLighten, colorMix(private_safeAlpha, palette2.divider, 1), 0.88));
-      setColor(palette2.Tooltip, "bg", colorMix(private_safeAlpha, palette2.grey[700], 0.92));
+      setColor(palette2.Switch, "primaryDisabledColor", private_safeLighten(palette2.primary.main, 0.62));
+      setColor(palette2.Switch, "secondaryDisabledColor", private_safeLighten(palette2.secondary.main, 0.62));
+      setColor(palette2.Switch, "errorDisabledColor", private_safeLighten(palette2.error.main, 0.62));
+      setColor(palette2.Switch, "infoDisabledColor", private_safeLighten(palette2.info.main, 0.62));
+      setColor(palette2.Switch, "successDisabledColor", private_safeLighten(palette2.success.main, 0.62));
+      setColor(palette2.Switch, "warningDisabledColor", private_safeLighten(palette2.warning.main, 0.62));
+      setColor(palette2.TableCell, "border", private_safeLighten(private_safeAlpha(palette2.divider, 1), 0.88));
+      setColor(palette2.Tooltip, "bg", private_safeAlpha(palette2.grey[700], 0.92));
     }
     if (palette2.mode === "dark") {
-      setColor(palette2.Alert, "errorColor", colorMix(private_safeLighten, palette2.error.light, 0.6));
-      setColor(palette2.Alert, "infoColor", colorMix(private_safeLighten, palette2.info.light, 0.6));
-      setColor(palette2.Alert, "successColor", colorMix(private_safeLighten, palette2.success.light, 0.6));
-      setColor(palette2.Alert, "warningColor", colorMix(private_safeLighten, palette2.warning.light, 0.6));
+      setColor(palette2.Alert, "errorColor", private_safeLighten(palette2.error.light, 0.6));
+      setColor(palette2.Alert, "infoColor", private_safeLighten(palette2.info.light, 0.6));
+      setColor(palette2.Alert, "successColor", private_safeLighten(palette2.success.light, 0.6));
+      setColor(palette2.Alert, "warningColor", private_safeLighten(palette2.warning.light, 0.6));
       setColor(palette2.Alert, "errorFilledBg", setCssVarColor("palette-error-dark"));
       setColor(palette2.Alert, "infoFilledBg", setCssVarColor("palette-info-dark"));
       setColor(palette2.Alert, "successFilledBg", setCssVarColor("palette-success-dark"));
@@ -9145,10 +9026,10 @@ function createThemeWithVars(options = {}, ...args) {
       setColor(palette2.Alert, "infoFilledColor", silent(() => palette2.getContrastText(palette2.info.dark)));
       setColor(palette2.Alert, "successFilledColor", silent(() => palette2.getContrastText(palette2.success.dark)));
       setColor(palette2.Alert, "warningFilledColor", silent(() => palette2.getContrastText(palette2.warning.dark)));
-      setColor(palette2.Alert, "errorStandardBg", colorMix(private_safeDarken, palette2.error.light, 0.9));
-      setColor(palette2.Alert, "infoStandardBg", colorMix(private_safeDarken, palette2.info.light, 0.9));
-      setColor(palette2.Alert, "successStandardBg", colorMix(private_safeDarken, palette2.success.light, 0.9));
-      setColor(palette2.Alert, "warningStandardBg", colorMix(private_safeDarken, palette2.warning.light, 0.9));
+      setColor(palette2.Alert, "errorStandardBg", private_safeDarken(palette2.error.light, 0.9));
+      setColor(palette2.Alert, "infoStandardBg", private_safeDarken(palette2.info.light, 0.9));
+      setColor(palette2.Alert, "successStandardBg", private_safeDarken(palette2.success.light, 0.9));
+      setColor(palette2.Alert, "warningStandardBg", private_safeDarken(palette2.warning.light, 0.9));
       setColor(palette2.Alert, "errorIconColor", setCssVarColor("palette-error-main"));
       setColor(palette2.Alert, "infoIconColor", setCssVarColor("palette-info-main"));
       setColor(palette2.Alert, "successIconColor", setCssVarColor("palette-success-main"));
@@ -9165,35 +9046,35 @@ function createThemeWithVars(options = {}, ...args) {
       setColor(palette2.FilledInput, "bg", "rgba(255, 255, 255, 0.09)");
       setColor(palette2.FilledInput, "hoverBg", "rgba(255, 255, 255, 0.13)");
       setColor(palette2.FilledInput, "disabledBg", "rgba(255, 255, 255, 0.12)");
-      setColor(palette2.LinearProgress, "primaryBg", colorMix(private_safeDarken, palette2.primary.main, 0.5));
-      setColor(palette2.LinearProgress, "secondaryBg", colorMix(private_safeDarken, palette2.secondary.main, 0.5));
-      setColor(palette2.LinearProgress, "errorBg", colorMix(private_safeDarken, palette2.error.main, 0.5));
-      setColor(palette2.LinearProgress, "infoBg", colorMix(private_safeDarken, palette2.info.main, 0.5));
-      setColor(palette2.LinearProgress, "successBg", colorMix(private_safeDarken, palette2.success.main, 0.5));
-      setColor(palette2.LinearProgress, "warningBg", colorMix(private_safeDarken, palette2.warning.main, 0.5));
-      setColor(palette2.Skeleton, "bg", colorSpace ? colorMix(private_safeAlpha, palette2.text.primary, 0.13) : `rgba(${setCssVarColor("palette-text-primaryChannel")} / 0.13)`);
-      setColor(palette2.Slider, "primaryTrack", colorMix(private_safeDarken, palette2.primary.main, 0.5));
-      setColor(palette2.Slider, "secondaryTrack", colorMix(private_safeDarken, palette2.secondary.main, 0.5));
-      setColor(palette2.Slider, "errorTrack", colorMix(private_safeDarken, palette2.error.main, 0.5));
-      setColor(palette2.Slider, "infoTrack", colorMix(private_safeDarken, palette2.info.main, 0.5));
-      setColor(palette2.Slider, "successTrack", colorMix(private_safeDarken, palette2.success.main, 0.5));
-      setColor(palette2.Slider, "warningTrack", colorMix(private_safeDarken, palette2.warning.main, 0.5));
-      const snackbarContentBackground = colorSpace ? colorMix(private_safeLighten, palette2.background.default, 0.985) : private_safeEmphasize(palette2.background.default, 0.98);
+      setColor(palette2.LinearProgress, "primaryBg", private_safeDarken(palette2.primary.main, 0.5));
+      setColor(palette2.LinearProgress, "secondaryBg", private_safeDarken(palette2.secondary.main, 0.5));
+      setColor(palette2.LinearProgress, "errorBg", private_safeDarken(palette2.error.main, 0.5));
+      setColor(palette2.LinearProgress, "infoBg", private_safeDarken(palette2.info.main, 0.5));
+      setColor(palette2.LinearProgress, "successBg", private_safeDarken(palette2.success.main, 0.5));
+      setColor(palette2.LinearProgress, "warningBg", private_safeDarken(palette2.warning.main, 0.5));
+      setColor(palette2.Skeleton, "bg", `rgba(${setCssVarColor("palette-text-primaryChannel")} / 0.13)`);
+      setColor(palette2.Slider, "primaryTrack", private_safeDarken(palette2.primary.main, 0.5));
+      setColor(palette2.Slider, "secondaryTrack", private_safeDarken(palette2.secondary.main, 0.5));
+      setColor(palette2.Slider, "errorTrack", private_safeDarken(palette2.error.main, 0.5));
+      setColor(palette2.Slider, "infoTrack", private_safeDarken(palette2.info.main, 0.5));
+      setColor(palette2.Slider, "successTrack", private_safeDarken(palette2.success.main, 0.5));
+      setColor(palette2.Slider, "warningTrack", private_safeDarken(palette2.warning.main, 0.5));
+      const snackbarContentBackground = private_safeEmphasize(palette2.background.default, 0.98);
       setColor(palette2.SnackbarContent, "bg", snackbarContentBackground);
-      setColor(palette2.SnackbarContent, "color", silent(() => colorSpace ? light.text.primary : palette2.getContrastText(snackbarContentBackground)));
+      setColor(palette2.SnackbarContent, "color", silent(() => palette2.getContrastText(snackbarContentBackground)));
       setColor(palette2.SpeedDialAction, "fabHoverBg", private_safeEmphasize(palette2.background.paper, 0.15));
       setColor(palette2.StepConnector, "border", setCssVarColor("palette-grey-600"));
       setColor(palette2.StepContent, "border", setCssVarColor("palette-grey-600"));
       setColor(palette2.Switch, "defaultColor", setCssVarColor("palette-grey-300"));
       setColor(palette2.Switch, "defaultDisabledColor", setCssVarColor("palette-grey-600"));
-      setColor(palette2.Switch, "primaryDisabledColor", colorMix(private_safeDarken, palette2.primary.main, 0.55));
-      setColor(palette2.Switch, "secondaryDisabledColor", colorMix(private_safeDarken, palette2.secondary.main, 0.55));
-      setColor(palette2.Switch, "errorDisabledColor", colorMix(private_safeDarken, palette2.error.main, 0.55));
-      setColor(palette2.Switch, "infoDisabledColor", colorMix(private_safeDarken, palette2.info.main, 0.55));
-      setColor(palette2.Switch, "successDisabledColor", colorMix(private_safeDarken, palette2.success.main, 0.55));
-      setColor(palette2.Switch, "warningDisabledColor", colorMix(private_safeDarken, palette2.warning.main, 0.55));
-      setColor(palette2.TableCell, "border", colorMix(private_safeDarken, colorMix(private_safeAlpha, palette2.divider, 1), 0.68));
-      setColor(palette2.Tooltip, "bg", colorMix(private_safeAlpha, palette2.grey[700], 0.92));
+      setColor(palette2.Switch, "primaryDisabledColor", private_safeDarken(palette2.primary.main, 0.55));
+      setColor(palette2.Switch, "secondaryDisabledColor", private_safeDarken(palette2.secondary.main, 0.55));
+      setColor(palette2.Switch, "errorDisabledColor", private_safeDarken(palette2.error.main, 0.55));
+      setColor(palette2.Switch, "infoDisabledColor", private_safeDarken(palette2.info.main, 0.55));
+      setColor(palette2.Switch, "successDisabledColor", private_safeDarken(palette2.success.main, 0.55));
+      setColor(palette2.Switch, "warningDisabledColor", private_safeDarken(palette2.warning.main, 0.55));
+      setColor(palette2.TableCell, "border", private_safeDarken(private_safeAlpha(palette2.divider, 1), 0.68));
+      setColor(palette2.Tooltip, "bg", private_safeAlpha(palette2.grey[700], 0.92));
     }
     setColorChannel(palette2.background, "default");
     setColorChannel(palette2.background, "paper");
@@ -9235,8 +9116,7 @@ function createThemeWithVars(options = {}, ...args) {
     prefix: cssVarPrefix,
     disableCssColorScheme,
     shouldSkipGeneratingVar: shouldSkipGeneratingVar2,
-    getSelector: createGetSelector_default(theme),
-    enableContrastVars: nativeColor
+    getSelector: createGetSelector_default(theme)
   };
   const {
     vars,
@@ -9293,7 +9173,7 @@ function createTheme2(options = {}, ...args) {
       light: true
     } : void 0,
     defaultColorScheme: initialDefaultColorScheme = palette2 == null ? void 0 : palette2.mode,
-    ...other
+    ...rest
   } = options;
   const defaultColorSchemeInput = initialDefaultColorScheme || "light";
   const defaultScheme = initialColorSchemes == null ? void 0 : initialColorSchemes[defaultColorSchemeInput];
@@ -9348,7 +9228,7 @@ function createTheme2(options = {}, ...args) {
     colorSchemesInput.light = true;
   }
   return createThemeWithVars({
-    ...other,
+    ...rest,
     colorSchemes: colorSchemesInput,
     defaultColorScheme: defaultColorSchemeInput,
     ...typeof cssVariables !== "boolean" && cssVariables
@@ -9380,17 +9260,21 @@ var styled4 = createStyled3({
 });
 var styled_default2 = styled4;
 
+// node_modules/@mui/material/esm/zero-styled/index.js
+var React30 = __toESM(require_react(), 1);
+
 // node_modules/@mui/material/esm/styles/useTheme.js
-var React24 = __toESM(require_react(), 1);
+var React28 = __toESM(require_react(), 1);
 function useTheme5() {
   const theme = useTheme_default(defaultTheme_default);
   if (true) {
-    React24.useDebugValue(theme);
+    React28.useDebugValue(theme);
   }
   return theme[identifier_default] || theme;
 }
 
 // node_modules/@mui/material/esm/GlobalStyles/GlobalStyles.js
+var React29 = __toESM(require_react(), 1);
 var import_prop_types19 = __toESM(require_prop_types(), 1);
 var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 function GlobalStyles3(props) {
@@ -9429,7 +9313,7 @@ function globalCss(styles2) {
 }
 
 // node_modules/@mui/material/esm/DefaultPropsProvider/DefaultPropsProvider.js
-var React25 = __toESM(require_react(), 1);
+var React31 = __toESM(require_react(), 1);
 var import_prop_types20 = __toESM(require_prop_types(), 1);
 var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 function DefaultPropsProvider2(props) {
@@ -9466,13 +9350,13 @@ function chainPropTypes(propType1, propType2) {
 }
 
 // node_modules/@mui/utils/esm/useEventCallback/useEventCallback.js
-var React26 = __toESM(require_react(), 1);
+var React32 = __toESM(require_react(), 1);
 function useEventCallback(fn) {
-  const ref = React26.useRef(fn);
+  const ref = React32.useRef(fn);
   useEnhancedEffect_default(() => {
     ref.current = fn;
   });
-  return React26.useRef((...args) => (
+  return React32.useRef((...args) => (
     // @ts-expect-error hide `this`
     (0, ref.current)(...args)
   )).current;
@@ -9494,7 +9378,7 @@ var inputBaseClasses = generateUtilityClasses("MuiInputBase", ["root", "formCont
 var inputBaseClasses_default = inputBaseClasses;
 
 // node_modules/@mui/material/esm/InputBase/InputBase.js
-var React31 = __toESM(require_react(), 1);
+var React37 = __toESM(require_react(), 1);
 var import_prop_types23 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/utils/esm/elementTypeAcceptingRef/elementTypeAcceptingRef.js
@@ -9526,14 +9410,8 @@ function elementTypeAcceptingRef(props, propName, componentName, location, propF
 }
 var elementTypeAcceptingRef_default = chainPropTypes(import_prop_types21.default.elementType, elementTypeAcceptingRef);
 
-// node_modules/@mui/utils/esm/isHostComponent/isHostComponent.js
-function isHostComponent(element) {
-  return typeof element === "string";
-}
-var isHostComponent_default = isHostComponent;
-
 // node_modules/@mui/material/esm/TextareaAutosize/TextareaAutosize.js
-var React28 = __toESM(require_react(), 1);
+var React34 = __toESM(require_react(), 1);
 var import_prop_types22 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/utils/esm/debounce/debounce.js
@@ -9553,10 +9431,10 @@ function debounce(func, wait = 166) {
 }
 
 // node_modules/@mui/utils/esm/useForkRef/useForkRef.js
-var React27 = __toESM(require_react(), 1);
+var React33 = __toESM(require_react(), 1);
 function useForkRef(...refs) {
-  const cleanupRef = React27.useRef(void 0);
-  const refEffect = React27.useCallback((instance) => {
+  const cleanupRef = React33.useRef(void 0);
+  const refEffect = React33.useCallback((instance) => {
     const cleanups = refs.map((ref) => {
       if (ref == null) {
         return null;
@@ -9577,7 +9455,7 @@ function useForkRef(...refs) {
       cleanups.forEach((refCleanup) => refCleanup == null ? void 0 : refCleanup());
     };
   }, refs);
-  return React27.useMemo(() => {
+  return React33.useMemo(() => {
     if (refs.every((ref) => ref == null)) {
       return null;
     }
@@ -9633,7 +9511,7 @@ function isObjectEmpty3(object) {
 function isEmpty2(obj) {
   return isObjectEmpty3(obj) || obj.outerHeightStyle === 0 && !obj.overflowing;
 }
-var TextareaAutosize = React28.forwardRef(function TextareaAutosize2(props, forwardedRef) {
+var TextareaAutosize = React34.forwardRef(function TextareaAutosize2(props, forwardedRef) {
   const {
     onChange,
     maxRows,
@@ -9644,12 +9522,12 @@ var TextareaAutosize = React28.forwardRef(function TextareaAutosize2(props, forw
   } = props;
   const {
     current: isControlled
-  } = React28.useRef(value != null);
-  const textareaRef = React28.useRef(null);
+  } = React34.useRef(value != null);
+  const textareaRef = React34.useRef(null);
   const handleRef = useForkRef(forwardedRef, textareaRef);
-  const heightRef = React28.useRef(null);
-  const hiddenTextareaRef = React28.useRef(null);
-  const calculateTextareaStyles = React28.useCallback(() => {
+  const heightRef = React34.useRef(null);
+  const hiddenTextareaRef = React34.useRef(null);
+  const calculateTextareaStyles = React34.useCallback(() => {
     const textarea = textareaRef.current;
     const hiddenTextarea = hiddenTextareaRef.current;
     if (!textarea || !hiddenTextarea) {
@@ -9698,7 +9576,7 @@ var TextareaAutosize = React28.forwardRef(function TextareaAutosize2(props, forw
     const outerHeightStyle = textareaStyles.outerHeightStyle;
     return heightRef.current != null && heightRef.current !== outerHeightStyle;
   });
-  const syncHeight = React28.useCallback(() => {
+  const syncHeight = React34.useCallback(() => {
     const textarea = textareaRef.current;
     const textareaStyles = calculateTextareaStyles();
     if (!textarea || !textareaStyles || isEmpty2(textareaStyles)) {
@@ -9711,7 +9589,7 @@ var TextareaAutosize = React28.forwardRef(function TextareaAutosize2(props, forw
     }
     textarea.style.overflow = textareaStyles.overflowing ? "hidden" : "";
   }, [calculateTextareaStyles]);
-  const frameRef = React28.useRef(-1);
+  const frameRef = React34.useRef(-1);
   useEnhancedEffect_default(() => {
     const debouncedHandleResize = debounce(syncHeight);
     const textarea = textareaRef == null ? void 0 : textareaRef.current;
@@ -9761,7 +9639,7 @@ var TextareaAutosize = React28.forwardRef(function TextareaAutosize2(props, forw
       onChange(event);
     }
   };
-  return (0, import_jsx_runtime18.jsxs)(React28.Fragment, {
+  return (0, import_jsx_runtime18.jsxs)(React34.Fragment, {
     children: [(0, import_jsx_runtime18.jsx)("textarea", {
       value,
       onChange: handleChange,
@@ -9821,6 +9699,12 @@ true ? TextareaAutosize.propTypes = {
 } : void 0;
 var TextareaAutosize_default = TextareaAutosize;
 
+// node_modules/@mui/material/esm/utils/isHostComponent.js
+function isHostComponent(element) {
+  return typeof element === "string";
+}
+var isHostComponent_default = isHostComponent;
+
 // node_modules/@mui/material/esm/FormControl/formControlState.js
 function formControlState({
   props,
@@ -9839,17 +9723,17 @@ function formControlState({
 }
 
 // node_modules/@mui/material/esm/FormControl/FormControlContext.js
-var React29 = __toESM(require_react(), 1);
-var FormControlContext = React29.createContext(void 0);
+var React35 = __toESM(require_react(), 1);
+var FormControlContext = React35.createContext(void 0);
 if (true) {
   FormControlContext.displayName = "FormControlContext";
 }
 var FormControlContext_default = FormControlContext;
 
 // node_modules/@mui/material/esm/FormControl/useFormControl.js
-var React30 = __toESM(require_react(), 1);
+var React36 = __toESM(require_react(), 1);
 function useFormControl() {
-  return React30.useContext(FormControlContext_default);
+  return React36.useContext(FormControlContext_default);
 }
 
 // node_modules/@mui/material/esm/utils/useForkRef.js
@@ -10083,7 +9967,7 @@ var InputGlobalStyles = globalCss({
     }
   }
 });
-var InputBase = React31.forwardRef(function InputBase2(inProps, ref) {
+var InputBase = React37.forwardRef(function InputBase2(inProps, ref) {
   const props = useDefaultProps2({
     props: inProps,
     name: "MuiInputBase"
@@ -10132,9 +10016,9 @@ var InputBase = React31.forwardRef(function InputBase2(inProps, ref) {
   const value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
   const {
     current: isControlled
-  } = React31.useRef(value != null);
-  const inputRef = React31.useRef();
-  const handleInputRefWarning = React31.useCallback((instance) => {
+  } = React37.useRef(value != null);
+  const inputRef = React37.useRef();
+  const handleInputRefWarning = React37.useCallback((instance) => {
     if (true) {
       if (instance && instance.nodeName !== "INPUT" && !instance.focus) {
         console.error(["MUI: You have provided a `inputComponent` to the input component", "that does not correctly handle the `ref` prop.", "Make sure the `ref` prop is called with a HTMLInputElement."].join("\n"));
@@ -10142,10 +10026,10 @@ var InputBase = React31.forwardRef(function InputBase2(inProps, ref) {
     }
   }, []);
   const handleInputRef = useForkRef_default(inputRef, inputRefProp, inputPropsProp.ref, handleInputRefWarning);
-  const [focused, setFocused] = React31.useState(false);
+  const [focused, setFocused] = React37.useState(false);
   const muiFormControl = useFormControl();
   if (true) {
-    React31.useEffect(() => {
+    React37.useEffect(() => {
       if (muiFormControl) {
         return muiFormControl.registerEffect();
       }
@@ -10158,7 +10042,7 @@ var InputBase = React31.forwardRef(function InputBase2(inProps, ref) {
     states: ["color", "disabled", "error", "hiddenLabel", "size", "required", "filled"]
   });
   fcs.focused = muiFormControl ? muiFormControl.focused : focused;
-  React31.useEffect(() => {
+  React37.useEffect(() => {
     if (!muiFormControl && disabled && focused) {
       setFocused(false);
       if (onBlur) {
@@ -10168,7 +10052,7 @@ var InputBase = React31.forwardRef(function InputBase2(inProps, ref) {
   }, [muiFormControl, disabled, focused, onBlur]);
   const onFilled = muiFormControl && muiFormControl.onFilled;
   const onEmpty = muiFormControl && muiFormControl.onEmpty;
-  const checkDirty = React31.useCallback((obj) => {
+  const checkDirty = React37.useCallback((obj) => {
     if (isFilled(obj)) {
       if (onFilled) {
         onFilled();
@@ -10227,7 +10111,7 @@ var InputBase = React31.forwardRef(function InputBase2(inProps, ref) {
       onChange(event, ...args);
     }
   };
-  React31.useEffect(() => {
+  React37.useEffect(() => {
     checkDirty(inputRef.current);
   }, []);
   const handleClick = (event) => {
@@ -10268,7 +10152,7 @@ var InputBase = React31.forwardRef(function InputBase2(inProps, ref) {
       value: "x"
     });
   };
-  React31.useEffect(() => {
+  React37.useEffect(() => {
     if (muiFormControl) {
       muiFormControl.setAdornedStart(Boolean(startAdornment));
     }
@@ -10296,7 +10180,7 @@ var InputBase = React31.forwardRef(function InputBase2(inProps, ref) {
     ...inputProps,
     ...slotProps.input ?? componentsProps.input
   };
-  return (0, import_jsx_runtime19.jsxs)(React31.Fragment, {
+  return (0, import_jsx_runtime19.jsxs)(React37.Fragment, {
     children: [!disableInjectingGlobalStyles && typeof InputGlobalStyles === "function" && // For Emotion/Styled-components, InputGlobalStyles will be a function
     // For Pigment CSS, this has no effect because the InputGlobalStyles will be null.
     (_InputGlobalStyles || (_InputGlobalStyles = (0, import_jsx_runtime19.jsx)(InputGlobalStyles, {}))), (0, import_jsx_runtime19.jsxs)(Root, {
@@ -10612,7 +10496,7 @@ function setRef(ref, value) {
 }
 
 // node_modules/@mui/utils/esm/useControlled/useControlled.js
-var React32 = __toESM(require_react(), 1);
+var React38 = __toESM(require_react(), 1);
 function useControlled(props) {
   const {
     controlled,
@@ -10622,25 +10506,25 @@ function useControlled(props) {
   } = props;
   const {
     current: isControlled
-  } = React32.useRef(controlled !== void 0);
-  const [valueState, setValue] = React32.useState(defaultProp);
+  } = React38.useRef(controlled !== void 0);
+  const [valueState, setValue] = React38.useState(defaultProp);
   const value = isControlled ? controlled : valueState;
   if (true) {
-    React32.useEffect(() => {
+    React38.useEffect(() => {
       if (isControlled !== (controlled !== void 0)) {
         console.error([`MUI: A component is changing the ${isControlled ? "" : "un"}controlled ${state} state of ${name} to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
       }
     }, [state, name, controlled]);
     const {
       current: defaultValue
-    } = React32.useRef(defaultProp);
-    React32.useEffect(() => {
-      if (!isControlled && JSON.stringify(defaultProp) !== JSON.stringify(defaultValue)) {
+    } = React38.useRef(defaultProp);
+    React38.useEffect(() => {
+      if (!isControlled && !Object.is(defaultValue, defaultProp)) {
         console.error([`MUI: A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
       }
     }, [JSON.stringify(defaultProp)]);
   }
-  const setValueIfUncontrolled = React32.useCallback((newValue) => {
+  const setValueIfUncontrolled = React38.useCallback((newValue) => {
     if (!isControlled) {
       setValue(newValue);
     }
@@ -10658,9 +10542,15 @@ var outlinedInputClasses = {
 };
 var outlinedInputClasses_default = outlinedInputClasses;
 
+// node_modules/@mui/utils/esm/isHostComponent/isHostComponent.js
+function isHostComponent2(element) {
+  return typeof element === "string";
+}
+var isHostComponent_default2 = isHostComponent2;
+
 // node_modules/@mui/utils/esm/appendOwnerState/appendOwnerState.js
 function appendOwnerState(elementType, otherProps, ownerState) {
-  if (elementType === void 0 || isHostComponent_default(elementType)) {
+  if (elementType === void 0 || isHostComponent_default2(elementType)) {
     return otherProps;
   }
   return {
@@ -10873,7 +10763,7 @@ var integerPropType = false ? validatorNoop : validator;
 var integerPropType_default = integerPropType;
 
 // node_modules/@mui/material/esm/Paper/Paper.js
-var React33 = __toESM(require_react(), 1);
+var React39 = __toESM(require_react(), 1);
 var import_prop_types24 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/material/esm/Paper/paperClasses.js
@@ -10935,7 +10825,7 @@ var PaperRoot = styled_default2("div", {
     }
   }]
 })));
-var Paper = React33.forwardRef(function Paper2(inProps, ref) {
+var Paper = React39.forwardRef(function Paper2(inProps, ref) {
   var _a;
   const props = useDefaultProps2({
     props: inProps,
@@ -11041,11 +10931,14 @@ true ? Paper.propTypes = {
 } : void 0;
 var Paper_default = Paper;
 
+// node_modules/@mui/material/esm/internal/svg-icons/ArrowDropDown.js
+var React42 = __toESM(require_react(), 1);
+
 // node_modules/@mui/material/esm/utils/createSvgIcon.js
-var React35 = __toESM(require_react(), 1);
+var React41 = __toESM(require_react(), 1);
 
 // node_modules/@mui/material/esm/SvgIcon/SvgIcon.js
-var React34 = __toESM(require_react(), 1);
+var React40 = __toESM(require_react(), 1);
 var import_prop_types25 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/material/esm/SvgIcon/svgIconClasses.js
@@ -11169,7 +11062,7 @@ var SvgIconRoot = styled_default2("svg", {
     ]
   };
 }));
-var SvgIcon = React34.forwardRef(function SvgIcon2(inProps, ref) {
+var SvgIcon = React40.forwardRef(function SvgIcon2(inProps, ref) {
   const props = useDefaultProps2({
     props: inProps,
     name: "MuiSvgIcon"
@@ -11186,7 +11079,7 @@ var SvgIcon = React34.forwardRef(function SvgIcon2(inProps, ref) {
     viewBox = "0 0 24 24",
     ...other
   } = props;
-  const hasSvgAsChild = React34.isValidElement(children2) && children2.type === "svg";
+  const hasSvgAsChild = React40.isValidElement(children2) && children2.type === "svg";
   const ownerState = {
     ...props,
     color: color2,
@@ -11309,7 +11202,7 @@ function createSvgIcon(path, displayName) {
     Component.displayName = `${displayName}Icon`;
   }
   Component.muiName = SvgIcon_default.muiName;
-  return React35.memo(React35.forwardRef(Component));
+  return React41.memo(React41.forwardRef(Component));
 }
 
 // node_modules/@mui/material/esm/internal/svg-icons/ArrowDropDown.js
@@ -11459,10 +11352,10 @@ function mergeSlotProps2(externalSlotProps, defaultSlotProps) {
 }
 
 // node_modules/@mui/utils/esm/getReactElementRef/getReactElementRef.js
-var React36 = __toESM(require_react(), 1);
+var React43 = __toESM(require_react(), 1);
 function getReactElementRef(element) {
   var _a;
-  if (parseInt(React36.version, 10) >= 19) {
+  if (parseInt(React43.version, 10) >= 19) {
     return ((_a = element == null ? void 0 : element.props) == null ? void 0 : _a.ref) || null;
   }
   return (element == null ? void 0 : element.ref) || null;
@@ -11512,20 +11405,20 @@ function useSlotProps(parameters) {
 var useSlotProps_default = useSlotProps;
 
 // node_modules/@mui/material/esm/Portal/Portal.js
-var React37 = __toESM(require_react(), 1);
+var React44 = __toESM(require_react(), 1);
 var ReactDOM = __toESM(require_react_dom(), 1);
 var import_prop_types26 = __toESM(require_prop_types(), 1);
 function getContainer(container) {
   return typeof container === "function" ? container() : container;
 }
-var Portal = React37.forwardRef(function Portal2(props, forwardedRef) {
+var Portal = React44.forwardRef(function Portal2(props, forwardedRef) {
   const {
     children: children2,
     container,
     disablePortal = false
   } = props;
-  const [mountNode, setMountNode] = React37.useState(null);
-  const handleRef = useForkRef(React37.isValidElement(children2) ? getReactElementRef(children2) : null, forwardedRef);
+  const [mountNode, setMountNode] = React44.useState(null);
+  const handleRef = useForkRef(React44.isValidElement(children2) ? getReactElementRef(children2) : null, forwardedRef);
   useEnhancedEffect_default(() => {
     if (!disablePortal) {
       setMountNode(getContainer(container) || document.body);
@@ -11541,11 +11434,11 @@ var Portal = React37.forwardRef(function Portal2(props, forwardedRef) {
     return void 0;
   }, [forwardedRef, mountNode, disablePortal]);
   if (disablePortal) {
-    if (React37.isValidElement(children2)) {
+    if (React44.isValidElement(children2)) {
       const newProps = {
         ref: handleRef
       };
-      return React37.cloneElement(children2, newProps);
+      return React44.cloneElement(children2, newProps);
     }
     return children2;
   }
@@ -11583,10 +11476,10 @@ if (true) {
 var Portal_default = Portal;
 
 // node_modules/@mui/utils/esm/useLazyRef/useLazyRef.js
-var React38 = __toESM(require_react(), 1);
+var React45 = __toESM(require_react(), 1);
 var UNINITIALIZED = {};
 function useLazyRef(init, initArg) {
-  const ref = React38.useRef(UNINITIALIZED);
+  const ref = React45.useRef(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = init(initArg);
   }
@@ -11594,10 +11487,10 @@ function useLazyRef(init, initArg) {
 }
 
 // node_modules/@mui/utils/esm/useOnMount/useOnMount.js
-var React39 = __toESM(require_react(), 1);
+var React46 = __toESM(require_react(), 1);
 var EMPTY = [];
 function useOnMount(fn) {
-  React39.useEffect(fn, EMPTY);
+  React46.useEffect(fn, EMPTY);
 }
 
 // node_modules/@mui/utils/esm/useTimeout/useTimeout.js
@@ -11635,12 +11528,12 @@ function useTimeout() {
 }
 
 // node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-function _objectWithoutPropertiesLoose(r2, e) {
-  if (null == r2) return {};
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
   var t = {};
-  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
     if (-1 !== e.indexOf(n)) continue;
-    t[n] = r2[n];
+    t[n] = r[n];
   }
   return t;
 }
@@ -11778,7 +11671,7 @@ var defaultProps = {
     return child;
   }
 };
-var TransitionGroup = (function(_React$Component) {
+var TransitionGroup = function(_React$Component) {
   _inheritsLoose(TransitionGroup2, _React$Component);
   function TransitionGroup2(props, context) {
     var _this;
@@ -11845,7 +11738,7 @@ var TransitionGroup = (function(_React$Component) {
     }, import_react10.default.createElement(Component, props, children2));
   };
   return TransitionGroup2;
-})(import_react10.default.Component);
+}(import_react10.default.Component);
 TransitionGroup.propTypes = true ? {
   /**
    * `<TransitionGroup>` renders a `<div>` by default. You can change this
@@ -11976,7 +11869,7 @@ var EXITED = "exited";
 var ENTERING = "entering";
 var ENTERED = "entered";
 var EXITING = "exiting";
-var Transition = (function(_React$Component) {
+var Transition = function(_React$Component) {
   _inheritsLoose(Transition2, _React$Component);
   function Transition2(props, context) {
     var _this;
@@ -12184,7 +12077,7 @@ var Transition = (function(_React$Component) {
     );
   };
   return Transition2;
-})(import_react11.default.Component);
+}(import_react11.default.Component);
 Transition.contextType = TransitionGroupContext_default;
 Transition.propTypes = true ? {
   /**
@@ -12390,7 +12283,7 @@ var removeClass2 = function removeClass3(node2, classes) {
     return removeClass(node2, c);
   });
 };
-var CSSTransition = (function(_React$Component) {
+var CSSTransition = function(_React$Component) {
   _inheritsLoose(CSSTransition2, _React$Component);
   function CSSTransition2() {
     var _this;
@@ -12510,7 +12403,7 @@ var CSSTransition = (function(_React$Component) {
     }));
   };
   return CSSTransition2;
-})(import_react12.default.Component);
+}(import_react12.default.Component);
 CSSTransition.defaultProps = {
   classNames: ""
 };
@@ -12643,7 +12536,7 @@ CSSTransition.propTypes = true ? _extends({}, Transition_default.propTypes, {
 var import_prop_types31 = __toESM(require_prop_types());
 var import_react13 = __toESM(require_react());
 var import_react_dom2 = __toESM(require_react_dom());
-var ReplaceTransition = (function(_React$Component) {
+var ReplaceTransition = function(_React$Component) {
   _inheritsLoose(ReplaceTransition2, _React$Component);
   function ReplaceTransition2() {
     var _this;
@@ -12722,7 +12615,7 @@ var ReplaceTransition = (function(_React$Component) {
     }));
   };
   return ReplaceTransition2;
-})(import_react13.default.Component);
+}(import_react13.default.Component);
 ReplaceTransition.propTypes = true ? {
   in: import_prop_types31.default.bool.isRequired,
   children: function children(props, propName) {
@@ -12794,7 +12687,7 @@ var enterRenders = (_enterRenders = {}, _enterRenders[modes.out] = function(_ref
     in: true
   })];
 }, _enterRenders);
-var SwitchTransition = (function(_React$Component) {
+var SwitchTransition = function(_React$Component) {
   _inheritsLoose(SwitchTransition2, _React$Component);
   function SwitchTransition2() {
     var _this;
@@ -12870,7 +12763,7 @@ var SwitchTransition = (function(_React$Component) {
     }, component);
   };
   return SwitchTransition2;
-})(import_react14.default.Component);
+}(import_react14.default.Component);
 SwitchTransition.propTypes = true ? {
   /**
    * Transition modes.
@@ -12891,7 +12784,6 @@ SwitchTransition.defaultProps = {
 
 export {
   require_prop_types,
-  clsx_default,
   composeClasses,
   useId,
   refType_default,
@@ -12903,6 +12795,7 @@ export {
   generateUtilityClass,
   generateUtilityClasses,
   useEnhancedEffect_default,
+  alpha,
   exactProp,
   useRtl,
   useTheme5 as useTheme,
@@ -12912,11 +12805,11 @@ export {
   useDefaultProps2 as useDefaultProps,
   chainPropTypes,
   elementTypeAcceptingRef_default,
-  isHostComponent_default,
   useForkRef,
   useEventCallback_default,
   ownerDocument,
   ownerWindow,
+  isHostComponent_default,
   formControlState,
   FormControlContext_default,
   useFormControl,
@@ -13010,7 +12903,7 @@ react-is/cjs/react-is.development.js:
 
 @mui/styled-engine/esm/index.js:
   (**
-   * @mui/styled-engine v7.3.6
+   * @mui/styled-engine v7.2.0
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -13019,7 +12912,7 @@ react-is/cjs/react-is.development.js:
 
 @mui/private-theming/esm/index.js:
   (**
-   * @mui/private-theming v7.3.6
+   * @mui/private-theming v7.2.0
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -13028,11 +12921,11 @@ react-is/cjs/react-is.development.js:
 
 @mui/system/esm/index.js:
   (**
-   * @mui/system v7.3.6
+   * @mui/system v7.2.0
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
    *)
 */
-//# sourceMappingURL=chunk-5L3UUVNM.js.map
+//# sourceMappingURL=chunk-JH6FUK2O.js.map

@@ -4,9 +4,9 @@ import {
   Paper_default,
   Portal_default,
   TransitionGroup_default,
+  alpha,
   capitalize_default,
   chainPropTypes,
-  clsx_default,
   composeClasses,
   createSimplePaletteValueFilter,
   createSvgIcon,
@@ -42,18 +42,21 @@ import {
   useSlot,
   useSlotProps_default,
   useTimeout
-} from "./chunk-5L3UUVNM.js";
-import "./chunk-3EA7UPNO.js";
+} from "./chunk-JH6FUK2O.js";
+import {
+  clsx_default
+} from "./chunk-2KHBIA62.js";
+import "./chunk-XNLU4CTU.js";
 import {
   require_react
-} from "./chunk-7JEA3LLI.js";
+} from "./chunk-O2Q6JZ3H.js";
 import {
   __publicField,
   __toESM
 } from "./chunk-DC5AMYBS.js";
 
 // node_modules/@mui/material/esm/Autocomplete/Autocomplete.js
-var React13 = __toESM(require_react(), 1);
+var React15 = __toESM(require_react(), 1);
 var import_prop_types10 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/material/esm/useAutocomplete/useAutocomplete.js
@@ -61,23 +64,16 @@ var React2 = __toESM(require_react(), 1);
 
 // node_modules/@mui/utils/esm/usePreviousProps/usePreviousProps.js
 var React = __toESM(require_react(), 1);
-function usePreviousProps(value) {
+var usePreviousProps = (value) => {
   const ref = React.useRef({});
   React.useEffect(() => {
     ref.current = value;
   });
   return ref.current;
-}
+};
 var usePreviousProps_default = usePreviousProps;
 
 // node_modules/@mui/material/esm/useAutocomplete/useAutocomplete.js
-function areArraysSame({
-  array1,
-  array2,
-  parser = (value) => value
-}) {
-  return array1 && array2 && array1.length === array2.length && array1.every((prevOption, index) => parser(prevOption) === parser(array2[index]));
-}
 function stripDiacritics(string) {
   return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -407,22 +403,13 @@ function useAutocomplete(props) {
       }
     }
   });
-  const filteredOptionsChanged = !areArraysSame({
-    array1: previousProps.filteredOptions,
-    array2: filteredOptions,
-    parser: getOptionLabel
-  });
   const getPreviousHighlightedOptionIndex = () => {
     const isSameValue = (value1, value2) => {
       const label1 = value1 ? getOptionLabel(value1) : "";
       const label2 = value2 ? getOptionLabel(value2) : "";
       return label1 === label2;
     };
-    if (highlightedIndexRef.current !== -1 && !areArraysSame({
-      array1: previousProps.filteredOptions,
-      array2: filteredOptions,
-      parser: getOptionLabel
-    }) && previousProps.inputValue === inputValue && (multiple ? value.length === previousProps.value.length && previousProps.value.every((val, i) => getOptionLabel(value[i]) === getOptionLabel(val)) : isSameValue(previousProps.value, value))) {
+    if (highlightedIndexRef.current !== -1 && previousProps.filteredOptions && previousProps.filteredOptions.length !== filteredOptions.length && previousProps.inputValue === inputValue && (multiple ? value.length === previousProps.value.length && previousProps.value.every((val, i) => getOptionLabel(value[i]) === getOptionLabel(val)) : isSameValue(previousProps.value, value))) {
       const previousHighlightedOption = previousProps.filteredOptions[highlightedIndexRef.current];
       if (previousHighlightedOption) {
         return filteredOptions.findIndex((option) => {
@@ -483,6 +470,7 @@ function useAutocomplete(props) {
     // Don't sync the highlighted index with the value when multiple
     // eslint-disable-next-line react-hooks/exhaustive-deps
     multiple ? false : value,
+    filterSelectedOptions,
     changeHighlightedIndex,
     setHighlightedIndex,
     popupOpen,
@@ -508,10 +496,8 @@ function useAutocomplete(props) {
     }, [componentName]);
   }
   React2.useEffect(() => {
-    if (filteredOptionsChanged || popupOpen) {
-      syncHighlightedIndex();
-    }
-  }, [syncHighlightedIndex, filteredOptionsChanged, popupOpen]);
+    syncHighlightedIndex();
+  }, [syncHighlightedIndex]);
   const handleOpen = (event) => {
     if (open) {
       return;
@@ -702,8 +688,7 @@ function useAutocomplete(props) {
           handleOpen(event);
           break;
         case "ArrowLeft":
-          if (!multiple && renderValue && value != null) {
-            setFocusedItem(0);
+          if (!multiple && renderValue) {
             focusItem(0);
           } else {
             handleFocusItem(event, "previous");
@@ -711,7 +696,6 @@ function useAutocomplete(props) {
           break;
         case "ArrowRight":
           if (!multiple && renderValue) {
-            setFocusedItem(-1);
             focusItem(-1);
           } else {
             handleFocusItem(event, "next");
@@ -758,7 +742,6 @@ function useAutocomplete(props) {
           }
           if (!multiple && renderValue && !readOnly) {
             setValueState(null);
-            setFocusedItem(-1);
             focusItem(-1);
           }
           break;
@@ -773,7 +756,6 @@ function useAutocomplete(props) {
           }
           if (!multiple && renderValue && !readOnly) {
             setValueState(null);
-            setFocusedItem(-1);
             focusItem(-1);
           }
           break;
@@ -783,10 +765,6 @@ function useAutocomplete(props) {
   };
   const handleFocus = (event) => {
     setFocused(true);
-    if (focusedItem !== -1) {
-      setFocusedItem(-1);
-      focusItem(-1);
-    }
     if (openOnFocus && !ignoreFocus.current) {
       handleOpen(event);
     }
@@ -3235,7 +3213,7 @@ function isFocusVisible(element) {
   try {
     return element.matches(":focus-visible");
   } catch (error) {
-    if (!window.navigator.userAgent.includes("jsdom")) {
+    if (!/jsdom/.test(window.navigator.userAgent)) {
       console.warn(["MUI: The `:focus-visible` pseudo class is not supported in this browser.", "Some components rely on this feature to work properly."].join("\n"));
     }
   }
@@ -3901,8 +3879,7 @@ var ButtonBase = React9.forwardRef(function ButtonBase2(inProps, ref) {
   }
   const buttonProps = {};
   if (ComponentProp === "button") {
-    const hasFormAttributes = !!other.formAction;
-    buttonProps.type = type === void 0 && !hasFormAttributes ? "button" : type;
+    buttonProps.type = type === void 0 ? "button" : type;
     buttonProps.disabled = disabled;
   } else {
     if (!other.href && !other.to) {
@@ -4033,10 +4010,6 @@ true ? ButtonBase.propTypes = {
   /**
    * @ignore
    */
-  formAction: import_prop_types6.default.oneOfType([import_prop_types6.default.func, import_prop_types6.default.string]),
-  /**
-   * @ignore
-   */
   href: import_prop_types6.default.any,
   /**
    * The component used to render a link when the `href` prop is provided.
@@ -4137,7 +4110,7 @@ var import_prop_types7 = __toESM(require_prop_types(), 1);
 function getCircularProgressUtilityClass(slot) {
   return generateUtilityClass("MuiCircularProgress", slot);
 }
-var circularProgressClasses = generateUtilityClasses("MuiCircularProgress", ["root", "determinate", "indeterminate", "colorPrimary", "colorSecondary", "svg", "track", "circle", "circleDeterminate", "circleIndeterminate", "circleDisableShrink"]);
+var circularProgressClasses = generateUtilityClasses("MuiCircularProgress", ["root", "determinate", "indeterminate", "colorPrimary", "colorSecondary", "svg", "circle", "circleDeterminate", "circleIndeterminate", "circleDisableShrink"]);
 
 // node_modules/@mui/material/esm/CircularProgress/CircularProgress.js
 var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
@@ -4183,7 +4156,6 @@ var useUtilityClasses4 = (ownerState) => {
   const slots = {
     root: ["root", variant, `color${capitalize_default(color)}`],
     svg: ["svg"],
-    track: ["track"],
     circle: ["circle", `circle${capitalize_default(variant)}`, disableShrink && "circleDisableShrink"]
   };
   return composeClasses(slots, getCircularProgressUtilityClass, classes);
@@ -4271,15 +4243,6 @@ var CircularProgressCircle = styled_default("circle", {
     }
   }]
 })));
-var CircularProgressTrack = styled_default("circle", {
-  name: "MuiCircularProgress",
-  slot: "Track"
-})(memoTheme_default(({
-  theme
-}) => ({
-  stroke: "currentColor",
-  opacity: (theme.vars || theme).palette.action.activatedOpacity
-})));
 var CircularProgress = React10.forwardRef(function CircularProgress2(inProps, ref) {
   const props = useDefaultProps({
     props: inProps,
@@ -4289,7 +4252,6 @@ var CircularProgress = React10.forwardRef(function CircularProgress2(inProps, re
     className,
     color = "primary",
     disableShrink = false,
-    enableTrackSlot = false,
     size = 40,
     style,
     thickness = 3.6,
@@ -4304,8 +4266,7 @@ var CircularProgress = React10.forwardRef(function CircularProgress2(inProps, re
     size,
     thickness,
     value,
-    variant,
-    enableTrackSlot
+    variant
   };
   const classes = useUtilityClasses4(ownerState);
   const circleStyle = {};
@@ -4331,20 +4292,11 @@ var CircularProgress = React10.forwardRef(function CircularProgress2(inProps, re
     role: "progressbar",
     ...rootProps,
     ...other,
-    children: (0, import_jsx_runtime7.jsxs)(CircularProgressSVG, {
+    children: (0, import_jsx_runtime7.jsx)(CircularProgressSVG, {
       className: classes.svg,
       ownerState,
       viewBox: `${SIZE / 2} ${SIZE / 2} ${SIZE} ${SIZE}`,
-      children: [enableTrackSlot ? (0, import_jsx_runtime7.jsx)(CircularProgressTrack, {
-        className: classes.track,
-        ownerState,
-        cx: SIZE,
-        cy: SIZE,
-        r: (SIZE - thickness) / 2,
-        fill: "none",
-        strokeWidth: thickness,
-        "aria-hidden": "true"
-      }) : null, (0, import_jsx_runtime7.jsx)(CircularProgressCircle, {
+      children: (0, import_jsx_runtime7.jsx)(CircularProgressCircle, {
         className: classes.circle,
         style: circleStyle,
         ownerState,
@@ -4353,7 +4305,7 @@ var CircularProgress = React10.forwardRef(function CircularProgress2(inProps, re
         r: (SIZE - thickness) / 2,
         fill: "none",
         strokeWidth: thickness
-      })]
+      })
     })
   });
 });
@@ -4388,12 +4340,6 @@ true ? CircularProgress.propTypes = {
     }
     return null;
   }),
-  /**
-   * If `true`, a track circle slot is mounted to show a subtle background for the progress.
-   * The `size` and `thickness` apply to the track slot to be consistent with the progress circle.
-   * @default false
-   */
-  enableTrackSlot: import_prop_types7.default.bool,
   /**
    * The size of the component.
    * If using a number, the pixel unit is assumed.
@@ -4478,7 +4424,7 @@ var IconButtonRoot = styled_default(ButtonBase_default, {
   variants: [{
     props: (props) => !props.disableRipple,
     style: {
-      "--IconButton-hoverBg": theme.alpha((theme.vars || theme).palette.action.active, (theme.vars || theme).palette.action.hoverOpacity),
+      "--IconButton-hoverBg": theme.vars ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette.action.active, theme.palette.action.hoverOpacity),
       "&:hover": {
         backgroundColor: "var(--IconButton-hoverBg)",
         // Reset on touch devices, it doesn't add specificity
@@ -4540,7 +4486,7 @@ var IconButtonRoot = styled_default(ButtonBase_default, {
       color
     },
     style: {
-      "--IconButton-hoverBg": theme.alpha((theme.vars || theme).palette[color].main, (theme.vars || theme).palette.action.hoverOpacity)
+      "--IconButton-hoverBg": theme.vars ? `rgba(${(theme.vars || theme).palette[color].mainChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha((theme.vars || theme).palette[color].main, theme.palette.action.hoverOpacity)
     }
   })), {
     props: {
@@ -4734,10 +4680,11 @@ true ? IconButton.propTypes = {
 var IconButton_default = IconButton;
 
 // node_modules/@mui/material/esm/Chip/Chip.js
-var React12 = __toESM(require_react(), 1);
+var React13 = __toESM(require_react(), 1);
 var import_prop_types9 = __toESM(require_prop_types(), 1);
 
 // node_modules/@mui/material/esm/internal/svg-icons/Cancel.js
+var React12 = __toESM(require_react(), 1);
 var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var Cancel_default = createSvgIcon((0, import_jsx_runtime9.jsx)("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
@@ -4807,7 +4754,7 @@ var ChipRoot = styled_default("div", {
       [`& .${chipClasses_default.deleteIcon}`]: styles[`deleteIconColor${capitalize_default(color)}`]
     }, {
       [`& .${chipClasses_default.deleteIcon}`]: styles[`deleteIcon${capitalize_default(variant)}Color${capitalize_default(color)}`]
-    }, styles.root, styles[`size${capitalize_default(size)}`], styles[`color${capitalize_default(color)}`], clickable && styles.clickable, clickable && color !== "default" && styles[`clickableColor${capitalize_default(color)}`], onDelete && styles.deletable, onDelete && color !== "default" && styles[`deletableColor${capitalize_default(color)}`], styles[variant], styles[`${variant}${capitalize_default(color)}`]];
+    }, styles.root, styles[`size${capitalize_default(size)}`], styles[`color${capitalize_default(color)}`], clickable && styles.clickable, clickable && color !== "default" && styles[`clickableColor${capitalize_default(color)})`], onDelete && styles.deletable, onDelete && color !== "default" && styles[`deletableColor${capitalize_default(color)}`], styles[variant], styles[`${variant}${capitalize_default(color)}`]];
   }
 })(memoTheme_default(({
   theme
@@ -4871,12 +4818,12 @@ var ChipRoot = styled_default("div", {
     },
     [`& .${chipClasses_default.deleteIcon}`]: {
       WebkitTapHighlightColor: "transparent",
-      color: theme.alpha((theme.vars || theme).palette.text.primary, 0.26),
+      color: theme.vars ? `rgba(${theme.vars.palette.text.primaryChannel} / 0.26)` : alpha(theme.palette.text.primary, 0.26),
       fontSize: 22,
       cursor: "pointer",
       margin: "0 5px 0 -6px",
       "&:hover": {
-        color: theme.alpha((theme.vars || theme).palette.text.primary, 0.4)
+        color: theme.vars ? `rgba(${theme.vars.palette.text.primaryChannel} / 0.4)` : alpha(theme.palette.text.primary, 0.4)
       }
     },
     variants: [{
@@ -4905,7 +4852,7 @@ var ChipRoot = styled_default("div", {
           backgroundColor: (theme.vars || theme).palette[color].main,
           color: (theme.vars || theme).palette[color].contrastText,
           [`& .${chipClasses_default.deleteIcon}`]: {
-            color: theme.alpha((theme.vars || theme).palette[color].contrastText, 0.7),
+            color: theme.vars ? `rgba(${theme.vars.palette[color].contrastTextChannel} / 0.7)` : alpha(theme.palette[color].contrastText, 0.7),
             "&:hover, &:active": {
               color: (theme.vars || theme).palette[color].contrastText
             }
@@ -4932,7 +4879,7 @@ var ChipRoot = styled_default("div", {
       },
       style: {
         [`&.${chipClasses_default.focusVisible}`]: {
-          backgroundColor: theme.alpha((theme.vars || theme).palette.action.selected, `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.focusOpacity}`)
+          backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
         }
       }
     }, ...Object.entries(theme.palette).filter(createSimplePaletteValueFilter(["dark"])).map(([color]) => {
@@ -4956,10 +4903,10 @@ var ChipRoot = styled_default("div", {
         WebkitTapHighlightColor: "transparent",
         cursor: "pointer",
         "&:hover": {
-          backgroundColor: theme.alpha((theme.vars || theme).palette.action.selected, `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.hoverOpacity}`)
+          backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}))` : alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity)
         },
         [`&.${chipClasses_default.focusVisible}`]: {
-          backgroundColor: theme.alpha((theme.vars || theme).palette.action.selected, `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.focusOpacity}`)
+          backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
         },
         "&:active": {
           boxShadow: (theme.vars || theme).shadows[1]
@@ -5014,15 +4961,15 @@ var ChipRoot = styled_default("div", {
       },
       style: {
         color: (theme.vars || theme).palette[color].main,
-        border: `1px solid ${theme.alpha((theme.vars || theme).palette[color].main, 0.7)}`,
+        border: `1px solid ${theme.vars ? `rgba(${theme.vars.palette[color].mainChannel} / 0.7)` : alpha(theme.palette[color].main, 0.7)}`,
         [`&.${chipClasses_default.clickable}:hover`]: {
-          backgroundColor: theme.alpha((theme.vars || theme).palette[color].main, (theme.vars || theme).palette.action.hoverOpacity)
+          backgroundColor: theme.vars ? `rgba(${theme.vars.palette[color].mainChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette[color].main, theme.palette.action.hoverOpacity)
         },
         [`&.${chipClasses_default.focusVisible}`]: {
-          backgroundColor: theme.alpha((theme.vars || theme).palette[color].main, (theme.vars || theme).palette.action.focusOpacity)
+          backgroundColor: theme.vars ? `rgba(${theme.vars.palette[color].mainChannel} / ${theme.vars.palette.action.focusOpacity})` : alpha(theme.palette[color].main, theme.palette.action.focusOpacity)
         },
         [`& .${chipClasses_default.deleteIcon}`]: {
-          color: theme.alpha((theme.vars || theme).palette[color].main, 0.7),
+          color: theme.vars ? `rgba(${theme.vars.palette[color].mainChannel} / 0.7)` : alpha(theme.palette[color].main, 0.7),
           "&:hover, &:active": {
             color: (theme.vars || theme).palette[color].main
           }
@@ -5079,7 +5026,7 @@ var ChipLabel = styled_default("span", {
 function isDeleteKeyboardEvent(keyboardEvent) {
   return keyboardEvent.key === "Backspace" || keyboardEvent.key === "Delete";
 }
-var Chip = React12.forwardRef(function Chip2(inProps, ref) {
+var Chip = React13.forwardRef(function Chip2(inProps, ref) {
   const props = useDefaultProps({
     props: inProps,
     name: "MuiChip"
@@ -5107,7 +5054,7 @@ var Chip = React12.forwardRef(function Chip2(inProps, ref) {
     slotProps = {},
     ...other
   } = props;
-  const chipRef = React12.useRef(null);
+  const chipRef = React13.useRef(null);
   const handleRef = useForkRef_default(chipRef, ref);
   const handleDeleteIconClick = (event) => {
     event.stopPropagation();
@@ -5141,7 +5088,7 @@ var Chip = React12.forwardRef(function Chip2(inProps, ref) {
     disabled,
     size,
     color,
-    iconColor: React12.isValidElement(iconProp) ? iconProp.props.color || color : color,
+    iconColor: React13.isValidElement(iconProp) ? iconProp.props.color || color : color,
     onDelete: !!onDelete,
     clickable,
     variant
@@ -5156,7 +5103,7 @@ var Chip = React12.forwardRef(function Chip2(inProps, ref) {
   } : {};
   let deleteIcon = null;
   if (onDelete) {
-    deleteIcon = deleteIconProp && React12.isValidElement(deleteIconProp) ? React12.cloneElement(deleteIconProp, {
+    deleteIcon = deleteIconProp && React13.isValidElement(deleteIconProp) ? React13.cloneElement(deleteIconProp, {
       className: clsx_default(deleteIconProp.props.className, classes.deleteIcon),
       onClick: handleDeleteIconClick
     }) : (0, import_jsx_runtime10.jsx)(Cancel_default, {
@@ -5165,14 +5112,14 @@ var Chip = React12.forwardRef(function Chip2(inProps, ref) {
     });
   }
   let avatar = null;
-  if (avatarProp && React12.isValidElement(avatarProp)) {
-    avatar = React12.cloneElement(avatarProp, {
+  if (avatarProp && React13.isValidElement(avatarProp)) {
+    avatar = React13.cloneElement(avatarProp, {
       className: clsx_default(classes.avatar, avatarProp.props.className)
     });
   }
   let icon = null;
-  if (iconProp && React12.isValidElement(iconProp)) {
-    icon = React12.cloneElement(iconProp, {
+  if (iconProp && React13.isValidElement(iconProp)) {
+    icon = React13.cloneElement(iconProp, {
       className: clsx_default(classes.icon, iconProp.props.className)
     });
   }
@@ -5211,12 +5158,12 @@ var Chip = React12.forwardRef(function Chip2(inProps, ref) {
       onKeyDown: (event) => {
         var _a;
         (_a = handlers.onKeyDown) == null ? void 0 : _a.call(handlers, event);
-        handleKeyDown(event);
+        handleKeyDown == null ? void 0 : handleKeyDown(event);
       },
       onKeyUp: (event) => {
         var _a;
         (_a = handlers.onKeyUp) == null ? void 0 : _a.call(handlers, event);
-        handleKeyUp(event);
+        handleKeyUp == null ? void 0 : handleKeyUp(event);
       }
     })
   });
@@ -5356,6 +5303,7 @@ true ? Chip.propTypes = {
 var Chip_default = Chip;
 
 // node_modules/@mui/material/esm/internal/svg-icons/Close.js
+var React14 = __toESM(require_react(), 1);
 var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
 var Close_default = createSvgIcon((0, import_jsx_runtime11.jsx)("path", {
   d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
@@ -5707,16 +5655,16 @@ var AutocompleteListbox = styled_default("ul", {
       backgroundColor: (theme.vars || theme).palette.action.focus
     },
     '&[aria-selected="true"]': {
-      backgroundColor: theme.alpha((theme.vars || theme).palette.primary.main, (theme.vars || theme).palette.action.selectedOpacity),
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.primary.mainChannel} / ${theme.vars.palette.action.selectedOpacity})` : alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
       [`&.${autocompleteClasses_default.focused}`]: {
-        backgroundColor: theme.alpha((theme.vars || theme).palette.primary.main, `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.hoverOpacity}`),
+        backgroundColor: theme.vars ? `rgba(${theme.vars.palette.primary.mainChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}))` : alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity),
         // Reset on touch devices, it doesn't add specificity
         "@media (hover: none)": {
           backgroundColor: (theme.vars || theme).palette.action.selected
         }
       },
       [`&.${autocompleteClasses_default.focusVisible}`]: {
-        backgroundColor: theme.alpha((theme.vars || theme).palette.primary.main, `${(theme.vars || theme).palette.action.selectedOpacity} + ${(theme.vars || theme).palette.action.focusOpacity}`)
+        backgroundColor: theme.vars ? `rgba(${theme.vars.palette.primary.mainChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
       }
     }
   }
@@ -5739,7 +5687,7 @@ var AutocompleteGroupUl = styled_default("ul", {
     paddingLeft: 24
   }
 });
-var Autocomplete = React13.forwardRef(function Autocomplete2(inProps, ref) {
+var Autocomplete = React15.forwardRef(function Autocomplete2(inProps, ref) {
   const props = useDefaultProps({
     props: inProps,
     name: "MuiAutocomplete"
@@ -5986,7 +5934,7 @@ var Autocomplete = React13.forwardRef(function Autocomplete2(inProps, ref) {
   };
   const clearIndicatorSlotProps = externalForwardedProps.slotProps.clearIndicator;
   const popupIndicatorSlotProps = externalForwardedProps.slotProps.popupIndicator;
-  return (0, import_jsx_runtime12.jsxs)(React13.Fragment, {
+  return (0, import_jsx_runtime12.jsxs)(React15.Fragment, {
     children: [(0, import_jsx_runtime12.jsx)(AutocompleteRoot, {
       ref,
       className: clsx_default(classes.root, className),
@@ -6248,7 +6196,6 @@ true ? Autocomplete.propTypes = {
    * Used to determine the disabled state for a given option.
    *
    * @param {Value} option The option to test.
-   * @template Value The option shape. Will be the same shape as an item of the options.
    * @returns {boolean}
    */
   getOptionDisabled: import_prop_types10.default.func,

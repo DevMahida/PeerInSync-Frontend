@@ -1,30 +1,30 @@
 :root {
-    --activity-color:#461e11;
-    --bg-cs-primary:#fdf6ea;
-    --bg-cs-secondary:#f5e9d4;
-    --bg-cs-tertory:#e8d9c5;
+    --activity-color: #461e11;
+    --bg-cs-primary: #fdf6ea;
+    --bg-cs-secondary: #f5e9d4;
+    --bg-cs-tertory: #e8d9c5;
     --bg-cs-footer: #f8e7d1;
     --hover-active-color: #3F7F7A;
     --bg-profile: #e8d9c5;
 }
 
-.text-cs-primary{
+.text-cs-primary {
     color: var(--bg-cs-primary);
 }
 
-.bg-cs-primary1{
+.bg-cs-primary1 {
     background-color: var(--bg-cs-primary);
 }
 
-.bg-cs-footer01{
+.bg-cs-footer01 {
     background-color: #0b473b;
 }
 
-.bg-cs-secondary1{
+.bg-cs-secondary1 {
     background-color: var(--bg-cs-secondary);
 }
 
-.bg-cs-tertory1{
+.bg-cs-tertory1 {
     background-color: var(--bg-cs-tertory);
 }
 
@@ -32,7 +32,7 @@
     background-color: var(--bg-profile);
 }
 
-.text-brown{
+.text-brown {
     color: var(--activity-color);
 }
 
@@ -44,27 +44,43 @@
     transition: all 0.2s linear;
 }
 
-.transition-02{
+.transition-02 {
     transition: all 0.2s linear;
 }
 
-.transition-02:hover{
+.transition-02:hover {
     transform: scale(1.015);
 }
 
-.border-brown{
+.bx-shadow:hover {
+    box-shadow: 0px 0px 5px #8d8d8d;
+}
+
+.border-brown {
     border: 3px solid var(--activity-color);
 }
 
-.hight-275px{
+.hight-275px {
     height: 275px;
 }
 
-
-
+/* main - event banner */
 .event-banner {
     height: 275px;
-    background: #CC9432;
-    background: radial-gradient(circle, #cc9432 0%, #0b473b 100%);
-    border-radius: 10px;
+    background: #E3AC75;
+    background: linear-gradient(90deg, #e3ac75 52%, #0f4f5d15 81%), url('../assets/images/event_banner.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+@media (min-width:576px) {
+    .event-banner {
+        height: 275px;
+        background: #E3AC75;
+        background: linear-gradient(90deg, #e3ac75 52%, #0f4f5d15 81%), url('../assets/images/event_banner.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center right;
+    }
 }

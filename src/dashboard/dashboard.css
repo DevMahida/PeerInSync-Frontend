@@ -61,70 +61,8 @@
 }
 
 
-/* ######################### 
-            header
-############################*/
-
-.header-dash {
-    background-color: var(--bg-cs-footer);
-}
-
-/* #### sidebar #### */
-
-#navbar .nav-link {
-    color: #2F3E3C;
-    position: relative;
-    padding-bottom: 6px;
-    transition: color 0.25s ease;
-}
-
-#navbar .nav-link:hover {
-    color: var(--hover-active-color) !important;
-
-}
-
-/* hover: left → right */
-#navbar .nav-link:hover::after {
-    width: 60%;
-}
-
-/* bottom line (hidden by default) */
-#navbar .nav-link::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: 0;
-    height: 2.5px;
-    background-color: var(--hover-active-color);
-    transform: translateX(-50%);
-    transition: width 0.3s ease;
-}
 
 
-#navbar .nav-link.active {
-    color: var(--hover-active-color) !important;
-}
-
-/* sidebar link active after */
-#navbar .nav-link.active::after {
-    width: 60%;
-}
-
-/* #### profile #### */
-.profile-ul {
-    width: 300px;
-}
-
-.update:hover {
-    color: #198754;
-    background-color: #19875420;
-}
-
-.log-del:hover {
-    color: #dc3545;
-    background-color: #fef2f2;
-}
 
 
 

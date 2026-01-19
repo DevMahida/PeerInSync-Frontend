@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink } from 'react-router-dom';
-import pis_logo1 from '../assets/images/PIS-logo.png';
-import profile from '../assets/images/profile.png';
+import { useNavigate } from 'react-router-dom';
+
+import Header from '../header_footer/header.jsx';
 import axios from 'axios';
 
 
@@ -9,239 +9,108 @@ import './Event.css';
 
 const Event = () => {
 
-    const [userData, setUserData] = useState({
+    const navigate = useNavigate();
 
-        uniqid: '',
+    // formData
+    const initialFormData = {
         name: '',
-        email: ''
-    });
+        project_title: '',
+        description: '',
+        date_time: '',
+        event_type: '',
+        loc_link: ''
+    };
 
-    useEffect(() => {
-        const scrollSpy = new window.bootstrap.ScrollSpy(
-            document.body,
-            {
-                target: "#navbar",
-                offset: 50,
-            }
-        );
+    const [formData, setFormData] = useState(initialFormData);
 
-        let userinfo = localStorage.getItem('userinfo');
-        //console.log(userinfo);
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
 
-        if (userinfo) {
-            try {
-                setUserData(JSON.parse(userinfo));
-            }
-            catch (err) {
-                console.error("Error parsing localStorage data:", err.message);
-                setUserData({ name: '[Invalid data]' });
-            }
-        }
+    // for create event
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-        return () => scrollSpy.dispose();
-    }, []);
+        console.log('Text before axois post req');
 
-    const logout = (e) => {
-
-        localStorage.removeItem('userinfo');
-        window.location.href = '/';
-    }
-
-    const deleteAccount = async (e) => {
-
-        await axios.delete('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/delete/' + userData.uniqid)
+        axios.post('https://peerinsync-backend-server.onrender.com/events/create', JSON.stringify(formData), {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        })
             .then(() => {
-                window.alert("Account Deleted Successfully");
+
+                window.alert("Event Created Successfully");
+                console.log("Form submitted:", JSON.stringify(formData));
+                setFormData({
+                    ...initialFormData,
+                    name: `${userData.fName} ${userData.lName}`
+                });
+
+                // CLOSE BOOTSTRAP MODAL
+                const modalEl = document.getElementById("createEvents");
+                const modalInstance = window.bootstrap.Modal.getInstance(modalEl);
+                modalInstance.hide();
+
             })
             .catch((err) => {
                 console.log(err);
-                window.alert("Unexpected Error" + err.message);
+                window.alert("Error submiting data." + err.message);
             });
-    }
+    };
+
+    // read userInfo
+    const [userData, setUserData] = useState({
+
+        _id: '',
+        fName: '',
+        lName: '',
+        email: '',
+        mobile_no: '',
+        college_name: '',
+        course_name: '',
+        branch: '',
+        current_year_of_study: '',
+        gender: '',
+        role: ''
+    });
+
+    // for fetching details
+    useEffect(() => {
+
+        const fetchInfo = async () => {
+            try {
+                const res = await axios.get('https://peerinsync-backend-server.onrender.com/me/me', { withCredentials: true });
+                const data = res.data;
+                setUserData(data);
+                setFormData(prev => ({
+                    ...prev,
+                    name: `${data.fName} ${data.lName}`
+                }));
+            }
+            catch (err) {
+                if (err.response?.status === 401) {
+                    alert('You are not logged in.');
+                    navigate('/Login', { replace: true });
+                }
+                else {
+                    console.error(err);
+                }
+            }
+        }
+
+        fetchInfo();
+
+    }, [])
 
     return (
         <>
-            {/* Header starts  */}
-            <header className="header-dash sticky-top">
 
-                <div className="container d-flex justify-content-between align-items-center" id="navbar">
-
-                    {/* logo nav */}
-                    <div className="d-flex align-items-center gap-3 gap-lg-5">
-
-                        {/* logo part */}
-                        <div>
-                            <p className="h3 text-dark mt-3">
-                                <Link className="text-dark text-decoration-none" to="/">
-                                    <img src={pis_logo1} alt="" width="100px" />
-                                    {/* <span>PeerInSync</span> */}
-                                </Link>
-                            </p>
-                        </div>
-
-                        {/* nav links */}
-                        <nav className="ms-3 d-none d-lg-block">
-                            <ul className="nav gap-4 align-items-center">
-                                <li className="nav-item d-flex">
-                                    <NavLink to="/dashboard" className={({ isActive }) => `nav-link fs-6 fw-medium px-0 ${isActive ? "active" : ""}`}>
-                                        Dashboard
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item d-flex">
-                                    <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                        Alumni List
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item d-flex">
-                                    <NavLink to="/Event" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                        Events
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item d-flex">
-                                    <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                        Discussion
-                                    </NavLink>
-                                </li>
-                                <li className="nav-item d-flex">
-                                    <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                        Collaboration
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </nav>
-
-                    </div>
-
-                    {/* off-btn profile */}
-                    <div className="d-flex align-items-center gap-3">
-
-                        {/* offcanvas btn */}
-                        <div className="d-lg-none">
-                            <button className="btn p-0 fs-4 rounded-5" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                <i className="ri-menu-line"></i>
-                            </button>
-                        </div>
-
-                        {/* user */}
-                        <div className="dropdown">
-                            <button className=" bg-cs-profile  border-1 rounded-5 d-flex align-items-center" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                                <img className="d-inline-block my-1" src={profile} alt="" />
-                                <span className="fs-3">
-                                    <i className="ri-arrow-drop-down-line"></i>
-                                </span>
-                            </button>
-
-                            <ul className="dropdown-menu rounded-4 px-3 profile-ul">
-
-                                {/* name email */}
-                                <li className="d-flex align-items-center gap-2">
-                                    <div>
-                                        <img className="d-inline-blockn" src={profile} alt="" width="40px" />
-                                    </div>
-                                    <div>
-                                        <span className="h5">{userData.name}</span><br />
-                                        <span>{userData.email}</span>
-                                    </div>
-                                </li>
-
-                                <li><hr className="dropdown-divider" /></li>
-
-                                {/* update */}
-                                <li>
-                                    <div className="dropdown-item update rounded-1 transition-2 px-3 py-2 d-flex gap-2 align-items-center pointer">
-                                        <span className="fs-5 text-success">
-                                            <i className="ri-edit-box-line"></i>
-                                        </span>
-                                        <span>Update</span>
-                                    </div>
-                                </li>
-
-                                <li><hr className="dropdown-divider" /></li>
-
-                                {/* LogOut */}
-                                <li>
-                                    <Link className="text-decoration-none" to='/' onClick={logout}>
-                                        <div className="dropdown-item log-del pointer rounded-1 transition-2 d-flex gap-2 align-items-center px-3 py-2">
-                                            <span className="fs-5 text-danger">
-                                                <i className="ri-logout-box-r-line"></i>
-                                            </span>
-                                            <span>Log Out</span>
-                                        </div>
-                                    </Link>
-
-
-                                </li>
-
-                                {/* Delete */}
-                                <li>
-                                    <Link className="text-decoration-none" to='/' onClick={deleteAccount}>
-                                        <div className="dropdown-item log-del pointer rounded-1 transition-2 d-flex gap-2 align-items-center px-3 py-2">
-                                            <span className="fs-5 text-danger">
-                                                <i className="ri-delete-bin-6-line"></i>
-                                            </span>
-                                            <span className="">Delete Account</span>
-                                        </div>
-                                    </Link>
-
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
-                {/* offcanvas */}
-                <div className="offcanvas offcanvas-end header-dash" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-
-                    {/* offcanvas header */}
-                    <div className="offcanvas-header">
-                        <h5 className="offcanvas-title" id="offcanvasRightLabel">PeerInSync Menu</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-
-                    {/* offcanvas body */}
-                    <div className="offcanvas-body" id="navbar">
-                        <ul className="nav flex-column gap-4">
-                            <li className="nav-item d-flex">
-                                <NavLink to="/dashboard" className={({ isActive }) => `nav-link fs-6 fw-medium px-0 ${isActive ? "active" : ""}`}>
-                                    Dashboard
-                                </NavLink>
-                            </li>
-                            <li className="nav-item d-flex">
-                                <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                    Alumni List
-                                </NavLink>
-                            </li>
-                            <li className="nav-item d-flex">
-                                <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                    Events
-                                </NavLink>
-                            </li>
-                            <li className="nav-item d-flex">
-                                <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                    Forums
-                                </NavLink>
-                            </li>
-                            <li className="nav-item d-flex">
-                                <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                    Discussion
-                                </NavLink>
-                            </li>
-                            <li className="nav-item d-flex">
-                                <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                    Collaboration
-                                </NavLink>
-                            </li>
-                            <li className="nav-item d-flex">
-                                <NavLink to="/alumni" className={({ isActive }) => `nav-link fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                    Help
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </header>
-            {/* Header ends */}
+            <Header />
 
             {/* main starts */}
             <main>
@@ -256,10 +125,11 @@ const Event = () => {
                             {/* banner */}
                             <div className="col-lg-8">
                                 <div className="event-banner rounded-3 transition-02 d-flex align-items-center">
-                                    <div className='text-cs-primary px-5'>
+                                    <div className='text-brown px-5'>
 
                                         <h1>Events & Webinars</h1>
-                                        <p>Learn from Alumni through seminars and webinars</p>
+                                        <p className="fw-medium">Learn from Alumni through seminars, webinars and workshops</p>
+                                        <p className="fw-medium">Discover • Learn • Connect</p>
 
                                     </div>
                                 </div>
@@ -273,8 +143,8 @@ const Event = () => {
                                     <div className="row mt-3">
                                         <div className="col-12">
                                             <div className='bg-cs-primary1 p-2 rounded-3 transition-02'>
-                                                <div className='d-flex justify-content-between align-items-center'>
-                                                    <p className='h5'>Resume Building Workshop</p>
+                                                <div className='d-flex justify-content-between align-items-center p-1'>
+                                                    <p className='h5 mb-0'>Resume Building Workshop</p>
                                                     <button className="border-1 rounded-3 p-2 bg-cs-tertory1">Details</button>
                                                 </div>
                                             </div>
@@ -293,7 +163,14 @@ const Event = () => {
                     <div className="container">
                         <div className="border-brown bg-cs-secondary1 p-3 rounded-4 text-brown">
 
-                            <span className="h4 text-brown">Event List</span>
+                            {userData.role === "alumni" ? (
+                                <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
+                                    <span className="h4 text-brown mb-0">Event List</span>
+                                    <button className="border-1 rounded-3 p-2 bg-cs-tertory1 transition-02 bx-shadow" data-bs-toggle="modal" data-bs-target="#createEvents"><i className="ri-add-large-line"></i> Create Event</button>
+                                </div>
+                            ) : (
+                                <span className="h4 text-brown">Event List</span>
+                            )}
 
                             {/* recommend cards */}
                             <div className="row mt-2 g-3">
@@ -314,13 +191,13 @@ const Event = () => {
                                                     <h4 className="pb-0 mb-1">Resume Building Workshop</h4>
                                                     <p className="mb-0"><strong>Workshop by</strong> Rahul Mehta (Alumni – HR Specialist)</p>
                                                     <span><strong>Platform</strong> : Google Meet</span><br />
-                                                    <span><i class="ri-time-fill"></i> 25 Sept, 4:00 PM</span>
+                                                    <span><i className="ri-time-fill"></i> 25 Sept, 4:00 PM</span>
                                                 </div>
                                             </div>
 
                                             {/* btn */}
                                             <div className="d-flex align-items-center gap-3">
-                                                <span class="badge text-bg-success">3 days left</span>
+                                                <span className="badge text-bg-success">3 days left</span>
                                                 <button className="border-1 rounded-3 p-2 bg-cs-tertory1">Register</button>
                                             </div>
                                         </div>
@@ -340,13 +217,13 @@ const Event = () => {
                                                     <h4 className="pb-0 mb-1">Higher Studies & Abroad Guidance</h4>
                                                     <p className="mb-0"><strong>Webinar by:</strong> Alumni Panel (MS & MBA Graduates)</p>
                                                     <span><strong>Platform</strong> : Google Meet</span><br />
-                                                    <span><i class="ri-time-fill"></i> 28 Sept, 5:00 PM</span>
+                                                    <span><i className="ri-time-fill"></i> 28 Sept, 5:00 PM</span>
                                                 </div>
                                             </div>
 
                                             {/* btn */}
                                             <div className="d-flex align-items-center gap-3">
-                                                <span class="badge text-bg-success">5 days left</span>
+                                                <span className="badge text-bg-success">5 days left</span>
                                                 <button className="border-1 rounded-3 p-2 bg-cs-tertory1">Register</button>
                                             </div>
                                         </div>
@@ -367,13 +244,13 @@ const Event = () => {
                                                     <h4 className="pb-0 mb-1">Data Science Career Talk</h4>
                                                     <p className="mb-0"><strong>Talk by:</strong> Kunal Patel (Data Scientist, Amazon)</p>
                                                     <span><strong>Platform</strong> : Google Meet</span><br />
-                                                    <span><i class="ri-time-fill"></i> 7 Oct, 5:00 PM</span>
+                                                    <span><i className="ri-time-fill"></i> 7 Oct, 5:00 PM</span>
                                                 </div>
                                             </div>
 
                                             {/* btn */}
                                             <div className="d-flex align-items-center gap-3">
-                                                <span class="badge text-bg-warning">Upcoming</span>
+                                                <span className="badge text-bg-warning">Upcoming</span>
                                             </div>
                                         </div>
                                     </div>
@@ -393,13 +270,13 @@ const Event = () => {
                                                     <h4 className="pb-0 mb-1">Cybersecurity Trends Seminar</h4>
                                                     <p className="mb-0"><strong>Seminar by: </strong> Dr. Neha Kulkarni (Cybersecurity Consultant)</p>
                                                     <span><strong>Auditorium</strong></span><br />
-                                                    <span><i class="ri-time-fill"></i> 8 Oct, 3:30 PM</span>
+                                                    <span><i className="ri-time-fill"></i> 8 Oct, 3:30 PM</span>
                                                 </div>
                                             </div>
 
                                             {/* btn */}
                                             <div className="d-flex align-items-center gap-3">
-                                                <span class="badge text-bg-warning">Upcoming</span>
+                                                <span className="badge text-bg-warning">Upcoming</span>
                                             </div>
                                         </div>
                                     </div>
@@ -412,10 +289,8 @@ const Event = () => {
                 </section>
                 {/* event list ends */}
 
-
             </main>
             {/* main ends */}
-
 
             {/* footer starts */}
             <footer className="bg-cs-footer01 p-4">
@@ -425,6 +300,86 @@ const Event = () => {
             </footer>
             {/* footer ends */}
 
+            {/* create event Modal */}
+            <div className="modal fade" id="createEvents" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content bg-cs-primary1">
+
+                        {/* modal header */}
+                        <div className="modal-header d-flex justify-content-between">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Create Event</h1>
+                            <button type="button" className="btn fs-5" data-bs-dismiss="modal" aria-label="Close"><i className="ri-close-large-line"></i></button>
+                        </div>
+
+                        {/* modal body */}
+                        <div className="modal-body">
+                            <form onSubmit={handleSubmit}>
+
+                                {/* project title */}
+                                <div>
+                                    <label className="mb-1" htmlFor="project_title">Project Title :</label>
+                                    <input className="mb-2 form-control" type="text" name="project_title" id="project_title" value={formData.project_title} onChange={handleChange} required />
+                                </div>
+
+                                {/* host */}
+                                <div>
+                                    <label className="mb-1" htmlFor="Host">Conducted By :</label>
+                                    <input className="mb-2 form-control" type="text" name="host" id="host" value={userData.fName + " " + userData.lName} disabled />
+                                </div>
+
+                                {/* description */}
+                                <div>
+                                    <label className="mb-1" htmlFor="description">Description :</label>
+                                    <textarea className="mb-2 form-control" name="description" id="description" rows={4} value={formData.description} onChange={handleChange} required></textarea>
+                                </div>
+
+                                {/* date-time */}
+                                <div>
+                                    <label className="mb-1" htmlFor="host">Date :</label>
+                                    <input className="mb-3 form-control" type="datetime-local" name="date_time" id="date_time" value={formData.date_time} onChange={handleChange} required />
+                                </div>
+
+                                {/* event type */}
+                                <div className="d-flex align-items-center">
+                                    <span className="me-2">Event Type :</span>
+
+                                    <input className="me-1" type="radio" name="event_type" id="seminar" value="seminar" checked={formData.event_type === "seminar"} onChange={handleChange} required />
+                                    <label className="me-2" htmlFor="seminar">Seminar</label>
+
+                                    <input className="me-1" type="radio" name="event_type" id="webinar" value="webinar" checked={formData.event_type === "webinar"} onChange={handleChange} />
+                                    <label className="me-2" htmlFor="webinar">Webinar</label>
+
+                                    <input className="me-1" type="radio" name="event_type" id="workshop" value="workshop" checked={formData.event_type === "workshop"} onChange={handleChange} />
+                                    <label className="me-2" htmlFor="workshop">Workshop</label>
+                                </div>
+
+                                {/* location / link */}
+                                <div className="mt-2">
+
+                                    {formData.event_type === "webinar" ? (
+                                        <div>
+                                            <label className="mb-1" htmlFor="loc_link">Link :</label>
+                                            <input className="mb-2 form-control" type="text" name="loc_link" id="loc_link" value={formData.loc_link} onChange={handleChange} placeholder="Google Meet link only" required />
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <label className="mb-1" htmlFor="loc_link">Location :</label>
+                                            <input className="mb-2 form-control" type="text" name="loc_link" id="loc_link" value={formData.loc_link} onChange={handleChange} required />
+                                        </div>
+                                    )}
+
+                                </div>
+
+                            </form>
+                        </div>
+
+                        {/* modal footer */}
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-dark" onClick={handleSubmit}>Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
