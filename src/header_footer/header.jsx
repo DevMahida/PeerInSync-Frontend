@@ -184,12 +184,15 @@ const Header = () => {
 
                                 {/* update */}
                                 <li>
-                                    <div className="dropdown-item update rounded-1 transition-2 px-3 py-2 d-flex gap-2 align-items-center pointer">
-                                        <span className="fs-5 text-success">
-                                            <i className="ri-edit-box-line"></i>
-                                        </span>
-                                        <span>Update</span>
-                                    </div>
+                                    <Link className="text-decoration-none" to="/Update">
+                                        <div className="dropdown-item update rounded-1 transition-2 px-3 py-2 d-flex gap-2 align-items-center pointer">
+                                            <span className="fs-5 text-success">
+                                                <i className="ri-edit-box-line"></i>
+                                            </span>
+                                            <span>Update</span>
+                                        </div>
+                                    </Link>
+
                                 </li>
 
                                 <li><hr className="dropdown-divider" /></li>

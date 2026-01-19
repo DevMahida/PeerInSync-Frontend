@@ -1,0 +1,85 @@
+:root {
+    --activity-color: #461e11;
+    --bg-cs-primary: #fdf6ea;
+    --bg-cs-secondary: #f5e9d4;
+    --bg-cs-tertory: #e8d9c5;
+    --bg-cs-footer: #f8e7d1;
+    --hover-active-color: #3F7F7A;
+    --bg-profile: #e8d9c5;
+}
+
+.text-cs-primary {
+    color: var(--bg-cs-primary);
+}
+
+.bg-cs-primary1 {
+    background-color: var(--bg-cs-primary);
+}
+
+.bg-cs-footer01 {
+    background-color: #0b473b;
+}
+
+.bg-cs-secondary1 {
+    background-color: var(--bg-cs-secondary);
+}
+
+.bg-cs-tertory1 {
+    background-color: var(--bg-cs-tertory);
+}
+
+.bg-cs-profile {
+    background-color: var(--bg-profile);
+}
+
+.text-brown {
+    color: var(--activity-color);
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.transition-02 {
+    transition: all 0.2s linear;
+}
+
+.transition-02:hover {
+    transform: scale(1.015);
+}
+
+
+
+/* ########### Update ########### */
+
+/* .update-wrapper{
+    max-width: 1000px;
+} */
+
+
+/* ########### MQ ################ */
+
+@media (min-width:576px) {
+
+    .update-wrapper{
+        max-width: 75% !important;
+    }
+}
+
+@media (min-width:768px) {
+    .update-wrapper{
+        max-width: 70% !important;
+    }
+}
+
+@media (min-width:992px) {
+    .update-wrapper{
+        max-width: 65% !important;
+    }
+}
+
+@media (min-width:1200px) {
+    .update-wrapper{
+        max-width: 1000px !important;
+    }
+}
