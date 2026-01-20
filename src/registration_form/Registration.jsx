@@ -234,7 +234,7 @@ const Registration = () => {
                             {/* gender */}
                             <div className='col-12'>
                                 <div className="register-card mb-3 d-flex align-items-center gap-3">
-                                    <span className='mb-1 fs-5 '>Gender : </span>
+                                    <span className='mb-1 fs-5 '>Gender :</span>
                                     <div className='d-flex gap-1 align-items-center'>
                                         <input type="radio" name='gender' value="male" id='male' required checked={formData.gender == "male"} onChange={handleChange} />
                                         <label htmlFor="male">Male</label>
