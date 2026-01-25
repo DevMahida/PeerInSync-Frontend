@@ -74,6 +74,11 @@
     background-position: center right;
 }
 
+.event-modal select:focus {
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+}
+
 @media (min-width:576px) {
     .event-banner {
         height: 275px;
@@ -84,3 +89,9 @@
         background-position: center right;
     }
 }
+
+/* @media (min-width:992px) {
+    .event-card{
+        height: 140px;
+    }
+} */

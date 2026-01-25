@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 import Header from '../header_footer/header.jsx';
@@ -11,6 +11,23 @@ const Event = () => {
 
     const navigate = useNavigate();
 
+    // read userInfo
+    const [userData, setUserData] = useState({
+
+        _id: '',
+        fName: '',
+        lName: '',
+        email: '',
+        mobile_no: '',
+        college_name: '',
+        course_name: '',
+        branch: '',
+        current_year_of_study: '',
+        gender: '',
+        role: ''
+    });
+
+
     // formData
     const initialFormData = {
         name: '',
@@ -21,6 +38,9 @@ const Event = () => {
         event_type: '',
         loc_link: ''
     };
+
+
+    const [events, setEvents] = useState([]);
 
     const [formData, setFormData] = useState(initialFormData);
 
@@ -52,7 +72,7 @@ const Event = () => {
                     name: `${userData.fName} ${userData.lName}`
                 });
 
-                // CLOSE BOOTSTRAP MODAL
+                // close bootstrap modal
                 const modalEl = document.getElementById("createEvents");
                 const modalInstance = window.bootstrap.Modal.getInstance(modalEl);
                 modalInstance.hide();
@@ -63,22 +83,6 @@ const Event = () => {
                 window.alert("Error submiting data." + err.message);
             });
     };
-
-    // read userInfo
-    const [userData, setUserData] = useState({
-
-        _id: '',
-        fName: '',
-        lName: '',
-        email: '',
-        mobile_no: '',
-        college_name: '',
-        course_name: '',
-        branch: '',
-        current_year_of_study: '',
-        gender: '',
-        role: ''
-    });
 
     // for fetching details
     useEffect(() => {
@@ -104,7 +108,19 @@ const Event = () => {
             }
         }
 
+
+        const fetchEvents = async () => {
+
+            axios.get('https://peerinsync-backend-server.onrender.com/events/getEvents', { withCredentials: true })
+                .then(response => {
+                    setEvents(response.data);
+                    console.log(response.data);
+                })
+                .catch(err => console.log(err));
+        }
+
         fetchInfo();
+        fetchEvents();
 
     }, [])
 
@@ -174,118 +190,51 @@ const Event = () => {
                             )}
 
                             {/* recommend cards */}
+
                             <div className="row mt-2 g-3">
+                                {events.map(events => (
+                                    <div className="col-lg-6 d-lg-flex" key={events._id}>
 
-                                <div className="col-lg-6">
+                                        <div className="event-card d-flex bg-cs-primary1 p-3 flex-column flex-grow-1 rounded-3 transition-02">
 
-                                    <div className="bg-cs-primary1 p-3 rounded-3 transition-02">
-
-                                        {/* card body */}
-                                        <div className="d-flex justify-content-between">
-
-                                            {/* detail */}
-                                            <div className="d-flex gap-2">
-
+                                            <div className="d-flex flex-grow-1 justify-content-between">
 
                                                 {/* detail */}
-                                                <div>
-                                                    <h4 className="pb-0 mb-1">Resume Building Workshop</h4>
-                                                    <p className="mb-0"><strong>Workshop by</strong> Rahul Mehta (Alumni – HR Specialist)</p>
-                                                    <span><strong>Platform</strong> : Google Meet</span><br />
-                                                    <span><i className="ri-time-fill"></i> 25 Sept, 4:00 PM</span>
+                                                <div className="d-flex flex-column justify-content-between">
+                                                    <h4 className="pb-0 mb-1">{events.project_title}</h4>
+
+                                                    <p className="mb-0"><strong className="text-capitalize">{events.event_type}</strong> by <strong>{events.name}</strong></p>
+
+                                                    {events.event_type === "webinar" ? (
+                                                        <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
+                                                            <span className="text-capitalize"><strong>Platform :</strong> Google Meet</span>
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-capitalize"><strong>Location :</strong> {events.loc_link}</span>
+                                                    )}
+
+                                                    <span><strong>Date :</strong>{events.date}</span>
+                                                    <span><strong>Time :</strong>{events.time}</span>
                                                 </div>
-                                            </div>
 
-                                            {/* btn */}
-                                            <div className="d-flex align-items-center gap-3">
-                                                <span className="badge text-bg-success">3 days left</span>
-                                                <button className="border-1 rounded-3 p-2 bg-cs-tertory1">Register</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="bg-cs-primary1 p-3 rounded-3 transition-02">
-
-                                        {/* card body */}
-                                        <div className="d-flex justify-content-between">
-
-                                            {/* detail */}
-                                            <div className="d-flex gap-2">
-
-                                                {/* detail */}
-                                                <div>
-                                                    <h4 className="pb-0 mb-1">Higher Studies & Abroad Guidance</h4>
-                                                    <p className="mb-0"><strong>Webinar by:</strong> Alumni Panel (MS & MBA Graduates)</p>
-                                                    <span><strong>Platform</strong> : Google Meet</span><br />
-                                                    <span><i className="ri-time-fill"></i> 28 Sept, 5:00 PM</span>
+                                                {/* btn */}
+                                                <div className="d-flex align-items-center gap-3">
+                                                    {/* <span className="badge text-bg-success">3 days left</span> */}
+                                                    <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1">Register</button>
                                                 </div>
+
                                             </div>
 
-                                            {/* btn */}
-                                            <div className="d-flex align-items-center gap-3">
-                                                <span className="badge text-bg-success">5 days left</span>
-                                                <button className="border-1 rounded-3 p-2 bg-cs-tertory1">Register</button>
-                                            </div>
                                         </div>
+
                                     </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="bg-cs-primary1 p-3 rounded-3 transition-02">
-
-                                        {/* card body */}
-                                        <div className="d-flex justify-content-between">
-
-                                            {/* detail */}
-                                            <div className="d-flex gap-2">
-
-
-                                                {/* detail */}
-                                                <div>
-                                                    <h4 className="pb-0 mb-1">Data Science Career Talk</h4>
-                                                    <p className="mb-0"><strong>Talk by:</strong> Kunal Patel (Data Scientist, Amazon)</p>
-                                                    <span><strong>Platform</strong> : Google Meet</span><br />
-                                                    <span><i className="ri-time-fill"></i> 7 Oct, 5:00 PM</span>
-                                                </div>
-                                            </div>
-
-                                            {/* btn */}
-                                            <div className="d-flex align-items-center gap-3">
-                                                <span className="badge text-bg-warning">Upcoming</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="bg-cs-primary1 p-3 rounded-3 transition-02">
-
-                                        {/* card body */}
-                                        <div className="d-flex justify-content-between">
-
-                                            {/* detail */}
-                                            <div className="d-flex gap-2">
-
-
-                                                {/* detail */}
-                                                <div>
-                                                    <h4 className="pb-0 mb-1">Cybersecurity Trends Seminar</h4>
-                                                    <p className="mb-0"><strong>Seminar by: </strong> Dr. Neha Kulkarni (Cybersecurity Consultant)</p>
-                                                    <span><strong>Auditorium</strong></span><br />
-                                                    <span><i className="ri-time-fill"></i> 8 Oct, 3:30 PM</span>
-                                                </div>
-                                            </div>
-
-                                            {/* btn */}
-                                            <div className="d-flex align-items-center gap-3">
-                                                <span className="badge text-bg-warning">Upcoming</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                ))}
                             </div>
 
+
                         </div>
+
+
                     </div>
                 </section>
                 {/* event list ends */}
@@ -302,12 +251,12 @@ const Event = () => {
             {/* footer ends */}
 
             {/* create event Modal */}
-            <div className="modal fade" id="createEvents" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade my-0 event-modal" id="createEvents" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content bg-cs-primary1">
 
                         {/* modal header */}
-                        <div className="modal-header d-flex justify-content-between">
+                        <div className="modal-header d-flex justify-content-between py-2">
                             <h1 className="modal-title fs-5" id="exampleModalLabel">Create Event</h1>
                             <button type="button" className="btn fs-5" data-bs-dismiss="modal" aria-label="Close"><i className="ri-close-large-line"></i></button>
                         </div>
@@ -324,14 +273,14 @@ const Event = () => {
 
                                 {/* host */}
                                 <div>
-                                    <label className="mb-1" htmlFor="Host">Conducted By :</label>
+                                    <label className="mb-1" htmlFor="host">Conducted By :</label>
                                     <input className="mb-2 form-control" type="text" name="host" id="host" value={userData.fName + " " + userData.lName} disabled />
                                 </div>
 
                                 {/* description */}
                                 <div>
                                     <label className="mb-1" htmlFor="description">Description :</label>
-                                    <textarea className="mb-2 form-control" name="description" id="description" rows={4} value={formData.description} onChange={handleChange} required></textarea>
+                                    <textarea className="mb-2 form-control" name="description" id="description" rows={3} value={formData.description} onChange={handleChange} required></textarea>
                                 </div>
 
                                 {/* date */}
@@ -347,8 +296,8 @@ const Event = () => {
                                 </div>
 
                                 {/* event type */}
-                                <div className="d-flex align-items-center">
-                                    <span className="me-2">Event Type :</span>
+                                <div className="">
+                                    {/* <span className="me-2">Event Type :</span>
 
                                     <input className="me-1" type="radio" name="event_type" id="seminar" value="seminar" checked={formData.event_type === "seminar"} onChange={handleChange} required />
                                     <label className="me-2" htmlFor="seminar">Seminar</label>
@@ -357,7 +306,14 @@ const Event = () => {
                                     <label className="me-2" htmlFor="webinar">Webinar</label>
 
                                     <input className="me-1" type="radio" name="event_type" id="workshop" value="workshop" checked={formData.event_type === "workshop"} onChange={handleChange} />
-                                    <label className="me-2" htmlFor="workshop">Workshop</label>
+                                    <label className="me-2" htmlFor="workshop">Workshop</label> <br /> */}
+
+                                    <label className="mb-1" htmlFor="event_type">Event Type :</label>
+                                    <select className="form-select" name="event_type" id="event_type" value={formData.event_type} onChange={handleChange} required>
+                                        <option value="seminar">Seminar</option>
+                                        <option value="webinar">Webinar</option>
+                                        <option value="workshop">Workshop</option>
+                                    </select>
                                 </div>
 
                                 {/* location / link */}
@@ -387,6 +343,7 @@ const Event = () => {
                     </div>
                 </div>
             </div>
+
         </>
     );
 }

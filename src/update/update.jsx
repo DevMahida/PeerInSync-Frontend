@@ -55,7 +55,6 @@ const Update = () => {
                 fName: userData.fName || "",
                 lName: userData.lName || "",
                 email: userData.email || "",
-                password: "",
                 mobile_no: userData.mobile_no || "",
                 college_name: userData.college_name || "",
                 course_name: userData.course_name || "",
