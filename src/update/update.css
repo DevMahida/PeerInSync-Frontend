@@ -52,34 +52,48 @@
 
 /* ########### Update ########### */
 
-/* .update-wrapper{
-    max-width: 1000px;
-} */
+/* #### college name #### */
+.update-card .MuiAutocomplete-inputRoot {
+    padding: 0 8px !important;
+    border: none !important;
+}
+
+/* When input is focused */
+.update-card .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border: 1px solid #000 !important;
+    /* active border color */
+}
+
+/* ##### year of studying ##### */
+.update-card select:focus {
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+}
 
 
 /* ########### MQ ################ */
 
 @media (min-width:576px) {
 
-    .update-wrapper{
+    .update-wrapper {
         max-width: 75% !important;
     }
 }
 
 @media (min-width:768px) {
-    .update-wrapper{
+    .update-wrapper {
         max-width: 70% !important;
     }
 }
 
 @media (min-width:992px) {
-    .update-wrapper{
+    .update-wrapper {
         max-width: 65% !important;
     }
 }
 
 @media (min-width:1200px) {
-    .update-wrapper{
+    .update-wrapper {
         max-width: 1000px !important;
     }
 }

@@ -16,7 +16,8 @@ const Event = () => {
         name: '',
         project_title: '',
         description: '',
-        date_time: '',
+        date: '',
+        time: '',
         event_type: '',
         loc_link: ''
     };
@@ -333,10 +334,16 @@ const Event = () => {
                                     <textarea className="mb-2 form-control" name="description" id="description" rows={4} value={formData.description} onChange={handleChange} required></textarea>
                                 </div>
 
-                                {/* date-time */}
+                                {/* date */}
                                 <div>
-                                    <label className="mb-1" htmlFor="host">Date :</label>
-                                    <input className="mb-3 form-control" type="datetime-local" name="date_time" id="date_time" value={formData.date_time} onChange={handleChange} required />
+                                    <label className="mb-1" htmlFor="date">Date :</label>
+                                    <input className="mb-3 form-control" type="date" name="date" id="date" value={formData.date} onChange={handleChange} required />
+                                </div>
+
+                                {/* time */}
+                                <div>
+                                    <label className="mb-1" htmlFor="time">Time :</label>
+                                    <input className="mb-3 form-control" type="time" name="time" id="time" value={formData.time} onChange={handleChange} required />
                                 </div>
 
                                 {/* event type */}
