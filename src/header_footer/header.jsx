@@ -234,7 +234,7 @@ const Header = () => {
                     <div className="offcanvas-body scrollpy scrollpy_nav">
                         <ul className="nav flex-column gap-4">
                             <li className="nav-item d-flex">
-                                <NavLink to="/dashboard" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium px-0 ${isActive ? "active" : ""}`}>
+                                <NavLink to="/dashboard" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
                                     Dashboard
                                 </NavLink>
                             </li>

@@ -39,6 +39,7 @@ const Event = () => {
         loc_link: ''
     };
 
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     const [events, setEvents] = useState([]);
 
@@ -75,6 +76,9 @@ const Event = () => {
                 // close bootstrap modal
                 const modalEl = document.getElementById("createEvents");
                 const modalInstance = window.bootstrap.Modal.getInstance(modalEl);
+
+                fetchEvents();
+
                 modalInstance.hide();
 
             })
@@ -83,6 +87,36 @@ const Event = () => {
                 window.alert("Error submiting data." + err.message);
             });
     };
+
+    const fetchEvents = async () => {
+
+        axios.get('https://peerinsync-backend-server.onrender.com/events/getEvents', { withCredentials: true })
+            .then(response => {
+                setEvents(response.data);
+                console.log(response.data);
+            })
+            .catch(err => console.log(err));
+    }
+
+    const registerEvent = (e) => {
+
+        e.preventDefault();
+
+        const eventID = e.target.dataset.id;
+        console.log(eventID);
+
+        axios.post('https://peerinsync-backend-server.onrender.com/events/registerEvent/' + eventID, null, { withCredentials: true })
+            .then(() => {
+                window.alert("Event Registered Successfully");
+                fetchEvents();
+            })
+            .catch(err => {
+                console.log(err);
+                window.alert("Error registering for event." + err.message);
+            })
+
+    }
+
 
     // for fetching details
     useEffect(() => {
@@ -108,21 +142,12 @@ const Event = () => {
             }
         }
 
-
-        const fetchEvents = async () => {
-
-            axios.get('https://peerinsync-backend-server.onrender.com/events/getEvents', { withCredentials: true })
-                .then(response => {
-                    setEvents(response.data);
-                    console.log(response.data);
-                })
-                .catch(err => console.log(err));
-        }
-
         fetchInfo();
         fetchEvents();
 
     }, [])
+
+
 
     return (
         <>
@@ -180,6 +205,7 @@ const Event = () => {
                     <div className="container">
                         <div className="border-brown bg-cs-secondary1 p-3 rounded-4 text-brown">
 
+                            {/* title */}
                             {userData.role === "alumni" ? (
                                 <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
                                     <span className="h4 text-brown mb-0">Event List</span>
@@ -189,8 +215,8 @@ const Event = () => {
                                 <span className="h4 text-brown">Event List</span>
                             )}
 
-                            {/* recommend cards */}
 
+                            {/* events cards */}
                             <div className="row mt-2 g-3">
                                 {events.map(events => (
                                     <div className="col-lg-6 d-lg-flex" key={events._id}>
@@ -213,14 +239,16 @@ const Event = () => {
                                                         <span className="text-capitalize"><strong>Location :</strong> {events.loc_link}</span>
                                                     )}
 
-                                                    <span><strong>Date :</strong>{events.date}</span>
-                                                    <span><strong>Time :</strong>{events.time}</span>
+                                                    <span><strong>Date : </strong>{new Date(events.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
+                                                    <span><strong>Time : </strong>{new Date(`1970-01-01T${events.time}`).toLocaleTimeString("en-US", {hour: "numeric",minute: "2-digit",hour12: true,})}</span>
                                                 </div>
 
                                                 {/* btn */}
                                                 <div className="d-flex align-items-center gap-3">
                                                     {/* <span className="badge text-bg-success">3 days left</span> */}
-                                                    <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1">Register</button>
+                                                    {/* <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1" data-id={events._id} onClick={registerEvent}>Register</button> */}
+                                                    <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(events)}
+                                                    >View Details</button>
                                                 </div>
 
                                             </div>
@@ -297,19 +325,9 @@ const Event = () => {
 
                                 {/* event type */}
                                 <div className="">
-                                    {/* <span className="me-2">Event Type :</span>
-
-                                    <input className="me-1" type="radio" name="event_type" id="seminar" value="seminar" checked={formData.event_type === "seminar"} onChange={handleChange} required />
-                                    <label className="me-2" htmlFor="seminar">Seminar</label>
-
-                                    <input className="me-1" type="radio" name="event_type" id="webinar" value="webinar" checked={formData.event_type === "webinar"} onChange={handleChange} />
-                                    <label className="me-2" htmlFor="webinar">Webinar</label>
-
-                                    <input className="me-1" type="radio" name="event_type" id="workshop" value="workshop" checked={formData.event_type === "workshop"} onChange={handleChange} />
-                                    <label className="me-2" htmlFor="workshop">Workshop</label> <br /> */}
-
                                     <label className="mb-1" htmlFor="event_type">Event Type :</label>
                                     <select className="form-select" name="event_type" id="event_type" value={formData.event_type} onChange={handleChange} required>
+                                        <option>Please Select The Event Type</option>
                                         <option value="seminar">Seminar</option>
                                         <option value="webinar">Webinar</option>
                                         <option value="workshop">Workshop</option>
@@ -339,6 +357,67 @@ const Event = () => {
                         {/* modal footer */}
                         <div className="modal-footer">
                             <button type="button" className="btn btn-dark" onClick={handleSubmit}>Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* view event Modal */}
+            <div className="modal fade my-0 event-modal" id="viewEvents" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content bg-cs-primary1">
+
+                        {/* modal header */}
+                        <div className="modal-header d-flex justify-content-between py-2">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Event Details</h1>
+                            <button type="button" className="btn fs-5" data-bs-dismiss="modal" aria-label="Close"><i className="ri-close-large-line"></i></button>
+                        </div>
+
+                        {/* modal body */}
+                        <div className="modal-body text-brown">
+
+                            {/* project title */}
+                            <div className="mb-2">
+                                <h4>{selectedEvent?.project_title}</h4>
+                            </div>
+
+                            {/* event-type / host */}
+                            <div className="mb-2">
+                                <p className="mb-0"><strong className="text-capitalize">{selectedEvent?.event_type}</strong> by <strong>{selectedEvent?.name}</strong></p>
+                            </div>
+
+                            {/* description */}
+                            <div>
+
+                                <span><strong>Description :</strong></span>
+                                <p>{selectedEvent?.description}</p>
+                            </div>
+
+                            {/* date - time */}
+                            <div className="d-flex flex-column">
+                                <span><strong>Date : </strong>{new Date(selectedEvent?.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
+                                <span><strong>Time : </strong>{new Date(`1970-01-01T${selectedEvent?.time}`).toLocaleTimeString("en-US", {hour: "numeric",minute: "2-digit",hour12: true,})}</span>
+                            </div>
+
+                            {/* location / link */}
+                            <div className="mt-2">
+
+                                {selectedEvent?.event_type === "webinar" ? (
+                                    <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
+                                        <span className="text-capitalize"><strong>Platform :</strong> Google Meet</span>
+                                    </div>
+                                ) : (
+                                    <span className="text-capitalize"><strong>Location :</strong> {selectedEvent?.loc_link}</span>
+                                )}
+
+                            </div>
+
+
+                        </div>
+
+                        {/* modal footer */}
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
                         </div>
                     </div>
                 </div>

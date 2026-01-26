@@ -70,7 +70,7 @@ const Registration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         axios.post('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/signup', JSON.stringify(formData), {
             headers: {
                 "Content-Type": "application/json"
@@ -91,13 +91,13 @@ const Registration = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-      
+
         setFormData((prev) => ({
-          ...prev,
-          [name]: value
+            ...prev,
+            [name]: value
         }));
-      };
-      
+    };
+
 
     return (
         <>
@@ -236,8 +236,8 @@ const Registration = () => {
 
                             {/* gender */}
                             <div className='col-12'>
-                                <div className="register-card mb-3 d-flex align-items-center gap-3">
-                                    <span className='mb-1 fs-5 '>Gender :</span>
+                                <div className="register-card mb-3">
+                                    {/* <span className='mb-1 fs-5 '>Gender :</span>
                                     <div className='d-flex gap-1 align-items-center'>
                                         <input type="radio" name='gender' value="male" id='male' required checked={formData.gender == "male"} onChange={handleChange} />
                                         <label htmlFor="male">Male</label>
@@ -249,7 +249,15 @@ const Registration = () => {
                                     <div className='d-flex gap-1 align-items-center'>
                                         <input type="radio" name='gender' value="others" id='others' checked={formData.gender == "others"} onChange={handleChange} />
                                         <label htmlFor="others">Others</label>
-                                    </div>
+                                    </div> */}
+
+                                    <label className="mb-1" htmlFor="gender">Gender:</label>
+                                    <select className="form-select" name="gender" id="gender" value={formData.gender} onChange={handleChange} required>
+                                        <option value="">Please Select Your Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Others</option>
+                                    </select>
 
                                 </div>
                             </div>
