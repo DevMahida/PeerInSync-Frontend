@@ -28,6 +28,8 @@ const Dashboard = () => {
         role: ''
     });
 
+    const [myEvents, setEvents] = useState([]);
+
     useEffect(() => {
 
         const fetchInfo = async () => {
@@ -47,7 +49,19 @@ const Dashboard = () => {
             }
         }
 
+        const getMyEvents = async () => {
+
+            axios.get('https://peerinsync-backend-server.onrender.com/events/myEvents', { withCredentials: true })
+                .then(response => {
+                    setEvents(response.data);
+                    console.log(response.data);
+                })
+                .catch(err => console.log(err));
+        }
+
+        getMyEvents();
         fetchInfo();
+
     }, []);
 
     return (

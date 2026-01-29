@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 import Header from '../header_footer/header.jsx';
@@ -8,6 +8,19 @@ import axios from 'axios';
 import './Event.css';
 
 const Event = () => {
+
+    // to get tomorrow's date
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    const tomorrow = tomorrowDate.toISOString().split("T")[0];
+
+    // to get 2 day's back date
+    const yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 2);
+    const yesterday = yesterdayDate.toISOString().split("T")[0];
+
+    // to get today's date
+    const today = new Date().toISOString().split("T")[0];
 
     const navigate = useNavigate();
 
@@ -27,7 +40,6 @@ const Event = () => {
         role: ''
     });
 
-
     // formData
     const initialFormData = {
         name: '',
@@ -39,6 +51,7 @@ const Event = () => {
         loc_link: ''
     };
 
+    // used for viewEvent modal
     const [selectedEvent, setSelectedEvent] = useState(null);
 
     const [events, setEvents] = useState([]);
@@ -109,14 +122,26 @@ const Event = () => {
             .then(() => {
                 window.alert("Event Registered Successfully");
                 fetchEvents();
+                getMyEvents();
             })
             .catch(err => {
                 console.log(err);
-                window.alert("Error registering for event." + err.message);
+                window.alert("Error registering for event: Event not found, already registered, or event is full | " + err.message);
             })
 
     }
 
+    const [myEvents, setMyEvents] = useState([]);
+
+    const getMyEvents = async () => {
+
+        axios.get('https://peerinsync-backend-server.onrender.com/events/myEvents', { withCredentials: true })
+            .then(response => {
+                setMyEvents(response.data);
+                console.log(response.data);
+            })
+            .catch(err => console.log(err));
+    }
 
     // for fetching details
     useEffect(() => {
@@ -142,12 +167,11 @@ const Event = () => {
             }
         }
 
+        getMyEvents();
         fetchInfo();
         fetchEvents();
 
     }, [])
-
-
 
     return (
         <>
@@ -179,17 +203,25 @@ const Event = () => {
 
                             {/* Events */}
                             <div className="col-lg-4 ">
-                                <div className="border-brown hight-275px bg-cs-secondary1 p-3 rounded-4 text-brown">
+                                <div className="myEvents border-brown hight-275px overflow-auto bg-cs-secondary1 p-3 rounded-4 text-brown">
                                     <span className="h4 ">Participated Events</span>
 
                                     <div className="row mt-3">
                                         <div className="col-12">
-                                            <div className='bg-cs-primary1 p-2 rounded-3 transition-02'>
-                                                <div className='d-flex justify-content-between align-items-center p-1'>
-                                                    <p className='h5 mb-0'>Resume Building Workshop</p>
-                                                    <button className="border-1 rounded-3 p-2 bg-cs-tertory1">Details</button>
-                                                </div>
+                                            <div>
+                                                {myEvents.length === 0 ? (
+                                                    <p className="text-muted">No participated events yet</p>
+                                                ) : (
+                                                    myEvents.map(myEvents => (
+                                                        <div key={myEvents._id} className="bg-cs-primary1 p-2 rounded-3 mb-3">
+                                                            <p className="h5 mb-0">{myEvents.project_title}</p>
+
+                                                            <button className="border-1 rounded-3 p-2 bg-cs-tertory1 mt-2" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(myEvents)}>View Details</button>
+                                                        </div>
+                                                    ))
+                                                )}
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -215,59 +247,65 @@ const Event = () => {
                                 <span className="h4 text-brown">Event List</span>
                             )}
 
-
                             {/* events cards */}
                             <div className="row mt-2 g-3">
-                                {events.map(events => (
-                                    <div className="col-lg-6 d-lg-flex" key={events._id}>
 
-                                        <div className="event-card d-flex bg-cs-primary1 p-3 flex-column flex-grow-1 rounded-3 transition-02">
+                                {events
+                                    .filter(events => events.date >= yesterday) //if date is today - 3 or so then disappear
+                                    .map(events => (
+                                        <div className="col-lg-6 d-lg-flex" key={events._id}>
 
-                                            <div className="d-flex flex-grow-1 justify-content-between">
+                                            <div className="event-card d-flex bg-cs-primary1 p-3 flex-column flex-grow-1 rounded-3 transition-02">
 
-                                                {/* detail */}
-                                                <div className="d-flex flex-column justify-content-between">
-                                                    <h4 className="pb-0 mb-1">{events.project_title}</h4>
+                                                <div className="d-flex flex-grow-1 justify-content-between">
 
-                                                    <p className="mb-0"><strong className="text-capitalize">{events.event_type}</strong> by <strong>{events.name}</strong></p>
+                                                    {/* detail */}
+                                                    <div className="d-flex flex-column justify-content-between w-75">
+                                                        <h4 className="pb-0 mb-1">{events.project_title}</h4>
 
-                                                    {events.event_type === "webinar" ? (
-                                                        <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
-                                                            <span className="text-capitalize"><strong>Platform :</strong> Google Meet</span>
-                                                        </div>
-                                                    ) : (
-                                                        <span className="text-capitalize"><strong>Location :</strong> {events.loc_link}</span>
-                                                    )}
+                                                        <p className="mb-0"><strong className="text-capitalize">{events.event_type}</strong> by <strong>{events.name}</strong></p>
 
-                                                    <span><strong>Date : </strong>{new Date(events.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
-                                                    <span><strong>Time : </strong>{new Date(`1970-01-01T${events.time}`).toLocaleTimeString("en-US", {hour: "numeric",minute: "2-digit",hour12: true,})}</span>
-                                                </div>
+                                                        {events.event_type === "webinar" ? (
+                                                            <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
+                                                                <span className="text-capitalize"><strong>Platform :</strong> Google Meet</span>
+                                                            </div>
+                                                        ) : (
+                                                            <span className="text-capitalize"><strong>Location :</strong> {events.loc_link}</span>
+                                                        )}
 
-                                                {/* btn */}
-                                                <div className="d-flex align-items-center gap-3">
-                                                    {/* <span className="badge text-bg-success">3 days left</span> */}
-                                                    {/* <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1" data-id={events._id} onClick={registerEvent}>Register</button> */}
-                                                    <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(events)}
-                                                    >View Details</button>
+                                                        <span><strong>Date : </strong>{new Date(events.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
+                                                        <span><strong>Time : </strong>{new Date(`1970-01-01T${events.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
+                                                    </div>
+
+                                                    {/* btn */}
+                                                    <div className="d-flex align-items-center gap-3">
+                                                        {events.date === today ? (
+                                                            <span class="badge text-bg-warning">On Going</span>
+                                                        ) : events.date >= tomorrow ?
+                                                            (
+                                                                <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(events)}
+                                                                >View Details</button>
+                                                            ) : (
+                                                                <span class="badge text-bg-success">Completed</span>
+                                                            )}
+
+                                                    </div>
+
                                                 </div>
 
                                             </div>
 
                                         </div>
-
-                                    </div>
-                                ))}
+                                    ))}
                             </div>
 
-
                         </div>
-
 
                     </div>
                 </section>
                 {/* event list ends */}
 
-            </main>
+            </main >
             {/* main ends */}
 
             {/* footer starts */}
@@ -314,7 +352,7 @@ const Event = () => {
                                 {/* date */}
                                 <div>
                                     <label className="mb-1" htmlFor="date">Date :</label>
-                                    <input className="mb-3 form-control" type="date" name="date" id="date" value={formData.date} onChange={handleChange} required />
+                                    <input className="mb-3 form-control" type="date" name="date" id="date" min={tomorrow} value={formData.date} onChange={handleChange} required />
                                 </div>
 
                                 {/* time */}
@@ -396,7 +434,7 @@ const Event = () => {
                             {/* date - time */}
                             <div className="d-flex flex-column">
                                 <span><strong>Date : </strong>{new Date(selectedEvent?.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
-                                <span><strong>Time : </strong>{new Date(`1970-01-01T${selectedEvent?.time}`).toLocaleTimeString("en-US", {hour: "numeric",minute: "2-digit",hour12: true,})}</span>
+                                <span><strong>Time : </strong>{new Date(`1970-01-01T${selectedEvent?.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
                             </div>
 
                             {/* location / link */}

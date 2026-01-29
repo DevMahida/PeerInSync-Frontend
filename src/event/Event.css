@@ -8,6 +8,17 @@
     --bg-profile: #e8d9c5;
 }
 
+.myEvents::-webkit-scrollbar{
+    background-color: var(--bg-cs-secondary);
+    border-radius: 20px;
+    border: 1px solid var(--activity-color);
+}
+
+.myEvents::-webkit-scrollbar-thumb{
+    background-color: var(--activity-color);
+    border-radius: 20px;
+}
+
 .text-cs-primary {
     color: var(--bg-cs-primary);
 }
