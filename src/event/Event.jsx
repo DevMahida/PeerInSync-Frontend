@@ -173,6 +173,8 @@ const Event = () => {
 
     }, [])
 
+    const isRegistered = myEvents.some(myEv => myEv._id === selectedEvent?._id);
+
     return (
         <>
 
@@ -212,7 +214,9 @@ const Event = () => {
                                                 {myEvents.length === 0 ? (
                                                     <p className="text-muted">No participated events yet</p>
                                                 ) : (
-                                                    myEvents.map(myEvents => (
+                                                    myEvents
+                                                    .filter(events => events.date >= yesterday)
+                                                    .map(myEvents => (
                                                         <div key={myEvents._id} className="bg-cs-primary1 p-2 rounded-3 mb-3">
                                                             <p className="h5 mb-0">{myEvents.project_title}</p>
 
@@ -280,13 +284,13 @@ const Event = () => {
                                                     {/* btn */}
                                                     <div className="d-flex align-items-center gap-3">
                                                         {events.date === today ? (
-                                                            <span class="badge text-bg-warning">On Going</span>
+                                                            <span className="badge text-bg-warning">On Going</span>
                                                         ) : events.date >= tomorrow ?
                                                             (
                                                                 <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(events)}
                                                                 >View Details</button>
                                                             ) : (
-                                                                <span class="badge text-bg-success">Completed</span>
+                                                                <span className="badge text-bg-success">Completed</span>
                                                             )}
 
                                                     </div>
@@ -426,7 +430,6 @@ const Event = () => {
 
                             {/* description */}
                             <div>
-
                                 <span><strong>Description :</strong></span>
                                 <p>{selectedEvent?.description}</p>
                             </div>
@@ -450,12 +453,16 @@ const Event = () => {
 
                             </div>
 
-
                         </div>
 
                         {/* modal footer */}
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
+                            {isRegistered ? (
+                                <button type="button" className="btn btn-dark" data-id={selectedEvent?._id}>Unregister</button>
+                            ) : (
+                                <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
+                            )}
+                            {/* <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button> */}
                         </div>
                     </div>
                 </div>
