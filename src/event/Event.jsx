@@ -206,7 +206,7 @@ const Event = () => {
                             {/* Events */}
                             <div className="col-lg-4 ">
                                 <div className="myEvents border-brown hight-275px overflow-auto bg-cs-secondary1 p-3 rounded-4 text-brown">
-                                    <span className="h4 ">Participated Events</span>
+                                    <span className="h4 ">Enrolled Events</span>
 
                                     <div className="row mt-3">
                                         <div className="col-12">
@@ -215,7 +215,7 @@ const Event = () => {
                                                     <p className="text-muted">No participated events yet</p>
                                                 ) : (
                                                     myEvents
-                                                    .filter(events => events.date >= yesterday)
+                                                    .filter(events => events.date >= today)
                                                     .map(myEvents => (
                                                         <div key={myEvents._id} className="bg-cs-primary1 p-2 rounded-3 mb-3">
                                                             <p className="h5 mb-0">{myEvents.project_title}</p>

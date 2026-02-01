@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 
 import Header from '../header_footer/header.jsx';
@@ -12,6 +13,14 @@ import './dashboard.css';
 const Dashboard = () => {
 
     const navigate = useNavigate();
+
+    // to get 2 day's back date
+    const yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 2);
+    const yesterday = yesterdayDate.toISOString().split("T")[0];
+
+    // to get today's date
+    const today = new Date().toISOString().split("T")[0];
 
     const [userData, setUserData] = useState({
 
@@ -64,6 +73,9 @@ const Dashboard = () => {
 
     }, []);
 
+    const isParticipated = myEvents.filter(myEv => myEv.date >= today);
+    const count = isParticipated.length;
+
     return (
         <>
 
@@ -107,8 +119,12 @@ const Dashboard = () => {
                                         </div>
                                         <div className="col-4">
                                             <div>
-                                                <span className="d-block text-center display-4 fw-medium">2</span>
-                                                <span className="d-block text-center lh-sm fw-medium">Upcoming Events</span>
+                                                <Link to="/Event" className="text-decoration-none text-brown">
+                                                    <span className="d-block text-center display-4 fw-medium">
+                                                        {count}
+                                                    </span>
+                                                    <span className="d-block text-center lh-sm fw-medium">Enrolled<br />Events</span>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +141,12 @@ const Dashboard = () => {
                     <div className="container">
                         <div className="border-brown bg-cs-secondary1 p-3 rounded-4 text-brown">
 
-                            <span className="h4 text-brown">Upcoming Events</span>
+                            <div className="d-flex justify-content-between">
+                                <span className="h4 text-brown">Upcoming Events</span>
+                                <Link to="/Event" className="text-decoration-none ">
+                                    <button className="border-1 rounded-3 p-2 bg-cs-tertory1 transition-02 bx-shadow">View All</button>
+                                </Link>
+                            </div>
 
                             {/* upcoming event cards */}
                             <div className="row mt-2 g-3">
@@ -153,7 +174,7 @@ const Dashboard = () => {
                                             </div>
 
                                             {/* btn */}
-                                            <div>
+                                            <div className="d-flex align-items-center">
                                                 <button className="border-1 rounded-3 ms-3 py-1 px-3 bg-cs-tertory1">View <br />Details</button>
                                             </div>
                                         </div>
