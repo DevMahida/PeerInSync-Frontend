@@ -88,7 +88,7 @@ const Event = () => {
 
                 // close bootstrap modal
                 const modalEl = document.getElementById("createEvents");
-                const modalInstance = window.bootstrap.Modal.getInstance(modalEl);
+                const modalInstance = bootstrap.window.Modal.getInstance(modalEl);
 
                 fetchEvents();
 
