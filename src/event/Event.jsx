@@ -87,12 +87,14 @@ const Event = () => {
                 });
 
                 // close bootstrap modal
+                // close bootstrap modal safely
                 const modalEl = document.getElementById("createEvents");
-                const modalInstance = bootstrap.window.Modal.getInstance(modalEl);
+
+                if (modalEl && window.bootstrap) {
+                    window.bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+                }
 
                 fetchEvents();
-
-                modalInstance.hide();
 
             })
             .catch((err) => {
@@ -127,6 +129,26 @@ const Event = () => {
             .catch(err => {
                 console.log(err);
                 window.alert("Error registering for event: Event not found, already registered, or event is full | " + err.message);
+            })
+
+    }
+
+    const unregisterEvent = (e) => {
+
+        e.preventDefault();
+
+        const eventID = e.target.dataset.id;
+        console.log(eventID);
+
+        axios.put('https://peerinsync-backend-server.onrender.com/events/unregister/' + eventID, null, { withCredentials: true })
+            .then(() => {
+                window.alert("Unregistered Successfully");
+                fetchEvents();
+                getMyEvents();
+            })
+            .catch(err => {
+                console.log(err);
+                window.alert("Error unregistering for event: Event not found or already unregistered | " + err.message);
             })
 
     }
@@ -173,7 +195,8 @@ const Event = () => {
 
     }, [])
 
-    const isRegistered = myEvents.some(myEv => myEv._id === selectedEvent?._id);
+    const isRegistered = selectedEvent ? myEvents.some(myEv => myEv._id === selectedEvent._id) : false;
+
 
     return (
         <>
@@ -215,14 +238,14 @@ const Event = () => {
                                                     <p className="text-muted">No participated events yet</p>
                                                 ) : (
                                                     myEvents
-                                                    .filter(events => events.date >= today)
-                                                    .map(myEvents => (
-                                                        <div key={myEvents._id} className="bg-cs-primary1 p-2 rounded-3 mb-3">
-                                                            <p className="h5 mb-0">{myEvents.project_title}</p>
+                                                        .filter(events => events.date >= today)
+                                                        .map(myEvents => (
+                                                            <div key={myEvents._id} className="bg-cs-primary1 p-2 rounded-3 mb-3">
+                                                                <p className="h5 mb-0">{myEvents.project_title}</p>
 
-                                                            <button className="border-1 rounded-3 p-2 bg-cs-tertory1 mt-2" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(myEvents)}>View Details</button>
-                                                        </div>
-                                                    ))
+                                                                <button className="border-1 rounded-3 p-2 bg-cs-tertory1 mt-2" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(myEvents)}>View Details</button>
+                                                            </div>
+                                                        ))
                                                 )}
                                             </div>
 
@@ -369,7 +392,7 @@ const Event = () => {
                                 <div className="">
                                     <label className="mb-1" htmlFor="event_type">Event Type :</label>
                                     <select className="form-select" name="event_type" id="event_type" value={formData.event_type} onChange={handleChange} required>
-                                        <option>Please Select The Event Type</option>
+                                        <option value="">Please Select The Event Type</option>
                                         <option value="seminar">Seminar</option>
                                         <option value="webinar">Webinar</option>
                                         <option value="workshop">Workshop</option>
@@ -393,12 +416,12 @@ const Event = () => {
 
                                 </div>
 
-                            </form>
-                        </div>
+                                {/* submit button */}
+                                <div className="mt-3 text-end">
+                                    <button type="submit" className="btn btn-dark">Create</button>
+                                </div>
 
-                        {/* modal footer */}
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-dark" onClick={handleSubmit}>Create</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -458,7 +481,7 @@ const Event = () => {
                         {/* modal footer */}
                         <div className="modal-footer">
                             {isRegistered ? (
-                                <button type="button" className="btn btn-dark" data-id={selectedEvent?._id}>Unregister</button>
+                                <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={unregisterEvent}>Unregister</button>
                             ) : (
                                 <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
                             )}
