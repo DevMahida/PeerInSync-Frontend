@@ -59,9 +59,14 @@ const Event = () => {
     // used for viewEvent modal
     const [selectedEvent, setSelectedEvent] = useState(null);
 
+    // used for fetching event data inform of array
     const [events, setEvents] = useState([]);
 
+    // used for sending event data to database
     const [formData, setFormData] = useState(initialFormData);
+
+    // for disabling button
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -73,6 +78,9 @@ const Event = () => {
     // for create event
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // set create button to disabled state
+        setIsDisabled(true);
 
         console.log('Text before axois post req');
 
@@ -106,6 +114,12 @@ const Event = () => {
                 console.log(err);
                 window.alert("Error submiting data." + err.message);
             });
+
+        // re-enable button after 4 seconds 
+        setTimeout(() => {
+            setIsDisabled(false);
+        }, 4000);
+
     };
 
     const fetchEvents = async () => {
@@ -118,6 +132,7 @@ const Event = () => {
             .catch(err => console.log(err));
     }
 
+    // used for event registering and unregistering;stores the registerd events details
     const [myEvents, setMyEvents] = useState([]);
 
     const getMyEvents = async () => {
@@ -170,7 +185,7 @@ const Event = () => {
 
     }
 
-    // for fetching details
+    // for fetching user details
     useEffect(() => {
 
         const fetchInfo = async () => {
@@ -200,6 +215,7 @@ const Event = () => {
 
     }, [])
 
+    // if selectedEvent = myEvents then user is registered
     const isRegistered = selectedEvent ? myEvents.some(myEv => myEv._id === selectedEvent._id) : false;
 
     let footerContent;
@@ -232,7 +248,7 @@ const Event = () => {
             footerContent = <span className="dis-unregister" title="Unregistering is not allowed within 2 days of the event.">
                 <button type="button" className="btn btn-dark" disabled>Unregister</button>
             </span>
-            if(selectedEvent?.event_type === "webinar"){
+            if (selectedEvent?.event_type === "webinar") {
                 webinarLink = <span><strong>Link :</strong> {selectedEvent?.loc_link}</span>
             }
 
@@ -470,7 +486,7 @@ const Event = () => {
 
                                 {/* submit button */}
                                 <div className="mt-3 text-end">
-                                    <button type="submit" className="btn btn-dark">Create</button>
+                                    <button type="submit" className="btn btn-dark" disabled={isDisabled}>Create</button>
                                 </div>
 
                             </form>
