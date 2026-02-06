@@ -22,6 +22,11 @@ const Event = () => {
     // to get today's date
     const today = new Date().toISOString().split("T")[0];
 
+    // to get tomorrow's date + 1
+    const TwoDaysLaterDate = new Date();
+    TwoDaysLaterDate.setDate(TwoDaysLaterDate.getDate() + 2);
+    const TwoDaysLater = TwoDaysLaterDate.toISOString().split("T")[0];
+
     const navigate = useNavigate();
 
     // read userInfo
@@ -113,6 +118,18 @@ const Event = () => {
             .catch(err => console.log(err));
     }
 
+    const [myEvents, setMyEvents] = useState([]);
+
+    const getMyEvents = async () => {
+
+        axios.get('https://peerinsync-backend-server.onrender.com/events/myEvents', { withCredentials: true })
+            .then(response => {
+                setMyEvents(response.data);
+                console.log(response.data);
+            })
+            .catch(err => console.log(err));
+    }
+
     const registerEvent = (e) => {
 
         e.preventDefault();
@@ -153,18 +170,6 @@ const Event = () => {
 
     }
 
-    const [myEvents, setMyEvents] = useState([]);
-
-    const getMyEvents = async () => {
-
-        axios.get('https://peerinsync-backend-server.onrender.com/events/myEvents', { withCredentials: true })
-            .then(response => {
-                setMyEvents(response.data);
-                console.log(response.data);
-            })
-            .catch(err => console.log(err));
-    }
-
     // for fetching details
     useEffect(() => {
 
@@ -197,6 +202,48 @@ const Event = () => {
 
     const isRegistered = selectedEvent ? myEvents.some(myEv => myEv._id === selectedEvent._id) : false;
 
+    let footerContent;
+
+    // for tooltips
+    useEffect(() => {
+        if (!window.bootstrap) return;
+
+        const modalEl = document.getElementById("viewEvents");
+        if (!modalEl) return;
+
+        const handleShown = () => {
+            const tooltips = modalEl.querySelectorAll('[data-bs-toggle="tooltip"]');
+            tooltips.forEach(el => {
+                new window.bootstrap.Tooltip(el);
+            });
+        };
+
+        modalEl.addEventListener("shown.bs.modal", handleShown);
+
+        return () => {
+            modalEl.removeEventListener("shown.bs.modal", handleShown);
+        };
+    }, []);
+
+
+    if (selectedEvent?.date >= today && selectedEvent?.date <= TwoDaysLater) {
+        if (isRegistered) {
+            footerContent = <span className="dis-unregister" title="Unregistering is not allowed within 2 days of the event.">
+                <button type="button" className="btn btn-dark" disabled>Unregister</button>
+            </span>
+
+
+        } else {
+            footerContent = <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
+        }
+    }
+    else {
+        if (isRegistered) {
+            footerContent = <button type="button" className="btn btn-dark" data- id={selectedEvent?._id} onClick={unregisterEvent}>Unregister</button>
+        } else {
+            footerContent = <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
+        }
+    }
 
     return (
         <>
@@ -480,19 +527,15 @@ const Event = () => {
 
                         {/* modal footer */}
                         <div className="modal-footer">
-                            {isRegistered ? (
-                                <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={unregisterEvent}>Unregister</button>
-                            ) : (
-                                <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
-                            )}
-                            {/* <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button> */}
+                            {footerContent}
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
         </>
     );
 }
 
 export default Event;
+

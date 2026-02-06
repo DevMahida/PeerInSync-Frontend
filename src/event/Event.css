@@ -10,7 +10,7 @@
 
 .myEvents::-webkit-scrollbar{
     background-color: var(--bg-cs-secondary);
-    border-radius: 20px;
+    border-radius: 100px;
     border: 1px solid var(--activity-color);
 }
 
@@ -88,6 +88,10 @@
 .event-modal select:focus {
     box-shadow: none !important;
     border: 1px solid #000 !important;
+}
+
+.dis-unregister{
+    cursor: not-allowed !important;
 }
 
 @media (min-width:576px) {
