@@ -203,6 +203,7 @@ const Event = () => {
     const isRegistered = selectedEvent ? myEvents.some(myEv => myEv._id === selectedEvent._id) : false;
 
     let footerContent;
+    let webinarLink;
 
     // for tooltips
     useEffect(() => {
@@ -231,7 +232,9 @@ const Event = () => {
             footerContent = <span className="dis-unregister" title="Unregistering is not allowed within 2 days of the event.">
                 <button type="button" className="btn btn-dark" disabled>Unregister</button>
             </span>
-
+            if(selectedEvent?.event_type === "webinar"){
+                webinarLink = <span><strong>Link :</strong> {selectedEvent?.loc_link}</span>
+            }
 
         } else {
             footerContent = <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
@@ -285,7 +288,8 @@ const Event = () => {
                                                     <p className="text-muted">No participated events yet</p>
                                                 ) : (
                                                     myEvents
-                                                        .filter(events => events.date >= today)
+                                                        .filter(events => events.date >= today) //shows events only for today and future
+                                                        .sort((a, b) => new Date(a.date) - new Date(b.date)) //sort by date (ascending order)
                                                         .map(myEvents => (
                                                             <div key={myEvents._id} className="bg-cs-primary1 p-2 rounded-3 mb-3">
                                                                 <p className="h5 mb-0">{myEvents.project_title}</p>
@@ -326,6 +330,7 @@ const Event = () => {
 
                                 {events
                                     .filter(events => events.date >= yesterday) //if date is today - 3 or so then disappear
+                                    .sort((a, b) => new Date(a.date) - new Date(b.date)) //sort by date (ascending order)
                                     .map(events => (
                                         <div className="col-lg-6 d-lg-flex" key={events._id}>
 
@@ -514,8 +519,9 @@ const Event = () => {
                             <div className="mt-2">
 
                                 {selectedEvent?.event_type === "webinar" ? (
-                                    <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
+                                    <div className="d-flex flex-column justify-content-between  mb-0 pb-0">
                                         <span className="text-capitalize"><strong>Platform :</strong> Google Meet</span>
+                                        {webinarLink}
                                     </div>
                                 ) : (
                                     <span className="text-capitalize"><strong>Location :</strong> {selectedEvent?.loc_link}</span>
