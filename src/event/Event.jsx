@@ -122,15 +122,23 @@ const Event = () => {
 
     };
 
+    // refrsh event list
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
     const fetchEvents = async () => {
+
+        setIsRefreshing(true); // start rotating
 
         axios.get('https://peerinsync-backend-server.onrender.com/events/getEvents', { withCredentials: true })
             .then(response => {
                 setEvents(response.data);
                 console.log(response.data);
             })
-            .catch(err => console.log(err));
-    }
+            .catch(err => console.log(err))
+            .finally(() => {
+                setIsRefreshing(false); // stop rotation
+            });
+    };
 
     // used for event registering and unregistering;stores the registerd events details
     const [myEvents, setMyEvents] = useState([]);
@@ -258,7 +266,7 @@ const Event = () => {
     }
     else {
         if (isRegistered) {
-            footerContent = <button type="button" className="btn btn-dark" data- id={selectedEvent?._id} onClick={unregisterEvent}>Unregister</button>
+            footerContent = <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={unregisterEvent}>Unregister</button>
         } else {
             footerContent = <button type="button" className="btn btn-dark" data-id={selectedEvent?._id} onClick={registerEvent}>Register</button>
         }
@@ -335,10 +343,29 @@ const Event = () => {
                             {userData.role === "alumni" ? (
                                 <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
                                     <span className="h4 text-brown mb-0">Event List</span>
-                                    <button className="border-1 rounded-3 p-2 bg-cs-tertory1 transition-02 bx-shadow" data-bs-toggle="modal" data-bs-target="#createEvents"><i className="ri-add-large-line"></i> Create Event</button>
+                                    <div className="d-flex align-items-center gap-2">
+
+                                        {/* refresh button */}
+                                        <button className="refresh-btn fs-2 p-0 btn border-0 rounded-5" onClick={fetchEvents} disabled={isRefreshing}>
+                                            <i className={`ri-refresh-line ${isRefreshing ? "spin" : ""}`}></i>
+                                        </button>
+
+                                        <button className="border-1 rounded-3 p-2 bg-cs-tertory1 transition-02 bx-shadow" data-bs-toggle="modal" data-bs-target="#createEvents">
+                                            <i className="ri-add-large-line"></i> Create Event
+                                        </button>
+                                    </div>
+
                                 </div>
                             ) : (
-                                <span className="h4 text-brown">Event List</span>
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <span className="h4 text-brown">Event List</span>
+
+                                    {/* refresh button */}
+                                    <button className="refresh-btn fs-2 p-0 btn border-0 rounded-5" onClick={fetchEvents} disabled={isRefreshing}>
+                                        <i className={`ri-refresh-line ${isRefreshing ? "spin" : ""}`}></i>
+                                    </button>
+                                </div>
+
                             )}
 
                             {/* events cards */}

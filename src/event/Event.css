@@ -8,13 +8,13 @@
     --bg-profile: #e8d9c5;
 }
 
-.myEvents::-webkit-scrollbar{
+.myEvents::-webkit-scrollbar {
     background-color: var(--bg-cs-secondary);
     border-radius: 100px;
     border: 1px solid var(--activity-color);
 }
 
-.myEvents::-webkit-scrollbar-thumb{
+.myEvents::-webkit-scrollbar-thumb {
     background-color: var(--activity-color);
     border-radius: 20px;
 }
@@ -90,9 +90,36 @@
     border: 1px solid #000 !important;
 }
 
-.dis-unregister{
+.dis-unregister {
     cursor: not-allowed !important;
 }
+
+/* ## reload animation ## */
+
+.refresh-btn i {
+    display: inline-block;
+  }
+  
+  /* spinning animation */
+  .spin {
+    animation: rotate 0.5s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* optional polish */
+  .refresh-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+  }
+
 
 @media (min-width:576px) {
     .event-banner {
