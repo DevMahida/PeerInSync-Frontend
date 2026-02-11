@@ -87,21 +87,22 @@ const Dashboard = () => {
             }
         }
 
-        const getMyEvents = async () => {
-
-            axios.get('https://peerinsync-backend-server.onrender.com/events/myEvents', { withCredentials: true })
-                .then(response => {
-                    setMyEvents(response.data);
-                    console.log(response.data);
-                })
-                .catch(err => console.log(err));
-        }
-
         getMyEvents();
         fetchInfo();
         fetchEvents();
 
     }, []);
+
+    // for fetching registered events
+    const getMyEvents = async () => {
+
+        axios.get('https://peerinsync-backend-server.onrender.com/events/myEvents', { withCredentials: true })
+            .then(response => {
+                setMyEvents(response.data);
+                console.log(response.data);
+            })
+            .catch(err => console.log(err));
+    }
 
     const registerEvent = (e) => {
 
