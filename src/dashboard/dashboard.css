@@ -1,30 +1,30 @@
 :root {
-    --activity-color:#461e11;
-    --bg-cs-primary:#fdf6ea;
-    --bg-cs-secondary:#f5e9d4;
-    --bg-cs-tertory:#e8d9c5;
+    --activity-color: #461e11;
+    --bg-cs-primary: #fdf6ea;
+    --bg-cs-secondary: #f5e9d4;
+    --bg-cs-tertory: #e8d9c5;
     --bg-cs-footer: #f8e7d1;
     --hover-active-color: #3F7F7A;
     --bg-profile: #e8d9c5;
 }
 
-.text-cs-primary{
+.text-cs-primary {
     color: var(--bg-cs-primary);
 }
 
-.bg-cs-primary1{
+.bg-cs-primary1 {
     background-color: var(--bg-cs-primary);
 }
 
-.bg-cs-footer01{
+.bg-cs-footer01 {
     background-color: #0b473b;
 }
 
-.bg-cs-secondary1{
+.bg-cs-secondary1 {
     background-color: var(--bg-cs-secondary);
 }
 
-.bg-cs-tertory1{
+.bg-cs-tertory1 {
     background-color: var(--bg-cs-tertory);
 }
 
@@ -32,7 +32,7 @@
     background-color: var(--bg-profile);
 }
 
-.text-brown{
+.text-brown {
     color: var(--activity-color);
 }
 
@@ -44,24 +44,17 @@
     transition: all 0.2s linear;
 }
 
-.transition-02{
+.transition-02 {
     transition: all 0.2s linear;
 }
 
-.transition-02:hover{
+.transition-02:hover {
     transform: scale(1.015);
 }
 
-.border-brown{
+.border-brown {
     border: 3px solid var(--activity-color);
 }
-
-
-
-
-
-
-
 
 
 /* ######################### 
@@ -84,35 +77,57 @@
 /* banner MQ */
 @media (max-width: 768px) {
 
-    .dash-banner{
+    .dash-banner {
         height: 250px;
     }
 
-  .dash-banner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 10px;
-    background: linear-gradient(
-      180deg,
-      #00000066,
-      #00000099
-    );
-  }
+    .dash-banner::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 10px;
+        background: linear-gradient(180deg,
+                #00000066,
+                #00000099);
+    }
 
-  .dash-banner * {
-    position: relative;
-    z-index: 1;
-  }
+    .dash-banner * {
+        position: relative;
+        z-index: 1;
+    }
 }
 
 /* upcoming events */
-.icon-span{
+.icon-span {
     width: 40px;
     height: 40px;
 }
-@media (min-width:576px) {
-    .h-130px{
-        height: 140px;
+
+@media (max-width:375px) {
+    .col-cm-12{
+        width: 100% !important;
+    }
+    .view-btn{
+        margin : 0 30px;
+        margin-top: 10px;
+        flex-grow: 1;
+    }
+}
+
+@media (min-width:992px) {
+    .h-130px {
+        height: 175px;
+    }
+}
+
+@media (min-width:1200px) {
+    .h-130px {
+        height: 250px;
+    }
+}
+
+@media (min-width:1400px) {
+    .h-130px {
+        height: 175px;
     }
 }

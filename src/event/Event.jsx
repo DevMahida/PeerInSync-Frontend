@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../header_footer/header.jsx';
 import axios from 'axios';
 
-
 import './Event.css';
 
 const Event = () => {
@@ -125,7 +124,8 @@ const Event = () => {
     // refrsh event list
     const [isRefreshing, setIsRefreshing] = useState(false);
 
-    const fetchEvents = async () => {
+    // fetch events from data base
+    const fetchEvents = () => {
 
         setIsRefreshing(true); // start rotating
 
@@ -143,6 +143,7 @@ const Event = () => {
     // used for event registering and unregistering;stores the registerd events details
     const [myEvents, setMyEvents] = useState([]);
 
+    // for fetching registered events
     const getMyEvents = async () => {
 
         axios.get('https://peerinsync-backend-server.onrender.com/events/myEvents', { withCredentials: true })
@@ -272,6 +273,47 @@ const Event = () => {
         }
     }
 
+    const latestOnClick = () => {
+        setSortBy("latest");
+        setCurrentPage(1);
+    }
+    const eventDateOnClick = () => {
+        setSortBy("eventdate");
+        setCurrentPage(1);
+    }
+
+
+
+    // for event list sorter
+    const [sortBy, setSortBy] = useState("latest");
+
+    // sorting / filter of events
+    const sortedEvents = [...events]
+        .filter(ev => new Date(ev.date) >= new Date(yesterday))
+        .sort((a, b) => {
+            if (sortBy === "eventdate") {
+                return new Date(a.date) - new Date(b.date);
+            }
+            if (sortBy === "latest") {
+                return new Date(b.creationDate) - new Date(a.creationDate);
+            }
+            return 0;
+        });
+
+    // pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const eventsPerPage = 8;
+
+    const indexOfLastEvent = currentPage * eventsPerPage;
+    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+
+    const currentEvents = sortedEvents.slice(
+        indexOfFirstEvent,
+        indexOfLastEvent
+    );
+
+    const totalPages = Math.ceil(sortedEvents.length / eventsPerPage);
+
     return (
         <>
 
@@ -313,7 +355,7 @@ const Event = () => {
                                                 ) : (
                                                     myEvents
                                                         .filter(events => events.date >= today) //shows events only for today and future
-                                                        .sort((a, b) => new Date(a.date) - new Date(b.date)) //sort by date (ascending order)
+                                                        .sort((a, b) => new Date(a.date) - new Date(b.date)) //sort by Event date (ascending order)
                                                         .map(myEvents => (
                                                             <div key={myEvents._id} className="bg-cs-primary1 p-2 rounded-3 mb-3">
                                                                 <p className="h5 mb-0">{myEvents.project_title}</p>
@@ -341,15 +383,58 @@ const Event = () => {
 
                             {/* title */}
                             {userData.role === "alumni" ? (
-                                <div className="d-flex justify-content-between align-items-center mb-0 pb-0">
-                                    <span className="h4 text-brown mb-0">Event List</span>
-                                    <div className="d-flex align-items-center gap-2">
+                                <div className="d-flex justify-content-between align-items-center flex-wrap g-2 mb-0 pb-0">
+                                    <span className="h4 text-brown mb-0 pe-2">Event List</span>
+                                    <div className="d-flex align-items-center flex-wrap gap-2">
 
-                                        {/* refresh button */}
-                                        <button className="refresh-btn fs-2 p-0 btn border-0 rounded-5" onClick={fetchEvents} disabled={isRefreshing}>
-                                            <i className={`ri-refresh-line ${isRefreshing ? "spin" : ""}`}></i>
-                                        </button>
+                                        {/* refresh / filter button */}
+                                        <div className="d-flex gap-2 align-items-center">
 
+                                            {/* refresh button */}
+                                            <button className="refresh-btn fs-2 p-0 btn border-0 rounded-5" onClick={fetchEvents} disabled={isRefreshing}>
+                                                <i className={`ri-refresh-line ${isRefreshing ? "spin" : ""}`} title="Refresh"></i>
+                                            </button>
+
+                                            {/* filter option */}
+                                            <div className="dropdown bg-cs-tertory1">
+                                                <button className="btn dropdown-toggle border-1 filter-option" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i className="ri-filter-2-fill"></i>
+                                                </button>
+
+                                                <ul className="dropdown-menu mt-1 width-250px">
+
+                                                    <li className="dropdown-item pointer" onClick={latestOnClick}>
+                                                        <div className="row">
+                                                            <div className="col-2">
+                                                                <div>
+                                                                    {sortBy === "latest" && <span><i className="ri-check-line"></i></span>}
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-10">
+                                                                <div>Sort By : Latest</div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li className="dropdown-item pointer" onClick={eventDateOnClick}>
+                                                        <div className="row">
+                                                            <div className="col-2">
+                                                                <div>
+                                                                    {sortBy === "eventdate" && <span><i className="ri-check-line"></i></span>}
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-10">
+                                                                <div>Sort By : Event Date</div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                        {/* create event button */}
                                         <button className="border-1 rounded-3 p-2 bg-cs-tertory1 transition-02 bx-shadow" data-bs-toggle="modal" data-bs-target="#createEvents">
                                             <i className="ri-add-large-line"></i> Create Event
                                         </button>
@@ -365,16 +450,17 @@ const Event = () => {
                                         <i className={`ri-refresh-line ${isRefreshing ? "spin" : ""}`}></i>
                                     </button>
                                 </div>
-
                             )}
 
                             {/* events cards */}
                             <div className="row mt-2 g-3">
 
-                                {events
-                                    .filter(events => events.date >= yesterday) //if date is today - 3 or so then disappear
-                                    .sort((a, b) => new Date(a.date) - new Date(b.date)) //sort by date (ascending order)
-                                    .map(events => (
+                                {currentEvents === 0 ?
+                                    (<div className="text-center py-4">
+                                        <p className="text-muted mb-0">No events available at the moment.</p>
+                                    </div>
+                                    )
+                                    : (currentEvents.map(events => (
                                         <div className="col-lg-6 d-lg-flex" key={events._id}>
 
                                             <div className="event-card d-flex bg-cs-primary1 p-3 flex-column flex-grow-1 rounded-3 transition-02">
@@ -397,6 +483,7 @@ const Event = () => {
 
                                                         <span><strong>Date : </strong>{new Date(events.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
                                                         <span><strong>Time : </strong>{new Date(`1970-01-01T${events.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
+                                                        <span><strong>Created On </strong>{new Date(events.creationDate).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
                                                     </div>
 
                                                     {/* btn */}
@@ -405,8 +492,9 @@ const Event = () => {
                                                             <span className="badge text-bg-warning">On Going</span>
                                                         ) : events.date >= tomorrow ?
                                                             (
-                                                                <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(events)}
-                                                                >View Details</button>
+                                                                <button className="border-1 rounded-3 mx-1 p-2 bg-cs-tertory1" data-bs-toggle="modal" data-bs-target="#viewEvents" onClick={() => setSelectedEvent(events)}>
+                                                                    View Details
+                                                                </button>
                                                             ) : (
                                                                 <span className="badge text-bg-success">Completed</span>
                                                             )}
@@ -418,15 +506,38 @@ const Event = () => {
                                             </div>
 
                                         </div>
-                                    ))}
+                                    ))
+                                    )
+                                }
                             </div>
 
-                        </div>
+                            {/* pagination */}
+                            <nav aria-label="Page navigation">
+                                <ul className="pagination mt-5 gap-2 justify-content-center">
+                                    <li className="page-item">
+                                        <button className="btn btn-outline-dark" disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}>
+                                            Preview
+                                        </button>
+                                    </li>
+                                    <li className="page-item">
+                                        {[...Array(totalPages)].map((_, index) => (
+                                            <button key={index} className={`btn ${currentPage === index + 1 ? "btn-dark" : "btn-outline-dark"} me-2`} onClick={() => setCurrentPage(index + 1)}>
+                                                {index + 1}
+                                            </button>
+                                        ))}
+                                    </li>
+                                    <li className="page-item">
+                                        <button className="btn btn-outline-dark" disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}>
+                                            Next
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
 
+                        </div>
                     </div>
                 </section>
                 {/* event list ends */}
-
             </main >
             {/* main ends */}
 

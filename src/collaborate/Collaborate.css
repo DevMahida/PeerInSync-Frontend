@@ -1,0 +1,109 @@
+:root {
+    --activity-color: #461e11;
+    --bg-cs-primary: #fdf6ea;
+    --bg-cs-secondary: #f5e9d4;
+    --bg-cs-tertory: #e8d9c5;
+    --bg-cs-footer: #f8e7d1;
+    --hover-active-color: #3F7F7A;
+    --bg-profile: #e8d9c5;
+}
+
+input {
+    margin-left: 10px;
+}
+
+select {
+    margin-left: 24px;
+}
+
+table, th, td {
+    border: 1px solid black; /* Sets a 1-pixel solid black border */
+}
+
+.pageTitle {
+    margin: 20px;
+}
+
+.createBtn {
+    background: var(--bg-cs-tertory);
+    border-width: 1px;
+    padding: 10px 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.createBtn:hover {
+    background: #c0b3a1;
+}
+
+.createTitle {
+    margin: 30px;
+}
+
+.projTitle {
+    position: relative;
+    right: 64px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fileName {
+    position: relative;
+    right: 58px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.projLang {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.subButton {
+    background-color: var(--bg-cs-secondary);
+    padding: 10px 15px;
+    font-size: 20px;
+    border-width: 1px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.subButton:hover {
+    background-color: #f4e3c4cd;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    display: none;
+
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.overlayContent {
+    position: relative;
+    top: 46%;
+    width: 80%;
+    text-align: center;
+    color: white;
+    margin-top: 30px;
+    margin: auto;
+}
+
+.overlay .closeBtn {
+    position: absolute;
+    bottom: 230px;
+    right: 350px;
+    font-size: 40px;
+    cursor: pointer;
+    color: white;
+    font-family: Arial;
+  }
+  
+.overlay .closeBtn:hover {
+    color: #ccc;
+}

@@ -75,6 +75,10 @@
     height: 275px;
 }
 
+.width-250px{
+    width: 200px !important;
+}
+
 /* main - event banner */
 .event-banner {
     height: 275px;
@@ -85,13 +89,19 @@
     background-position: center right;
 }
 
-.event-modal select:focus {
+select:focus {
     box-shadow: none !important;
     border: 1px solid #000 !important;
 }
 
 .dis-unregister {
     cursor: not-allowed !important;
+}
+
+/* ####  event ##### */
+.filter-option{
+    border: 1px solid #000 !important;
+    cursor: pointer;
 }
 
 /* ## reload animation ## */
@@ -131,9 +141,3 @@
         background-position: center right;
     }
 }
-
-/* @media (min-width:992px) {
-    .event-card{
-        height: 140px;
-    }
-} */

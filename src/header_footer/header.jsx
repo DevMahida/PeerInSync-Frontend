@@ -139,8 +139,9 @@ const Header = () => {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item d-flex">
-                                    <NavLink to="/alumni" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
-                                        Collaboration
+                                    {/*Darsh*/}
+                                    <NavLink to="/Collaborate" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
+                                        Collaborate
                                     </NavLink>
                                 </li>
                             </ul>
