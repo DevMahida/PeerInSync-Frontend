@@ -1,0 +1,13 @@
+:root {
+    --activity-color: #461e11;
+    --bg-cs-primary: #fdf6ea;
+    --bg-cs-secondary: #f5e9d4;
+    --bg-cs-tertory: #e8d9c5;
+    --bg-cs-footer: #f8e7d1;
+    --hover-active-color: #3F7F7A;
+    --bg-profile: #e8d9c5;
+}
+
+.bg {
+    background: #000;
+}

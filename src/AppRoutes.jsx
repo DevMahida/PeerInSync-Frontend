@@ -15,6 +15,7 @@ import Update from './update/update.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
 import Event from './event/Event.jsx';
 import Collaborate from './collaborate/Collaborate.jsx'  //Darsh
+import Project from './collaborate/Project.jsx'  //Darsh
 
 function AppRoutes() {
   useOffcanvasCleanup();
@@ -34,6 +35,7 @@ function AppRoutes() {
         <Route path='/Dashboard' element={<Dashboard />} /> 
         <Route path='/Event' element={<Event />} />
         <Route path="/Collaborate" element={<Collaborate />} />   {/*Darsh*/}
+        <Route path="/Project" element={<Project />} />   {/*Darsh*/}
       </Routes>
 
       {/*Toast Container */}

@@ -5,6 +5,7 @@ import Header from '../header_footer/header.jsx';
 import axios from 'axios';
 
 import './Event.css';
+import { FormControl, Select, MenuItem} from "@mui/material";
 
 const Event = () => {
 
@@ -567,42 +568,44 @@ const Event = () => {
                                 {/* project title */}
                                 <div>
                                     <label className="mb-1" htmlFor="project_title">Project Title :</label>
-                                    <input className="mb-2 form-control" type="text" name="project_title" id="project_title" value={formData.project_title} onChange={handleChange} required />
+                                    <input className="mb-2 mx-1 form-control" type="text" name="project_title" id="project_title" value={formData.project_title} onChange={handleChange} required />
                                 </div>
 
                                 {/* host */}
                                 <div>
                                     <label className="mb-1" htmlFor="host">Conducted By :</label>
-                                    <input className="mb-2 form-control" type="text" name="host" id="host" value={userData.fName + " " + userData.lName} disabled />
+                                    <input className="mb-2 mx-1 form-control" type="text" name="host" id="host" value={userData.fName + " " + userData.lName} disabled />
                                 </div>
 
                                 {/* description */}
                                 <div>
                                     <label className="mb-1" htmlFor="description">Description :</label>
-                                    <textarea className="mb-2 form-control" name="description" id="description" rows={3} value={formData.description} onChange={handleChange} required></textarea>
+                                    <textarea className="mb-2 mx-1 form-control" name="description" id="description" rows={3} value={formData.description} onChange={handleChange} required></textarea>
                                 </div>
 
                                 {/* date */}
                                 <div>
                                     <label className="mb-1" htmlFor="date">Date :</label>
-                                    <input className="mb-3 form-control" type="date" name="date" id="date" min={tomorrow} value={formData.date} onChange={handleChange} required />
+                                    <input className="mb-3 mx-1 form-control" type="date" name="date" id="date" min={tomorrow} value={formData.date} onChange={handleChange} required />
                                 </div>
 
                                 {/* time */}
                                 <div>
                                     <label className="mb-1" htmlFor="time">Time :</label>
-                                    <input className="mb-3 form-control" type="time" name="time" id="time" value={formData.time} onChange={handleChange} required />
+                                    <input className="mb-3 mx-1 form-control" type="time" name="time" id="time" value={formData.time} onChange={handleChange} required />
                                 </div>
 
                                 {/* event type */}
-                                <div className="">
-                                    <label className="mb-1" htmlFor="event_type">Event Type :</label>
-                                    <select className="form-select" name="event_type" id="event_type" value={formData.event_type} onChange={handleChange} required>
-                                        <option value="">Please Select The Event Type</option>
-                                        <option value="seminar">Seminar</option>
-                                        <option value="webinar">Webinar</option>
-                                        <option value="workshop">Workshop</option>
-                                    </select>
+                                <div className="create-modal">
+                                    <FormControl fullWidth className="mx-1">
+                                        <label className="mb-1" htmlFor="event_type">Event Type :</label>
+
+                                        <Select className='p-0 bg-white' size='small' name="event_type" id="event_type" value={formData.event_type || ""} onChange={handleChange} required>
+                                            <MenuItem value="seminar">Seminar</MenuItem>
+                                            <MenuItem value="webinar">Webinar</MenuItem>
+                                            <MenuItem value="workshop">Workshop</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                 </div>
 
                                 {/* location / link */}
@@ -611,12 +614,12 @@ const Event = () => {
                                     {formData.event_type === "webinar" ? (
                                         <div>
                                             <label className="mb-1" htmlFor="loc_link">Link :</label>
-                                            <input className="mb-2 form-control" type="text" name="loc_link" id="loc_link" value={formData.loc_link} onChange={handleChange} placeholder="Google Meet link only" required />
+                                            <input className="mb-2 mx-1 form-control" type="text" name="loc_link" id="loc_link" value={formData.loc_link} onChange={handleChange} placeholder="Google Meet link only" required />
                                         </div>
                                     ) : (
                                         <div>
                                             <label className="mb-1" htmlFor="loc_link">Location :</label>
-                                            <input className="mb-2 form-control" type="text" name="loc_link" id="loc_link" value={formData.loc_link} onChange={handleChange} required />
+                                            <input className="mb-2 mx-1 form-control" type="text" name="loc_link" id="loc_link" value={formData.loc_link} onChange={handleChange} required />
                                         </div>
                                     )}
 

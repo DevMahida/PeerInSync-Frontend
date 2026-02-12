@@ -1,14 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useState } from 'react';
 // CODE BY DARSH
 import axios from 'axios';
 
 import '../registration_form/Registration.css';
-// import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import * as React from 'react';
 import colleges from '../javaScript/Colleges.js';
-import { createFilterOptions } from '@mui/material/Autocomplete';
+
+import { FormControl, Select, MenuItem, Autocomplete, TextField, createFilterOptions } from "@mui/material";
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -124,7 +123,7 @@ const Registration = () => {
                             <div className='col-12'>
                                 <div className="register-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="fName">First Name:</label><br />
-                                    <input className='form-control bg-white' type="text" name='fName' id='fName' autoComplete='given-name' value={formData.fName} onChange={handleChange} required />
+                                    <input className='form-control bg-white mx-1' type="text" name='fName' id='fName' autoComplete='given-name' value={formData.fName} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -132,7 +131,7 @@ const Registration = () => {
                             <div className='col-12'>
                                 <div className="register-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="lName">Last Name:</label><br />
-                                    <input className='form-control' type="text" name='lName' id='lName' autoComplete='given-name' value={formData.lName} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="text" name='lName' id='lName' autoComplete='given-name' value={formData.lName} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -140,7 +139,7 @@ const Registration = () => {
                             <div className='col-12'>
                                 <div className="register-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="email">Email:</label><br />
-                                    <input className='form-control' type="email" name='email' id='email' autoComplete="email" value={formData.email} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="email" name='email' id='email' autoComplete="email" value={formData.email} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -149,7 +148,7 @@ const Registration = () => {
                                 <div className="register-card mb-3">
 
                                     <label className='mb-1 fs-5' htmlFor="password">Password:</label><br />
-                                    <div className="register-password form-control d-flex justify-content-between align-items-center">
+                                    <div className="register-password mx-1 form-control d-flex justify-content-between align-items-center">
                                         <input className='border-0' type={showPassword ? "text" : "password"} name="password" id='password' autoComplete="new-password" value={formData.password} onChange={handlePasswordChange} required />
                                         <i className={showPassword ? "ri-eye-off-line" : "ri-eye-line"} onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}></i>
                                     </div>
@@ -171,15 +170,15 @@ const Registration = () => {
                             <div className='col-12'>
                                 <div className="register-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="mobile_no">Mobile No.:</label><br />
-                                    <input className='form-control' type="tel" name='mobile_no' id='mobile_no' maxLength={10} pattern="[0-9]{10}" inputMode='numeric' autoComplete='tel-national' value={formData.mobile_no} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="tel" name='mobile_no' id='mobile_no' maxLength={10} pattern="[0-9]{10}" inputMode='numeric' autoComplete='tel-national' value={formData.mobile_no} onChange={handleChange} required />
                                 </div>
                             </div>
 
                             {/* college name */}
                             <div className='col-12'>
-                                <div className="register-card mb-3">
+                                <div className="register-card mb-3 w-100">
                                     <label className='fs-5 mb-1' htmlFor="college_name">College Name</label>
-                                    <Autocomplete className='form-control p-0 rounded-1'
+                                    <Autocomplete className='form-control p-0 rounded-1 mx-1'
                                         disablePortal
                                         id="college_name"
                                         options={colleges}
@@ -198,23 +197,23 @@ const Registration = () => {
                                             />
                                         )}
                                     />
-
-
                                 </div>
                             </div>
 
                             {/* Year of studying */}
                             <div className='col-12'>
                                 <div className="register-card mb-3">
-                                    <label className='fs-5 mb-1' htmlFor="current_year_of_study">Current Year of Studying:</label><br />
-                                    <select className="form-select" name="current_year_of_study" id="current_year_of_study" value={formData.current_year_of_study} onChange={handleChange} required>
-                                        <option >Year of Studying</option>
-                                        <option value="1">1st Year</option>
-                                        <option value="2">2nd Year</option>
-                                        <option value="3">3rd Year</option>
-                                        <option value="4">4th Year</option>
-                                        <option value="grad">Graduated</option>
-                                    </select>
+                                    <FormControl fullWidth className="mx-1">
+                                        <label className='fs-5 mb-1' htmlFor="current_year_of_study">Current Year of Studying:</label>
+
+                                        <Select className='p-0 bg-white' size='small' id="current_year_of_study" name="current_year_of_study" value={formData.current_year_of_study || ""} onChange={handleChange} required>
+                                            <MenuItem value="1">1st Year</MenuItem>
+                                            <MenuItem value="2">2nd Year</MenuItem>
+                                            <MenuItem value="3">3rd Year</MenuItem>
+                                            <MenuItem value="4">4th Year</MenuItem>
+                                            <MenuItem value="grad">Graduated</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                 </div>
                             </div>
 
@@ -222,7 +221,7 @@ const Registration = () => {
                             <div className='col-12'>
                                 <div className="register-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="course_name">Course:</label><br />
-                                    <input className='form-control' type="text" name='course_name' id='course_name' autoComplete='off' value={formData.course_name} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="text" name='course_name' id='course_name' autoComplete='off' value={formData.course_name} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -230,41 +229,29 @@ const Registration = () => {
                             <div className='col-12'>
                                 <div className="register-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="branch">Branch:</label><br />
-                                    <input className='form-control' type="text" name='branch' id='branch' autoComplete='off' value={formData.branch} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="text" name='branch' id='branch' autoComplete='off' value={formData.branch} onChange={handleChange} required />
                                 </div>
                             </div>
 
                             {/* gender */}
                             <div className='col-12'>
                                 <div className="register-card mb-3">
-                                    {/* <span className='mb-1 fs-5 '>Gender :</span>
-                                    <div className='d-flex gap-1 align-items-center'>
-                                        <input type="radio" name='gender' value="male" id='male' required checked={formData.gender == "male"} onChange={handleChange} />
-                                        <label htmlFor="male">Male</label>
-                                    </div>
-                                    <div className='d-flex gap-1 align-items-center'>
-                                        <input type="radio" name='gender' value="female" id='female' checked={formData.gender == "female"} onChange={handleChange} />
-                                        <label htmlFor="female">Female</label>
-                                    </div>
-                                    <div className='d-flex gap-1 align-items-center'>
-                                        <input type="radio" name='gender' value="others" id='others' checked={formData.gender == "others"} onChange={handleChange} />
-                                        <label htmlFor="others">Others</label>
-                                    </div> */}
+                                    <FormControl fullWidth className="mx-1">
+                                        <label className="mb-1" htmlFor="gender">Gender:</label>
 
-                                    <label className="mb-1" htmlFor="gender">Gender:</label>
-                                    <select className="form-select" name="gender" id="gender" value={formData.gender} onChange={handleChange} required>
-                                        <option value="">Please Select Your Gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Others</option>
-                                    </select>
+                                        <Select className='p-0 bg-white' size='small' name="gender" id="gender" value={formData.gender || ""} onChange={handleChange} required>
+                                            <MenuItem value="male">Male</MenuItem>
+                                            <MenuItem value="female">Female</MenuItem>
+                                            <MenuItem value="other">Others</MenuItem>
+                                        </Select>
+                                    </FormControl>
 
                                 </div>
                             </div>
 
                             {/* join as */}
                             <div className='col-12'>
-                                <div className="register-card mb-3 d-flex align-items-center gap-3">
+                                <div className="register-card mb-3 d-flex align-items-center gap-2">
                                     <span className='mb-1 fs-5 '>Join As : </span>
                                     <div className='d-flex gap-1 align-items-center'>
                                         <input type="radio" name='role' value="alumni" id='Alumni' required checked={formData.role == "alumni"} onChange={handleChange} />

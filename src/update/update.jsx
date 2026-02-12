@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import './update.css';
 
+import { FormControl, Select, MenuItem } from "@mui/material";
+
 const Update = () => {
 
     const navigate = useNavigate();
@@ -126,7 +128,7 @@ const Update = () => {
                             <div className="col-xl-6">
                                 <div className="update-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="fName">First Name:</label>
-                                    <input className='form-control' type="text" name='fName' id='fName' autoComplete='given-name' value={formData.fName} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="text" name='fName' id='fName' autoComplete='given-name' value={formData.fName} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -134,7 +136,7 @@ const Update = () => {
                             <div className="col-xl-6">
                                 <div className="update-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="lName">Last Name:</label>
-                                    <input className='form-control' type="text" name='lName' id='lName' autoComplete='given-name' value={formData.lName} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="text" name='lName' id='lName' autoComplete='given-name' value={formData.lName} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -142,7 +144,7 @@ const Update = () => {
                             <div className='col-xl-6'>
                                 <div className="update-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="email">Email:</label>
-                                    <input className='form-control' type="email" name='email' id='email' autoComplete="email" value={formData.email} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="email" name='email' id='email' autoComplete="email" value={formData.email} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -150,7 +152,7 @@ const Update = () => {
                             <div className='col-xl-6'>
                                 <div className="update-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="mobile_no">Mobile No.:</label><br />
-                                    <input className='form-control' type="tel" name='mobile_no' id='mobile_no' maxLength={10} pattern="[0-9]{10}" inputMode='numeric' autoComplete='tel-national' value={formData.mobile_no} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="tel" name='mobile_no' id='mobile_no' maxLength={10} pattern="[0-9]{10}" inputMode='numeric' autoComplete='tel-national' value={formData.mobile_no} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -158,7 +160,7 @@ const Update = () => {
                             <div className='col-xl-6'>
                                 <div className="update-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="college_name">College Name:</label>
-                                    <input className='form-control' type="text" name='college_name' id='college_name' value={formData.college_name} onChange={handleChange} required disabled />
+                                    <input className='form-control mx-1' type="text" name='college_name' id='college_name' value={formData.college_name} onChange={handleChange} required disabled />
                                     <input className='form-control' type="text" name='college_name' id='college_name' value={formData.college_name} onChange={handleChange} required hidden />
                                 </div>
                             </div>
@@ -167,7 +169,7 @@ const Update = () => {
                             <div className='col-xl-6'>
                                 <div className="update-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="course">Course:</label>
-                                    <input className='form-control' type="text" name='course' id='course' autoComplete='course' value={formData.course_name} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="text" name='course' id='course' autoComplete='course' value={formData.course_name} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -175,45 +177,53 @@ const Update = () => {
                             <div className='col-xl-6'>
                                 <div className="update-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="branch">Branch:</label>
-                                    <input className='form-control' type="text" name='branch' id='branch' autoComplete='branch' value={formData.branch} onChange={handleChange} required />
+                                    <input className='form-control mx-1' type="text" name='branch' id='branch' autoComplete='branch' value={formData.branch} onChange={handleChange} required />
                                 </div>
                             </div>
 
                             {/* Year of studying */}
                             <div className='col-xl-6'>
                                 <div className="update-card mb-3">
-                                    <label className='fs-5 mb-1' htmlFor="current_year_of_study">Current Year of Studying:</label><br />
-                                    <select className="form-select" name="current_year_of_study" id="current_year_of_study" value={formData.current_year_of_study} onChange={handleChange} required>
-                                        <option >Year of Studying</option>
-                                        <option value="1">1st Year</option>
-                                        <option value="2">2nd Year</option>
-                                        <option value="3">3rd Year</option>
-                                        <option value="4">4th Year</option>
-                                        <option value="grad">Graduated</option>
-                                    </select>
+                                    <FormControl fullWidth className="mx-1">
+                                        <label className='fs-5 mb-1' htmlFor="current_year_of_study">Current Year of Studying:</label>
+
+                                        <Select className='p-0 bg-white rounded-2' size='small' name="current_year_of_study" id="current_year_of_study" value={formData.current_year_of_study || ""} onChange={handleChange} required>
+                                            <MenuItem value="1">1st Year</MenuItem>
+                                            <MenuItem value="2">2nd Year</MenuItem>
+                                            <MenuItem value="3">3rd Year</MenuItem>
+                                            <MenuItem value="4">4th Year</MenuItem>
+                                            <MenuItem value="grad">Graduated</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                 </div>
                             </div>
 
                             {/* gender */}
                             <div className='col-xl-6'>
                                 <div className="update-card mb-3">
-                                    <label className='fs-5 mb-1' htmlFor="gender">Gender:</label>
-                                    <select className="form-select" name="gender" id="gender" value={formData.gender} onChange={handleChange} required>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="others">Others</option>
-                                    </select>
+                                    <FormControl fullWidth className="mx-1">
+                                        <label className="fs-5 mb-1" htmlFor="gender">Gender:</label>
+
+                                        <Select className='p-0 bg-white rounded-2' size='small' name="gender" id="gender" value={formData.gender || ""} onChange={handleChange} required>
+                                            <MenuItem value="male">Male</MenuItem>
+                                            <MenuItem value="female">Female</MenuItem>
+                                            <MenuItem value="other">Others</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                 </div>
                             </div>
 
                             {/* role */}
                             <div className='col-xl-6'>
                                 <div className="update-card mb-3">
-                                    <label className='fs-5 mb-1' htmlFor="role">Role:</label>
-                                    <select className="form-select" name="role" id="role" value={formData.role} onChange={handleChange} required>
-                                        <option value="alumni">Alumni</option>
-                                        <option value="student">Student</option>
-                                    </select>
+                                    <FormControl fullWidth className="mx-1">
+                                        <label className='fs-5 mb-1' htmlFor="role">Role:</label>
+
+                                        <Select className='p-0 bg-white rounded-2' size='small' name="role" id="role" value={formData.role || ""} onChange={handleChange} required>
+                                            <MenuItem value="alumni">Alumni</MenuItem>
+                                            <MenuItem value="student">Student</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                 </div>
                             </div>
 

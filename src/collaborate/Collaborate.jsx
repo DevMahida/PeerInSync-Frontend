@@ -1,9 +1,11 @@
 import { useState } from "react";
-import MonacoEditor from "../components/MonacoEditor";
+import { useNavigate } from "react-router-dom";
 import Header from "../header_footer/header";
 import './Collaborate.css';
 
 const Collaborate = () => {
+
+    const navigate = useNavigate();
 
     function showForm() {
         document.getElementById("overlay").style.display = "block";
@@ -28,6 +30,11 @@ const Collaborate = () => {
         });
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate('/Project', { state: formData });
+    }
+
     return (
         <>
             <Header />
@@ -44,29 +51,33 @@ const Collaborate = () => {
 
                         <span onClick={hideForm} title="close" className="closeBtn">[x]</span>
 
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="projTitle">
                                 <label htmlFor="project_title">Project Title:</label>
                                 <input type="text" name="project_title" id="project_title" onChange={handleChange} required />
                             </div>
 
                             <div className="fileName">
-                                <label htmlFor="project_title">File Name:</label>
+                                <label htmlFor="file_name">File Name:</label>
                                 <input type="text" name="file_name" id="file_name" placeholder="Eg: name.c / name.java" onChange={handleChange} required />
                             </div>
 
                             <div className="projLang">
-                                <label htmlFor="project_title">Language:</label>
-                                    <select name="event_type" id="event_type" onChange={handleChange} required>
+                                <label htmlFor="language">Language:</label>
+                                    <select name="language" id="language" onChange={handleChange} required>
                                         <option value="">Please Select The Development Language</option>
-                                        <option value="seminar">Javascript</option>
-                                        <option value="webinar">C</option>
-                                        <option value="workshop">Java</option>
+                                        <option value="javascript">Javascript</option>
+                                        <option value="typescript">Typescript</option>
+                                        <option value="html">HTML</option>
+                                        <option value="css">CSS</option>
+                                        <option value="c">C</option>
+                                        <option value="java">Java</option>
+                                        <option value="python">Python</option>
                                     </select>
                             </div>
 
                             <div>
-                                <button className="subButton" type="submit" onClick={console.log(formData)}>Create</button>
+                                <button className="subButton" type="submit" onClick={handleSubmit}>Create</button>
                             </div>
                         </form>
                     </div>
