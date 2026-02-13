@@ -1,7 +1,10 @@
 // import react from "react";
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import '../Login/Login.css';
+
 import axios from 'axios';
 
 const Login = () => {
@@ -27,17 +30,19 @@ const Login = () => {
             withCredentials: true
         })
         .then((response) => {
-            window.alert("Logged in Successfully");
+            toast.success("Logged in successfully");
+                setTimeout(() => {
+                    navigate('/Dashboard');
+                }/*, 1200*/);
             console.log("Form submitted:", JSON.stringify(formData));
 
             // localStorage.setItem('userinfo', JSON.stringify(response.data));
-
-            navigate('/Dashboard');
+            
             setFormData(initialFormData);
         })
         .catch((err) => {
             console.log(err);
-            window.alert("Error submiting data." + err.message);
+            toast.error("Error submiting data. " + err.message);
         });
     };
 

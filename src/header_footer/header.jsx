@@ -69,30 +69,33 @@ const Header = () => {
 
     const deleteAccount = (e) => {
 
-        const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+        axios.delete('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/delete', { withCredentials: true })
+            .then(() => {
 
-        if (!confirmDelete) return;
+                // close bootstrap modal safely
+                // const modalEl = document.getElementById("deleteModal");
 
-        else {
-            axios.delete('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/delete', { withCredentials: true })
-                .then(() => {
+                // if (modalEl && window.bootstrap) {
+                //     window.bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+                // }
 
-                    // toast added
-                    toast.success("Account deleted successfully");
+                // toast added
+                toast.success("Account deleted successfully");
 
-                    // redirect after toast
-                    setTimeout(() => {
-                        navigate("/");
-                    }/*, 1500*/);
-                })
-                .catch((err) => {
+                // redirect after toast
+                setTimeout(() => {
+                    navigate("/");
+                }/*, 1500*/);
+            })
 
-                    console.log(err);
-                    window.alert("Unexpected Error" + err.message);
+            .catch((err) => {
 
-                    toast.error("Failed to delete account");
-                });
-        }
+                console.log(err);
+                // window.alert("Unexpected Error" + err.message);
+
+                toast.error("Failed to delete account" + err.message);
+            });
+
     }
 
     return (
@@ -209,7 +212,7 @@ const Header = () => {
 
                                 {/* Delete */}
                                 <li>
-                                    <button className="dropdown-item white log-del pointer rounded-1 transition-2 d-flex gap-2 align-items-center px-3 py-2 " onClick={deleteAccount} >
+                                    <button className="dropdown-item white log-del pointer rounded-1 transition-2 d-flex gap-2 align-items-center px-3 py-2" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                         <span className="fs-5 text-danger">
                                             <i className="ri-delete-bin-6-line"></i>
                                         </span>
@@ -264,6 +267,25 @@ const Header = () => {
                 </div>
             </header>
             {/* Header ends */}
+
+            {/* delete account Modal */}
+            <div className="modal fade" id="deleteModal" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="staticBackdropLabel">PeerInSync</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <span>Are you sure you want to delete your account? This action cannot be undone.</span>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={deleteAccount}>Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 

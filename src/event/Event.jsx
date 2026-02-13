@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import Header from '../header_footer/header.jsx';
 import axios from 'axios';
 
 import './Event.css';
-import { FormControl, Select, MenuItem} from "@mui/material";
+import { FormControl, Select, MenuItem } from "@mui/material";
 
 const Event = () => {
 
@@ -92,27 +93,20 @@ const Event = () => {
         })
             .then(() => {
 
-                window.alert("Event Created Successfully");
+                toast.success("Event Created Successfully.");
                 console.log("Form submitted:", JSON.stringify(formData));
                 setFormData({
                     ...initialFormData,
                     name: `${userData.fName} ${userData.lName}`
                 });
 
-                // close bootstrap modal
-                // close bootstrap modal safely
-                const modalEl = document.getElementById("createEvents");
-
-                if (modalEl && window.bootstrap) {
-                    window.bootstrap.Modal.getOrCreateInstance(modalEl).hide();
-                }
-
                 fetchEvents();
 
             })
+
             .catch((err) => {
                 console.log(err);
-                window.alert("Error submiting data." + err.message);
+                toast.error("Error submiting data. " + err.message);
             });
 
         // re-enable button after 4 seconds 
@@ -164,13 +158,13 @@ const Event = () => {
 
         axios.post('https://peerinsync-backend-server.onrender.com/events/registerEvent/' + eventID, null, { withCredentials: true })
             .then(() => {
-                window.alert("Event Registered Successfully");
+                toast.success("Event Registered Successfully.");
                 fetchEvents();
                 getMyEvents();
             })
             .catch(err => {
                 console.log(err);
-                window.alert("Error registering for event: Event not found, already registered, or event is full | " + err.message);
+                toast.error("Error registering for event: Event not found, already registered, or event is full | " + err.message);
             })
 
     }
@@ -184,13 +178,13 @@ const Event = () => {
 
         axios.put('https://peerinsync-backend-server.onrender.com/events/unregister/' + eventID, null, { withCredentials: true })
             .then(() => {
-                window.alert("Unregistered Successfully");
+                toast.success("Event Unregistered Successfully");
                 fetchEvents();
                 getMyEvents();
             })
             .catch(err => {
                 console.log(err);
-                window.alert("Error unregistering for event: Event not found or already unregistered | " + err.message);
+                toast.error("Error unregistering for event: Event not found or already unregistered | " + err.message);
             })
 
     }
@@ -230,28 +224,6 @@ const Event = () => {
 
     let footerContent;
     let webinarLink;
-
-    // for tooltips
-    useEffect(() => {
-        if (!window.bootstrap) return;
-
-        const modalEl = document.getElementById("viewEvents");
-        if (!modalEl) return;
-
-        const handleShown = () => {
-            const tooltips = modalEl.querySelectorAll('[data-bs-toggle="tooltip"]');
-            tooltips.forEach(el => {
-                new window.bootstrap.Tooltip(el);
-            });
-        };
-
-        modalEl.addEventListener("shown.bs.modal", handleShown);
-
-        return () => {
-            modalEl.removeEventListener("shown.bs.modal", handleShown);
-        };
-    }, []);
-
 
     if (selectedEvent?.date >= today && selectedEvent?.date <= TwoDaysLater) {
         if (isRegistered) {
@@ -446,10 +418,51 @@ const Event = () => {
                                 <div className="d-flex justify-content-between align-items-center">
                                     <span className="h4 text-brown">Event List</span>
 
-                                    {/* refresh button */}
-                                    <button className="refresh-btn fs-2 p-0 btn border-0 rounded-5" onClick={fetchEvents} disabled={isRefreshing}>
-                                        <i className={`ri-refresh-line ${isRefreshing ? "spin" : ""}`}></i>
-                                    </button>
+                                    <div className="d-flex align-items-center gap-3">
+                                        {/* refresh button */}
+                                        <button className="refresh-btn fs-2 p-0 btn border-0 rounded-5" onClick={fetchEvents} disabled={isRefreshing}>
+                                            <i className={`ri-refresh-line ${isRefreshing ? "spin" : ""}`}></i>
+                                        </button>
+
+                                        {/* filter option */}
+                                        <div className="dropdown bg-cs-tertory1">
+                                            <button className="btn dropdown-toggle border-1 filter-option" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i className="ri-filter-2-fill"></i>
+                                            </button>
+
+                                            <ul className="dropdown-menu mt-1 width-250px">
+
+                                                <li className="dropdown-item pointer" onClick={latestOnClick}>
+                                                    <div className="row">
+                                                        <div className="col-2">
+                                                            <div>
+                                                                {sortBy === "latest" && <span><i className="ri-check-line"></i></span>}
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-10">
+                                                            <div>Sort By : Latest</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li className="dropdown-item pointer" onClick={eventDateOnClick}>
+                                                    <div className="row">
+                                                        <div className="col-2">
+                                                            <div>
+                                                                {sortBy === "eventdate" && <span><i className="ri-check-line"></i></span>}
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-10">
+                                                            <div>Sort By : Event Date</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             )}
 
@@ -627,7 +640,7 @@ const Event = () => {
 
                                 {/* submit button */}
                                 <div className="mt-3 text-end">
-                                    <button type="submit" className="btn btn-dark" disabled={isDisabled}>Create</button>
+                                    <button type="submit" className="btn btn-dark" data-bs-dismiss="modal" disabled={isDisabled}>Create</button>
                                 </div>
 
                             </form>

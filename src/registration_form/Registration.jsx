@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+
 // CODE BY DARSH
 import axios from 'axios';
 
@@ -76,15 +78,21 @@ const Registration = () => {
             }
         })
             .then(() => {
-                window.alert("You have registered successfully.");
-                navigate('/Login');
+                toast.success("Registered successfully");
+                setTimeout(() => {
+                    navigate('/Login');
+
+                }/*, 1200*/);
                 console.log("Form submitted:", JSON.stringify(formData));
                 setFormData(initialFormData);
             })
 
             .catch((err) => {
                 console.log(err);
-                window.alert("Error submiting data." + err.message);
+                // window.alert("Error submiting data." + err.message);
+                toast.error("Error submitting data. " + err.message);
+                setTimeout(() => {
+                },/* 1200*/);
             });
     };
 
@@ -149,7 +157,7 @@ const Registration = () => {
 
                                     <label className='mb-1 fs-5' htmlFor="password">Password:</label><br />
                                     <div className="register-password mx-1 form-control d-flex justify-content-between align-items-center">
-                                        <input className='border-0' type={showPassword ? "text" : "password"} name="password" id='password' autoComplete="new-password" value={formData.password} onChange={handlePasswordChange} required />
+                                        <input className='border-0 m-0' type={showPassword ? "text" : "password"} name="password" id='password' autoComplete="new-password" value={formData.password} onChange={handlePasswordChange} required />
                                         <i className={showPassword ? "ri-eye-off-line" : "ri-eye-line"} onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}></i>
                                     </div>
 

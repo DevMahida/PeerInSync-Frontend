@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import axios from 'axios';
 
 import './update.css';
@@ -87,14 +89,16 @@ const Update = () => {
             withCredentials: true
         })
             .then(() => {
-                window.alert("Your data have been updated Successfully.");
-                navigate('/Dashboard');
+                toast.success("Your data have been updated Successfully.");
+                setTimeout(() => {
+                    navigate('/Dashboard');
+                }/*, 1200*/);
                 console.log("Form submitted:", JSON.stringify(formData));
             })
 
             .catch((err) => {
                 console.log(err);
-                window.alert("Error submiting data." + err.message);
+                toast.error("Error submiting data. " + err.message);
             });
     };
 
