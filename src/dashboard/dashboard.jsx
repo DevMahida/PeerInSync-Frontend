@@ -279,10 +279,11 @@ const Dashboard = () => {
                                                         </div>
 
                                                         {/* detail */}
-                                                        <div className="d-flex flex-column">
+                                                        <div className="d-flex flex-column justify-content-between ">
                                                             <h4 className="pb-0 mb-2">{events.project_title}</h4>
                                                             <span className="pb-0 mb-1"><strong className="text-capitalize">{events.event_type}</strong> by <strong>{events.name}</strong></span>
-                                                            <span><i className="ri-calendar-line"></i> {new Date(events.date).toLocaleDateString("en-GB").replaceAll("/", "-")} | {new Date(`1970-01-01T${events.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
+                                                            <span><strong><i className="ri-calendar-line"></i></strong> {new Date(events.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
+                                                            <span><strong><i className="ri-time-line"></i></strong> {new Date(`1970-01-01T${events.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
                                                         </div>
                                                     </div>
 

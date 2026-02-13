@@ -287,6 +287,73 @@ const Event = () => {
 
     const totalPages = Math.ceil(sortedEvents.length / eventsPerPage);
 
+    // for event pagination
+    const scrollToTopPagination = () => {
+        window.scrollTo({
+            top: 325,
+            behavior: "smooth"
+        });
+    };
+
+    // responsive visible page count
+    const [visiblePages, setVisiblePages] = useState(4);
+
+    // adjust visible page count based on screen width
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 576) {
+                setVisiblePages(2); // phone
+            } else if (window.innerWidth <= 992) {
+                setVisiblePages(3); // tablet
+            } else {
+                setVisiblePages(4); // desktop
+            }
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    // calculate dynamic page window
+    const getVisiblePageNumbers = () => {
+        const pages = [];
+
+        const half = Math.floor(visiblePages / 2);
+
+        let start = currentPage - half;
+        let end = currentPage + half;
+
+        // Adjust if visiblePages is even
+        if (visiblePages % 2 === 0) {
+            end -= 1;
+        }
+
+        // Fix left boundary
+        if (start < 1) {
+            start = 1;
+            end = visiblePages;
+        }
+
+        // Fix right boundary
+        if (end > totalPages) {
+            end = totalPages;
+            start = totalPages - visiblePages + 1;
+        }
+
+        // Final safety check
+        if (start < 1) start = 1;
+
+        for (let i = start; i <= end; i++) {
+            pages.push(i);
+        }
+
+        return pages;
+    };
+
+    const visiblePageNumbers = getVisiblePageNumbers();
+
     return (
         <>
 
@@ -353,7 +420,6 @@ const Event = () => {
                 <section className="my-3">
                     <div className="container">
                         <div className="border-brown bg-cs-secondary1 p-3 rounded-4 text-brown">
-
                             {/* title */}
                             {userData.role === "alumni" ? (
                                 <div className="d-flex justify-content-between align-items-center flex-wrap g-2 mb-0 pb-0">
@@ -469,7 +535,7 @@ const Event = () => {
                             {/* events cards */}
                             <div className="row mt-2 g-3">
 
-                                {currentEvents === 0 ?
+                                {currentEvents.length === 0 ?
                                     (<div className="text-center py-4">
                                         <p className="text-muted mb-0">No events available at the moment.</p>
                                     </div>
@@ -529,19 +595,32 @@ const Event = () => {
                             <nav aria-label="Page navigation">
                                 <ul className="pagination mt-5 gap-2 justify-content-center">
                                     <li className="page-item">
-                                        <button className="btn btn-outline-dark" disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}>
+                                        <button className="btn btn-outline-dark" disabled={currentPage === 1} onClick={() => { setCurrentPage(prev => prev - 1); scrollToTopPagination(); }}>
                                             Preview
                                         </button>
                                     </li>
                                     <li className="page-item">
-                                        {[...Array(totalPages)].map((_, index) => (
-                                            <button key={index} className={`btn ${currentPage === index + 1 ? "btn-dark" : "btn-outline-dark"} me-2`} onClick={() => setCurrentPage(index + 1)}>
-                                                {index + 1}
+                                        {visiblePageNumbers.map((page) => (
+                                            <button
+                                                key={page}
+                                                className={`btn ${currentPage === page ? "btn-dark" : "btn-outline-dark"} me-2`}
+                                                onClick={() => {
+                                                    setCurrentPage(page);
+                                                    scrollToTopPagination();
+                                                }}
+                                            >
+                                                {page}
                                             </button>
                                         ))}
+
+                                        {/* Show ellipsis if more pages exist */}
+                                        {visiblePageNumbers[visiblePageNumbers.length - 1] < totalPages && (
+                                            <span className="mx-2">...</span>
+                                        )}
                                     </li>
+
                                     <li className="page-item">
-                                        <button className="btn btn-outline-dark" disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}>
+                                        <button className="btn btn-outline-dark" disabled={currentPage === totalPages} onClick={() => { setCurrentPage(prev => prev + 1); scrollToTopPagination(); }}>
                                             Next
                                         </button>
                                     </li>
