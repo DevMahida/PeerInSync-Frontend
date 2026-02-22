@@ -129,7 +129,7 @@ const Help = () => {
                             <div className='col-12'>
                                 <div>
                                     <label className="fs-5" htmlFor="fullName">Full Name:</label>
-                                    <input className='form-control' type="text" name="fullName" id="fullName" placeholder="Please enter your full name" value={formData.fullName} onChange={handleChange} required />
+                                    <input className='form-control ms-0' type="text" name="fullName" id="fullName" placeholder="Please enter your full name" value={formData.fullName} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -137,7 +137,7 @@ const Help = () => {
                             <div className='col-12'>
                                 <div>
                                     <label className="fs-5" htmlFor="email">Email:</label>
-                                    <input className='form-control' type="email" name="email" id="email" placeholder="Please enter your email" value={formData.email} onChange={handleChange} required />
+                                    <input className='form-control ms-0' type="email" name="email" id="email" placeholder="Please enter your email" value={formData.email} onChange={handleChange} required />
                                 </div>
                             </div>
 
@@ -145,7 +145,7 @@ const Help = () => {
                             <div className='col-12'>
                                 <div>
                                     <label className="fs-5" htmlFor="message">Message:</label>
-                                    <textarea className="form-control" name="message" id="message" cols="30" rows="8" placeholder="Write your issue here" value={formData.message} onChange={handleChange} required ></textarea>
+                                    <textarea className="form-control ms-0" name="message" id="message" cols="30" rows="8" placeholder="Explain your concern here" value={formData.message} onChange={handleChange} required ></textarea>
                                 </div>
                             </div>
 
