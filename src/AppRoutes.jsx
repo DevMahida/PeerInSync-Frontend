@@ -13,6 +13,7 @@ import Login from './Login/Login.jsx';
 import Header from './header_footer/header.jsx';
 import Update from './update/update.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
+import Alumni_list from "./alumni-list/alumni-list.jsx";
 import Event from './event/Event.jsx';
 import Collaborate from './collaborate/Collaborate.jsx'  //Darsh
 import Project from './collaborate/Project.jsx'  //Darsh
@@ -33,6 +34,7 @@ function AppRoutes() {
         <Route path='/Header' element={<Header />} />
         <Route path='/Update' element={<Update />} />
         <Route path='/Dashboard' element={<Dashboard />} /> 
+        <Route path='/Alumni_list' element={<Alumni_list />} /> 
         <Route path='/Event' element={<Event />} />
         <Route path="/Collaborate" element={<Collaborate />} />   {/*Darsh*/}
         <Route path="/Project" element={<Project />} />   {/*Darsh*/}

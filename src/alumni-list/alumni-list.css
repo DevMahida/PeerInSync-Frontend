@@ -1,0 +1,7 @@
+:root{
+    --bg-cs-header-list: #f8e7d1;
+}
+
+.bg-cs-header-list{
+    background-color: var(--bg-cs-header-list);
+}

@@ -49,7 +49,6 @@ const Dashboard = () => {
 
     const [selectedEvent, setSelectedEvent] = useState(null);
 
-
     // used for fetching event data inform of array
     const [events, setEvents] = useState([]);
 
@@ -257,7 +256,7 @@ const Dashboard = () => {
                                     .slice(0, 3) // shows 3 elements
                                     .map(events => (
                                         <div className="col-xl-4 col-lg-6" key={events._id}>
-                                            <div className="bg-cs-primary1 p-3 rounded-3 transition-02 h-130px">
+                                            <div className="bg-cs-primary1 p-3 rounded-3 h-130px">
 
                                                 {/* event card body */}
                                                 <div className="row justify-content-between">

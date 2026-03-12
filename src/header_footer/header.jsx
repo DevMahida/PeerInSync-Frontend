@@ -72,13 +72,6 @@ const Header = () => {
         axios.delete('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/delete', { withCredentials: true })
             .then(() => {
 
-                // close bootstrap modal safely
-                // const modalEl = document.getElementById("deleteModal");
-
-                // if (modalEl && window.bootstrap) {
-                //     window.bootstrap.Modal.getOrCreateInstance(modalEl).hide();
-                // }
-
                 // toast added
                 toast.success("Account deleted successfully");
 
@@ -91,7 +84,6 @@ const Header = () => {
             .catch((err) => {
 
                 console.log(err);
-                // window.alert("Unexpected Error" + err.message);
 
                 toast.error("Failed to delete account" + err.message);
             });
@@ -127,7 +119,7 @@ const Header = () => {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item d-flex">
-                                    <NavLink to="/alumni" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
+                                    <NavLink to="/Alumni_list" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
                                         Alumni List
                                     </NavLink>
                                 </li>
@@ -137,7 +129,7 @@ const Header = () => {
                                     </NavLink>
                                 </li>
                                 <li className="nav-item d-flex">
-                                    <NavLink to="/alumni" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
+                                    <NavLink to="/discussion" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
                                         Discussion
                                     </NavLink>
                                 </li>
