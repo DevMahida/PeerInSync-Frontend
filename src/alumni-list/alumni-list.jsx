@@ -45,42 +45,6 @@ const Alumni_list = () => {
                         </div>
 
                         {/* cards */}
-                        <div className="row g-3 mb-5">
-
-                            {/* card */}
-                            <div className="col-lg-6">
-                                <div className="alumni-list-card p-3 bg-cs-primary1 rounded-3">
-
-                                    {/* profile */}
-                                    <div className='gap-3 d-flex mb-2'>
-                                        {/* profile logo */}
-                                        <div className=''>
-                                            <img className='img-fluid' src={man1} alt="" />
-                                        </div>
-
-                                        {/* profile-details */}
-                                        <div>
-                                            <h3>Amit Sharma</h3>
-                                            <p className='my-0 fs-5'>MS Computer Science, 2019</p>
-                                            <span className='fs-5'>Software Engineer at Google</span>
-                                        </div>
-                                    </div>
-
-                                    {/* expertice */}
-                                    <div>
-                                        <span>
-                                            <strong>Expertise : </strong>
-                                            <span className='bg-cs-secondary1 py-1 px-2 me-2 rounded-3'>DSA</span>
-                                            <span className='bg-cs-secondary1 py-1 px-2 rounded-3'>System Design</span>
-                                        </span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        {/* cards */}
                         <div className='row g-3'>
                             {alumniList.length === 0 ? (
                                 <p>Alumni List is empty</p>
@@ -93,7 +57,7 @@ const Alumni_list = () => {
 
                                                 {/* profile */}
                                                 <div className='gap-3 d-flex mb-2'>
-                                                    
+
                                                     {/* profile logo */}
                                                     <div>
                                                         {alumniList.gender == "male" ? (
@@ -109,10 +73,27 @@ const Alumni_list = () => {
                                                     {/* profile-details */}
                                                     <div>
                                                         <h4>{alumniList.fName + " " + alumniList.lName}</h4>
-                                                        <p className='my-0'>{alumniList.course_name}</p>
-                                                        <span className=''>{alumniList.branch}</span>
+                                                        <p className='m-0 fw-medium'>{alumniList.course_name}</p>
+                                                        <p className='m-0 fw-medium fs-6'><strong>{alumniList.designation}</strong> at <strong>{alumniList.company_organization}</strong></p>
                                                     </div>
 
+                                                </div>
+
+                                                {/* expertice */}
+                                                <div className="mt-2 d-flex gap-2">
+                                                    <span><strong className="mb-1">Expertise:</strong></span>
+
+                                                    <div className="d-flex flex-wrap gap-2">
+                                                        {alumniList.areas_of_expertise?.length > 0 ? (
+                                                            alumniList.areas_of_expertise.map((exp, index) => (
+                                                                <span key={index} className="badge bg-cs-secondary1 text-dark px-3 py-2 rounded-3">
+                                                                    {exp}
+                                                                </span>
+                                                            ))
+                                                        ) : (
+                                                            <span className="text-muted">No expertise added</span>
+                                                        )}
+                                                    </div>
                                                 </div>
 
                                             </div>
@@ -120,13 +101,7 @@ const Alumni_list = () => {
                                     ))
                             )}
                         </div>
-
-
                     </div>
-
-
-
-
                 </div>
             </main>
         </>

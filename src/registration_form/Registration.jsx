@@ -8,6 +8,10 @@ import axios from 'axios';
 import '../registration_form/Registration.css';
 import * as React from 'react';
 import colleges from '../javaScript/Colleges.js';
+import Courses from '../javaScript/courses.js';
+import BranchesByCourse from '../javaScript/BranchByCourse.js';
+import ExpertiseDomains from '../javaScript/ExpertiseDomains.js';
+
 
 import { FormControl, Select, MenuItem, Autocomplete, TextField, createFilterOptions } from "@mui/material";
 
@@ -26,6 +30,9 @@ const Registration = () => {
         current_year_of_study: '',
         gender: '',
         role: '',
+        areas_of_expertise: [],
+        company_organization: '',
+        designation: '',
     };
 
     const filterOptions = createFilterOptions({ limit: 50 });
@@ -41,6 +48,27 @@ const Registration = () => {
         }));
     };
 
+    const handleCourseChange = (event, newValue) => {
+        setFormData(prev => ({
+            ...prev,
+            course_name: newValue ? newValue.value : "",
+            branch: ""
+        }));
+    };
+
+    const handleBranchChange = (event, newValue) => {
+        setFormData(prev => ({
+            ...prev,
+            branch: newValue || ""
+        }));
+    };
+
+    const handleExpertiseChange = (event, value) => {
+        setFormData({
+            ...formData,
+            areas_of_expertise: value
+        });
+    };
 
     const handlePasswordChange = (e) => {
         const value = e.target.value;
@@ -69,31 +97,41 @@ const Registration = () => {
 
     const [formData, setFormData] = useState(initialFormData);
 
-    const handleSubmit = (e) => {
+    // disable , enable submit button
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        axios.post('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/signup', JSON.stringify(formData), {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then(() => {
-                toast.success("Registered successfully");
-                setTimeout(() => {
-                    navigate('/Login');
+        if (
+            formData.role === "alumni" &&
+            (!formData.areas_of_expertise || formData.areas_of_expertise.length === 0)
+        ) {
+            toast.error("Please select at least one expertise");
+            return;
+        }
 
-                }/*, 1200*/);
-                console.log("Form submitted:", JSON.stringify(formData));
-                setFormData(initialFormData);
-            })
+        try {
+            setIsSubmitting(true);
 
-            .catch((err) => {
-                console.log(err);
-                // window.alert("Error submiting data." + err.message);
-                toast.error("Error submitting data. " + err.message);
-                setTimeout(() => {
-                },/* 1200*/);
-            });
+            await axios.post(
+                'https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/signup',
+                JSON.stringify(formData),
+                {
+                    headers: { "Content-Type": "application/json" }
+                }
+            );
+
+            toast.success("Registered successfully");
+            navigate('/Login');
+
+            setFormData(initialFormData);
+
+        } catch (err) {
+            toast.error("Error submitting data. " + err.message);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -105,6 +143,14 @@ const Registration = () => {
         }));
     };
 
+    // for select year
+    const yearOptions = {
+        "1": "1st Year",
+        "2": "2nd Year",
+        "3": "3rd Year",
+        "4": "4th Year",
+        "grad": "Graduated"
+    };
 
     return (
         <>
@@ -186,7 +232,8 @@ const Registration = () => {
                             <div className='col-12'>
                                 <div className="register-card mb-3 w-100">
                                     <label className='fs-5 mb-1' htmlFor="college_name">College Name</label>
-                                    <Autocomplete className='form-control p-0 rounded-1 mx-1'
+                                    <Autocomplete
+                                        className='form-control p-0 rounded-1 mx-1'
                                         disablePortal
                                         id="college_name"
                                         options={colleges}
@@ -197,11 +244,9 @@ const Registration = () => {
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
+                                                placeholder="Select College"
                                                 required
-                                                inputProps={{
-                                                    ...params.inputProps,
-                                                    autoComplete: 'off',
-                                                }}
+                                                autoComplete="off"
                                             />
                                         )}
                                     />
@@ -214,7 +259,21 @@ const Registration = () => {
                                     <FormControl fullWidth className="mx-1">
                                         <label className='fs-5 mb-1' htmlFor="current_year_of_study">Current Year of Studying:</label>
 
-                                        <Select className='p-0 bg-white' size='small' id="current_year_of_study" name="current_year_of_study" value={formData.current_year_of_study || ""} onChange={handleChange} required>
+                                        <Select className='p-0 bg-white'
+                                            size='small'
+                                            id="current_year_of_study" name="current_year_of_study"
+                                            value={formData.current_year_of_study || ""}
+                                            onChange={handleChange}
+                                            displayEmpty
+                                            required
+                                            renderValue={(selected) => {
+                                                if (!selected) {
+                                                    return <span style={{ color: "#9e9e9e" }}>Select Year</span>;
+                                                }
+                                                return yearOptions[selected] || selected;
+                                            }}
+                                        >
+                                            {/* <MenuItem disabled value="">Select Year</MenuItem> */}
                                             <MenuItem value="1">1st Year</MenuItem>
                                             <MenuItem value="2">2nd Year</MenuItem>
                                             <MenuItem value="3">3rd Year</MenuItem>
@@ -228,8 +287,25 @@ const Registration = () => {
                             {/* Course */}
                             <div className='col-12'>
                                 <div className="register-card mb-3">
-                                    <label className='fs-5 mb-1' htmlFor="course_name">Course:</label><br />
-                                    <input className='form-control mx-1' type="text" name='course_name' id='course_name' autoComplete='off' value={formData.course_name} onChange={handleChange} required />
+                                    <label className='fs-5 mb-1' htmlFor="course_name">Course :</label>
+                                    <Autocomplete
+                                        className='form-control p-0 rounded-1 mx-1'
+                                        disablePortal
+                                        id="course_name"
+                                        options={Courses}
+                                        getOptionLabel={(option) => option.label}
+                                        sx={{ width: '100%' }}
+                                        value={Courses.find(option => option.value === formData.course_name) || null}
+                                        onChange={handleCourseChange}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                placeholder="Select Course"
+                                                required
+                                                autoComplete="off"
+                                            />
+                                        )}
+                                    />
                                 </div>
                             </div>
 
@@ -237,7 +313,20 @@ const Registration = () => {
                             <div className='col-12'>
                                 <div className="register-card mb-3">
                                     <label className='fs-5 mb-1' htmlFor="branch">Branch:</label><br />
-                                    <input className='form-control mx-1' type="text" name='branch' id='branch' autoComplete='off' value={formData.branch} onChange={handleChange} required />
+                                    <Autocomplete
+                                        className='form-control p-0 rounded-1 mx-1'
+                                        disablePortal
+                                        id="branch"
+                                        options={BranchesByCourse[formData.course_name] || []}
+                                        getOptionLabel={(option) => option}
+                                        isOptionEqualToValue={(option, value) => option === value}
+                                        value={formData.branch || null}
+                                        onChange={handleBranchChange}
+                                        disabled={!formData.course_name}
+                                        renderInput={(params) => (
+                                            <TextField {...params} placeholder="Select Branch" required autoComplete="off" />
+                                        )}
+                                    />
                                 </div>
                             </div>
 
@@ -247,7 +336,21 @@ const Registration = () => {
                                     <FormControl fullWidth className="mx-1">
                                         <label className="mb-1" htmlFor="gender">Gender:</label>
 
-                                        <Select className='p-0 bg-white' size='small' name="gender" id="gender" value={formData.gender || ""} onChange={handleChange} required>
+                                        <Select
+                                            className='p-0 bg-white'
+                                            size='small'
+                                            name="gender"
+                                            id="gender"
+                                            value={formData.gender || ""}
+                                            onChange={handleChange}
+                                            displayEmpty
+                                            required
+                                            renderValue={(selected) => {
+                                                if (!selected) {
+                                                    return <span style={{ color: "#9e9e9e" }}>Select Gender</span>; // placeholder color
+                                                }
+                                                return selected.charAt(0).toUpperCase() + selected.slice(1);
+                                            }}>
                                             <MenuItem value="male">Male</MenuItem>
                                             <MenuItem value="female">Female</MenuItem>
                                             <MenuItem value="other">Others</MenuItem>
@@ -262,23 +365,69 @@ const Registration = () => {
                                 <div className="register-card mb-3 d-flex align-items-center gap-2">
                                     <span className='mb-1 fs-5 '>Join As : </span>
                                     <div className='d-flex gap-1 align-items-center'>
-                                        <input type="radio" name='role' value="alumni" id='Alumni' required checked={formData.role == "alumni"} onChange={handleChange} />
+                                        <input type="radio" name='role' value="alumni" id='Alumni' required checked={formData.role === "alumni"} onChange={handleChange} />
                                         <label htmlFor="Alumni">Alumni</label>
                                     </div>
                                     <div className='d-flex gap-1 align-items-center'>
-                                        <input type="radio" name='role' value="student" id='Student' checked={formData.role == "student"} onChange={handleChange} />
+                                        <input type="radio" name='role' value="student" id='Student' checked={formData.role === "student"} onChange={handleChange} />
                                         <label htmlFor="Student">Student</label>
                                     </div>
 
                                 </div>
                             </div>
+
+                            {/* designation-expertices-work at*/}
+                            {formData.role === "alumni" &&
+                                (
+                                    <div className='row'>
+
+                                        {/* expertise */}
+                                        <div className='col-12'>
+                                            <div className="register-card mb-3">
+                                                <label className='fs-5 mb-1' htmlFor="expertise">Areas of Expertise :</label><br />
+                                                {/* <input className='form-control bg-white mx-1' type="text" name='expertise' id='expertise' value={formData.areas_of_expertise} onChange={handleChange} required /> */}
+                                                <Autocomplete
+                                                    className='form-control p-0 rounded-1 mx-1'
+                                                    multiple
+                                                    options={ExpertiseDomains}
+                                                    value={formData.areas_of_expertise}
+                                                    onChange={handleExpertiseChange}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            placeholder="Select expertise"
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Company / Organization */}
+                                        <div className='col-12'>
+                                            <div className="register-card mb-3">
+                                                <label className='fs-5 mb-1' htmlFor="company_organization">Company / Organization :</label><br />
+                                                <input className='form-control bg-white mx-1' type="text" name='company_organization' id='company_organization' value={formData.company_organization} onChange={handleChange} required />
+                                            </div>
+                                        </div>
+
+                                        {/* Designation */}
+                                        <div className='col-12'>
+                                            <div className="register-card mb-3">
+                                                <label className='fs-5 mb-1' htmlFor="designation">Designation :</label><br />
+                                                <input className='form-control bg-white mx-1' type="text" name='designation' id='designation' value={formData.designation} onChange={handleChange} required />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                )
+                            }
+
                         </div>
 
                         {/* Register botton */}
                         <div>
                             <div className='mt-3 d-flex gap-3'>
-                                <button className='btn btn-success px-3' type='submit'>Register</button>
-
+                                <button className='btn btn-success px-3' type='submit' disabled={isSubmitting}>Register</button>
                             </div>
                         </div>
 

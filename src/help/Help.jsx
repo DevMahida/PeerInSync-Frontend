@@ -8,8 +8,8 @@ import './Help.css';
 const Help = () => {
 
     const initialFormData = {
-        fullName: '',
         email: '',
+        title: '',
         message: '', 
     };
 
@@ -125,26 +125,27 @@ const Help = () => {
                         {/* form part  */}
                         <div className='row g-4'>
 
-                            {/* Full Name */}
-                            <div className='col-12'>
-                                <div>
-                                    <label className="fs-5" htmlFor="fullName">Full Name:</label>
-                                    <input className='form-control ms-0' type="text" name="fullName" id="fullName" placeholder="Please enter your full name" value={formData.fullName} onChange={handleChange} required />
-                                </div>
-                            </div>
-
                             {/* Email */}
                             <div className='col-12'>
                                 <div>
-                                    <label className="fs-5" htmlFor="email">Email:</label>
+                                    <label className="fs-5" htmlFor="email">Email :</label>
                                     <input className='form-control ms-0' type="email" name="email" id="email" placeholder="Please enter your email" value={formData.email} onChange={handleChange} required />
                                 </div>
                             </div>
 
+                            {/* title */}
+                            <div className='col-12'>
+                                <div>
+                                    <label className="fs-5" htmlFor="title">Title :</label>
+                                    <input className='form-control ms-0' type="text" name="title" id="title" placeholder="Briefly describe your issue (e.g., Unable to reset password)" value={formData.title} onChange={handleChange} required />
+                                </div>
+                            </div>
+
+
                             {/* Message */}
                             <div className='col-12'>
                                 <div>
-                                    <label className="fs-5" htmlFor="message">Message:</label>
+                                    <label className="fs-5" htmlFor="message">Message :</label>
                                     <textarea className="form-control ms-0" name="message" id="message" cols="30" rows="8" placeholder="Explain your concern here" value={formData.message} onChange={handleChange} required ></textarea>
                                 </div>
                             </div>
@@ -209,7 +210,7 @@ const Help = () => {
                 {/* footer-2 starts */}
                 <section className='bg-cs-footer2 p-4'>
                     <div className="container">
-                        <p className='text-white text-center m-0'><i className="ri-copyright-line"></i>2025 PeerInSync. Built by Student for Students</p>
+                        <p className='text-white text-center m-0'><i className="ri-copyright-line"></i>{new Date().getFullYear()} PeerInSync. Built by Student for Students</p>
                     </div>
                 </section>
                 {/* footer-2 ends */}

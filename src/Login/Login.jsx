@@ -18,32 +18,38 @@ const Login = () => {
         password: ''
     };
 
+    // disable , enable submit button
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [formData, setFormData] = useState(initialFormData);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        axios.post('https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/login', JSON.stringify(formData), {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            withCredentials: true
-        })
-        .then((response) => {
+    
+        try {
+            setIsSubmitting(true);
+    
+            await axios.post(
+                'https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/login', JSON.stringify(formData),
+                 {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    withCredentials: true
+                }
+            );
+    
             toast.success("Logged in successfully");
-                setTimeout(() => {
-                    navigate('/Dashboard');
-                }/*, 1200*/);
-            console.log("Form submitted:", JSON.stringify(formData));
-
-            // localStorage.setItem('userinfo', JSON.stringify(response.data));
-            
+            navigate('/Dashboard');
+    
             setFormData(initialFormData);
-        })
-        .catch((err) => {
+    
+        } catch (err) {
             console.log(err);
-            toast.error("Error submiting data. " + err.message);
-        });
+            toast.error("Error submitting data. " + err.message);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e) => {
@@ -102,7 +108,7 @@ const Login = () => {
                             <p className='forgot-link mt-4 text-primary link-primary'>Forgot Password</p>
 
                             <div className='text-center'>
-                                <button className='btn btn-dark px-3' type='submit'>Login</button>
+                                <button className='btn btn-dark px-3' type='submit' disabled={isSubmitting}>Login</button>
                             </div>
                         </div>
 

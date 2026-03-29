@@ -220,7 +220,7 @@ const About = () => {
                 {/* footer-2 starts */}
                 <section className='bg-cs-footer2 p-4'>
                     <div className="container">
-                        <p className='text-white text-center m-0'><i className="ri-copyright-line"></i>2025 PeerInSync. Built by Student for Students</p>
+                        <p className='text-white text-center m-0'><i className="ri-copyright-line"></i>{new Date().getFullYear()} PeerInSync. Built by Student for Students</p>
                     </div>
                 </section>
                 {/* footer-2 ends */}
