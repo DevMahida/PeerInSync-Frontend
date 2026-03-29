@@ -4,9 +4,13 @@ import { toast } from 'react-toastify';
 
 import axios from 'axios';
 
+import * as React from 'react';
+import Courses from '../javaScript/courses.js';
+import BranchesByCourse from '../javaScript/BranchByCourse.js';
+import ExpertiseDomains from '../javaScript/ExpertiseDomains.js';
 import './update.css';
 
-import { FormControl, Select, MenuItem } from "@mui/material";
+import { FormControl, Select, MenuItem, Autocomplete, TextField } from "@mui/material";
 
 const Update = () => {
 
@@ -16,17 +20,20 @@ const Update = () => {
     const [userData, setUserData] = useState(null);
 
     const [formData, setFormData] = useState({
-        fName: "",
-        lName: "",
-        email: "",
-        password: "",
-        mobile_no: "",
-        college_name: "",
-        course_name: "",
-        branch: "",
-        current_year_of_study: "",
-        gender: "",
-        role: ""
+        fName: '',
+        lName: '',
+        email: '',
+        password: '',
+        mobile_no: '',
+        college_name: '',
+        course_name: '',
+        branch: '',
+        current_year_of_study: '',
+        gender: '',
+        role: '',
+        areas_of_expertise: [],
+        company_organization: '',
+        designation: '',
     });
 
     useEffect(() => {
@@ -79,6 +86,28 @@ const Update = () => {
         }));
     };
 
+    const handleCourseChange = (event, newValue) => {
+        setFormData(prev => ({
+            ...prev,
+            course_name: newValue ? newValue.value : "",
+            branch: ""
+        }));
+    };
+
+    const handleBranchChange = (event, newValue) => {
+        setFormData(prev => ({
+            ...prev,
+            branch: newValue || ""
+        }));
+    };
+
+    const handleExpertiseChange = (event, value) => {
+        setFormData({
+            ...formData,
+            areas_of_expertise: value
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -100,6 +129,15 @@ const Update = () => {
                 console.log(err);
                 toast.error("Error submiting data. " + err.message);
             });
+    };
+
+    // for select year
+    const yearOptions = {
+        "1": "1st Year",
+        "2": "2nd Year",
+        "3": "3rd Year",
+        "4": "4th Year",
+        "grad": "Graduated"
     };
 
     return (
@@ -169,29 +207,73 @@ const Update = () => {
                                 </div>
                             </div>
 
-                            {/* Course*/}
+                            {/* Course */}
                             <div className='col-xl-6'>
-                                <div className="update-card mb-3">
-                                    <label className='fs-5 mb-1' htmlFor="course">Course:</label>
-                                    <input className='form-control mx-1' type="text" name='course' id='course' autoComplete='course' value={formData.course_name} onChange={handleChange} required />
+                                <div className="register-card mb-3">
+                                    <label className='fs-5 mb-1' htmlFor="course_name">Course :</label>
+                                    <Autocomplete
+                                        className='form-control p-0 rounded-1 mx-1'
+                                        disablePortal
+                                        id="course_name"
+                                        options={Courses}
+                                        getOptionLabel={(option) => option.label}
+                                        sx={{ width: '100%' }}
+                                        value={Courses.find(option => option.value === formData.course_name) || null}
+                                        onChange={handleCourseChange}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                placeholder="Select Course"
+                                                required
+                                                autoComplete="off"
+                                            />
+                                        )}
+                                    />
                                 </div>
                             </div>
 
-                            {/* branch*/}
+                            {/* branch */}
                             <div className='col-xl-6'>
-                                <div className="update-card mb-3">
-                                    <label className='fs-5 mb-1' htmlFor="branch">Branch:</label>
-                                    <input className='form-control mx-1' type="text" name='branch' id='branch' autoComplete='branch' value={formData.branch} onChange={handleChange} required />
+                                <div className="register-card mb-3">
+                                    <label className='fs-5 mb-1' htmlFor="branch">Branch:</label><br />
+                                    <Autocomplete
+                                        className='form-control p-0 rounded-1 mx-1'
+                                        disablePortal
+                                        id="branch"
+                                        options={BranchesByCourse[formData.course_name] || []}
+                                        getOptionLabel={(option) => option}
+                                        isOptionEqualToValue={(option, value) => option === value}
+                                        value={formData.branch || null}
+                                        onChange={handleBranchChange}
+                                        disabled={!formData.course_name}
+                                        renderInput={(params) => (
+                                            <TextField {...params} placeholder="Select Branch" required autoComplete="off" />
+                                        )}
+                                    />
                                 </div>
                             </div>
 
                             {/* Year of studying */}
                             <div className='col-xl-6'>
-                                <div className="update-card mb-3">
+                                <div className="register-card mb-3">
                                     <FormControl fullWidth className="mx-1">
                                         <label className='fs-5 mb-1' htmlFor="current_year_of_study">Current Year of Studying:</label>
 
-                                        <Select className='p-0 bg-white rounded-2' size='small' name="current_year_of_study" id="current_year_of_study" value={formData.current_year_of_study || ""} onChange={handleChange} required>
+                                        <Select className='p-0 bg-white'
+                                            size='small'
+                                            id="current_year_of_study" name="current_year_of_study"
+                                            value={formData.current_year_of_study || ""}
+                                            onChange={handleChange}
+                                            displayEmpty
+                                            required
+                                            renderValue={(selected) => {
+                                                if (!selected) {
+                                                    return <span style={{ color: "#9e9e9e" }}>Select Year</span>;
+                                                }
+                                                return yearOptions[selected] || selected;
+                                            }}
+                                        >
+                                            {/* <MenuItem disabled value="">Select Year</MenuItem> */}
                                             <MenuItem value="1">1st Year</MenuItem>
                                             <MenuItem value="2">2nd Year</MenuItem>
                                             <MenuItem value="3">3rd Year</MenuItem>
