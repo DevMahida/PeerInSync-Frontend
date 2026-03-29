@@ -235,7 +235,7 @@ const Header = () => {
                                 </NavLink>
                             </li>
                             <li className="nav-item d-flex">
-                                <NavLink to="/alumni" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
+                                <NavLink to="/Alumni_list" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
                                     Alumni List
                                 </NavLink>
                             </li>
