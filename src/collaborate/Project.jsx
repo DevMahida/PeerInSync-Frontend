@@ -1,32 +1,78 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import MonacoEditor from "../components/MonacoEditor";
+import "./Project.css";
 
 const Project = () => {
 
     const location = useLocation();
     const { project_title, file_name, language } = location.state || {};
 
-    const [code, setCode] = useState("//Start Coding Here");
+    // File System
+    const [files, setFiles] = useState([
+        { id: 1, name: "index.js", language: "javascript", content: "// index" },
+        { id: 2, name: "app.js", language: "javascript", content: "// app" }
+    ]);
+
+    const [activeFile, setActiveFile] = useState(files[0]);
 
     return (
         <>
-            <div className="prject-bg bg-dark">
-                <span className="bg">
-                    <div className="container text-white" style={{ padding: "1rem" }}>
+            <div className="top-bar">
+                <Link to="/Collaborate"><button className="btn back-btn">← Back</button></Link>
+                <span className="h4">{project_title}</span>
+            </div>
 
-                        <Link to="/Collaborate" className="btn text-white fs-4"><i class="ri-arrow-left-line"></i></Link>
+            <div className="editor-layout">
 
-                        <h2 align="center">{project_title}</h2>
+                {/* Sidebar */}
+                <div className="sidebar">
+                    {/* file list */}
+                    <h4>FILES</h4>
 
-                        <div className="mb-2">
-                            <MonacoEditor className="mb-2" value={code} onChange={setCode} language={language} />
+                    {files.map(file => (
+                        <div
+                            key={file.id}
+                            className="file-item"
+                            onClick={() => setActiveFile(file)}
+                        >
+                            <i class="ri-file-fill"></i>{" " + file.name}
                         </div>
+                    ))}
+                </div>
 
-                        <button className="btn btn-outline-light" onClick={() => console.log(code)}>Log Code</button>
+                {/* Main area */}
+                <div className="editor-main">
 
+                    {/* Tabs */}
+                    <div className="tabs-bar">
+                        {/* open files */}
+                        {files.map(file => (
+                            <div
+                                key={file.id}
+                                className={`tab ${activeFile.id === file.id ? "active" : ""}`}
+                                onClick={() => setActiveFile(file)}
+                            >
+                                {file.name}
+                            </div>
+                        ))}
                     </div>
-                </span>
+
+                    {/* Monaco */}
+                    <div className="editor-container">
+                        <MonacoEditor className="mb-2"
+                            theme="vs-dark"
+                            value={activeFile.content}
+                            language={activeFile.language} onChange={(newCode) => {
+                                setFiles(prev =>
+                                    prev.map(f =>
+                                        f.id === activeFile.id ? { ...f, content: newCode } : f
+                                    )
+                                );
+                            }} />
+                    </div>
+
+                </div>
             </div>
 
         </>

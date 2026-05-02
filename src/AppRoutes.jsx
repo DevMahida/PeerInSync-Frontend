@@ -11,6 +11,7 @@ import Register from './registration_form/Registration.jsx';
 import Login from './Login/Login.jsx';
 
 import Header from './header_footer/header.jsx';
+import Footer from './header_footer/footer.jsx';
 import Update from './update/update.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
 import Alumni_list from "./alumni-list/alumni-list.jsx";
@@ -32,6 +33,8 @@ function AppRoutes() {
         <Route path='/Login' element={<Login />} />
 
         <Route path='/Header' element={<Header />} />
+        <Route path='/Footer' element={<Footer />} />
+        
         <Route path='/Update' element={<Update />} />
         <Route path='/Dashboard' element={<Dashboard />} /> 
         <Route path='/Alumni_list' element={<Alumni_list />} /> 

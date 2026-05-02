@@ -1,13 +1,74 @@
-:root {
-    --activity-color: #461e11;
-    --bg-cs-primary: #fdf6ea;
-    --bg-cs-secondary: #f5e9d4;
-    --bg-cs-tertory: #e8d9c5;
-    --bg-cs-footer: #f8e7d1;
-    --hover-active-color: #3F7F7A;
-    --bg-profile: #e8d9c5;
+.editor-layout {
+    display: flex;
+    height: 100vh;
+    background-color: #1e1e1e;
 }
 
-.prject-bg{
-    background-color: #3c3c3c !important;
+.top-bar {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    background-color: #252526;
+    color: white;
+    border-bottom: 2px solid #333;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    background-color: #252526;
+    color: white;
+    padding: 10px;
+    border-right: 1px solid #333;
+}
+
+/* File item */
+.file-item {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.file-item:hover {
+    background-color: #37373d;
+}
+
+/* Main editor area */
+.editor-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tabs */
+.tabs-bar {
+    color: white;
+    height: 40px;
+    background-color: #2d2d2d;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.tab {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #3c3c3c;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #1e1e1e;
+}
+
+/* Editor */
+.editor-container {
+    flex: 1;
+    font-family: 'Fira Code', monospace;
+}
+
+.back-btn {
+    background-color: #1e1e1e;
+    color: white;
 }

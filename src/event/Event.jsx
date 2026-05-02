@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import Header from '../header_footer/header.jsx';
+import Footer from '../header_footer/footer.jsx'
+
 import axios from 'axios';
 
 import './Event.css';
@@ -635,11 +637,7 @@ const Event = () => {
             {/* main ends */}
 
             {/* footer starts */}
-            <footer className="bg-cs-footer01 p-4">
-                <div className="container">
-                    <p className='text-white text-center m-0'><i className="ri-copyright-line"></i>2025 PeerInSync. Built by Student for Students</p>
-                </div>
-            </footer>
+            <Footer/>
             {/* footer ends */}
 
             {/* create event Modal */}

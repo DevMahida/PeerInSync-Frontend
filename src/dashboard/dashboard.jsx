@@ -4,9 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from '../header_footer/header.jsx';
+import Footer from '../header_footer/footer.jsx'
 
-import man from '../assets/images/man.png';
+import other from '../assets/images/user.png';
 import man1 from '../assets/images/man1.png';
+import woman from '../assets/images/woman.png';
 
 import './dashboard.css';
 
@@ -44,7 +46,10 @@ const Dashboard = () => {
         branch: '',
         current_year_of_study: '',
         gender: '',
-        role: ''
+        role: '',
+        areas_of_expertise_interest: [],
+        company_organization: '',
+        designation: '',
     });
 
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -174,6 +179,23 @@ const Dashboard = () => {
         }
     }
 
+    const [alumniList, setAlumniList] = useState([]);
+
+    // fetch events from data base
+    const fetchAlumniList = () => {
+
+        axios.get('https://peerinsync-backend-server.onrender.com/alumni/getalumni', { withCredentials: true })
+            .then(response => {
+                setAlumniList(response.data);
+                console.log(response.data);
+            })
+            .catch(err => console.log(err));
+    };
+
+    useEffect(() => {
+        fetchAlumniList();
+    }, []);
+
     return (
         <>
 
@@ -249,7 +271,7 @@ const Dashboard = () => {
                             </div>
 
                             {/* upcoming event cards */}
-                            <div className="row mt-2 g-3">
+                            <div className="row mt-1 g-3">
                                 {[...events]
                                     .filter(events => events.date >= today) //today and future date
                                     .sort((a, b) => new Date(a.date) - new Date(b.date)) // sort by event date(ascending)
@@ -310,67 +332,92 @@ const Dashboard = () => {
                     <div className="container">
                         <div className="border-brown bg-cs-secondary1 p-3 rounded-4 text-brown">
 
-                            <span className="h4 text-brown">Recommended Alumni</span>
-
-                            {/* recommend cards */}
-                            <div className="row mt-2 g-3">
-                                <div className="col-md-6">
-                                    <div className="bg-cs-primary1 p-3 rounded-3 transition-02">
-
-                                        {/* card body */}
-                                        <div className="d-flex justify-content-between">
-
-                                            {/* icon - detail */}
-                                            <div className="d-flex gap-2">
-                                                {/* icon */}
-                                                <div>
-                                                    <img className="img-fluid" src={man} alt="" />
-                                                </div>
-
-                                                {/* detail */}
-                                                <div>
-                                                    <h5 className="pb-0 mb-1">Amit Patel</h5>
-                                                    <p className="mb-0">Senior Software Engineer @ Google</p>
-                                                    <span>Expertise: DSA, System Design</span>
-                                                </div>
-                                            </div>
-
-                                            {/* btn */}
-                                            <div className="d-flex align-items-center">
-                                                <button className="border-1 rounded-3 p-2 bg-cs-tertory1">View Details</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="bg-cs-primary1 p-3 rounded-3 transition-02">
-
-                                        {/* card body */}
-                                        <div className="d-flex justify-content-between">
-
-                                            {/* icon - detail */}
-                                            <div className="d-flex gap-2">
-                                                {/* icon */}
-                                                <div>
-                                                    <img className="img-fluid" src={man1} alt="" />
-                                                </div>
-
-                                                {/* detail */}
-                                                <div>
-                                                    <h5 className="pb-0 mb-1">Vinod Sharma</h5>
-                                                    <p className="mb-0">Data Scientist @ Amazon</p>
-                                                    <span>Expertise: Machine Learning, AI</span>
-                                                </div>
-                                            </div>
-
-                                            {/* btn */}
-                                            <div className="d-flex align-items-center">
-                                                <button className="border-1 rounded-3 mx-2 p-2 bg-cs-tertory1">View Details</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            {/* title / view all */}
+                            <div className="d-flex justify-content-between">
+                                <span className="h4 text-brown">Recommended Alumni</span>
+                                <Link to="/Alumni_list" className="text-decoration-none ">
+                                    <button className="border-1 rounded-3 p-2 bg-cs-tertory1 transition-02 bx-shadow">View All</button>
+                                </Link>
                             </div>
+
+                            <div className="row g-3 mt-1">
+                                {
+                                    (() => {
+                                        const filteredAlumni = alumniList.filter(alumni => {
+
+                                            // 1. college match
+                                            const collegeMatch = alumni.college_name === userData.college_name;
+
+                                            // 2. expertise match (at least one common)
+                                            const expertiseMatch = alumni.areas_of_expertise_interest?.some(exp =>
+                                                userData.areas_of_expertise_interest?.includes(exp)
+                                            );
+
+                                            const emailMatch = alumni.email !== userData.email;
+
+                                            return (collegeMatch || expertiseMatch) && emailMatch;
+                                        });
+
+                                        if (filteredAlumni.length === 0) {
+                                            return <p>No matching alumni found</p>;
+                                        }
+
+                                        return filteredAlumni
+                                            .sort((a, b) => a.fName.localeCompare(b.fName))
+                                            .slice(0, 5)
+                                            .map(alumni => (
+                                                <div key={alumni._id} className='col-md-6'>
+                                                    <div className='alumni-list-card p-3 bg-cs-primary1 rounded-3'>
+
+                                                        {/* profile */}
+                                                        <div className='gap-3 d-flex mb-2'>
+
+                                                            {/* profile logo */}
+                                                            <div>
+                                                                {alumni.gender == "male" ? (
+                                                                    <img className='img-fluid' src={man1} alt="" />
+                                                                ) : alumni.gender == "female" ? (
+                                                                    <img className='img-fluid' src={woman} alt="" />
+                                                                ) : (
+                                                                    <img className='img-fluid' src={other} alt="" />
+                                                                )}
+                                                            </div>
+
+                                                            {/* profile-details */}
+                                                            <div>
+                                                                <h4>{alumni.fName + " " + alumni.lName}</h4>
+                                                                <p className='m-0 fw-medium'>{alumni.course_name}</p>
+                                                                <p className='m-0 fw-medium fs-6'>
+                                                                    <strong>{alumni.designation}</strong> at <strong>{alumni.company_organization}</strong>
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        {/* expertise */}
+                                                        <div className="mt-2 d-flex gap-2">
+                                                            <span><strong>Expertise:</strong></span>
+
+                                                            <div className="d-flex flex-wrap gap-2">
+                                                                {alumni.areas_of_expertise_interest?.length > 0 ? (
+                                                                    alumni.areas_of_expertise_interest.map((exp, index) => (
+                                                                        <span key={index} className="badge bg-cs-secondary1 text-dark px-3 py-2 rounded-3">
+                                                                            {exp}
+                                                                        </span>
+                                                                    ))
+                                                                ) : (
+                                                                    <span className="text-muted">No expertise added</span>
+                                                                )}
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            ));
+                                    })()
+                                }
+                            </div>
+
 
                         </div>
                     </div>
@@ -378,13 +425,7 @@ const Dashboard = () => {
             </main>
             {/* main ends */}
 
-            {/* footer starts */}
-            <footer className="bg-cs-footer01 p-4">
-                <div className="container">
-                    <p className='text-white text-center m-0'><i className="ri-copyright-line"></i>2025 PeerInSync. Built by Student for Students</p>
-                </div>
-            </footer>
-            {/* footer ends */}
+            <Footer/>
 
             {/* view event Modal */}
             <div className="modal fade my-0 event-modal" id="viewEvents" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">

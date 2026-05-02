@@ -30,7 +30,7 @@ const Registration = () => {
         current_year_of_study: '',
         gender: '',
         role: '',
-        areas_of_expertise: [],
+        areas_of_expertise_interest: [],
         company_organization: '',
         designation: '',
     };
@@ -66,7 +66,7 @@ const Registration = () => {
     const handleExpertiseChange = (event, value) => {
         setFormData({
             ...formData,
-            areas_of_expertise: value
+            areas_of_expertise_interest: value
         });
     };
 
@@ -105,7 +105,7 @@ const Registration = () => {
 
         if (
             formData.role === "alumni" &&
-            (!formData.areas_of_expertise || formData.areas_of_expertise.length === 0)
+            (!formData.areas_of_expertise_interest || formData.areas_of_expertise_interest.length === 0)
         ) {
             toast.error("Please select at least one expertise");
             return;
@@ -128,6 +128,11 @@ const Registration = () => {
             setFormData(initialFormData);
 
         } catch (err) {
+            if (err.status == 400) {
+                toast.error("Account with this email already exists. ");
+                return;
+            }
+
             toast.error("Error submitting data. " + err.message);
         } finally {
             setIsSubmitting(false);
@@ -377,7 +382,7 @@ const Registration = () => {
                             </div>
 
                             {/* designation-expertices-work at*/}
-                            {formData.role === "alumni" &&
+                            {formData.role === "alumni" ?
                                 (
                                     <div className='row'>
 
@@ -385,12 +390,11 @@ const Registration = () => {
                                         <div className='col-12'>
                                             <div className="register-card mb-3">
                                                 <label className='fs-5 mb-1' htmlFor="expertise">Areas of Expertise :</label><br />
-                                                {/* <input className='form-control bg-white mx-1' type="text" name='expertise' id='expertise' value={formData.areas_of_expertise} onChange={handleChange} required /> */}
                                                 <Autocomplete
                                                     className='form-control p-0 rounded-1 mx-1'
                                                     multiple
                                                     options={ExpertiseDomains}
-                                                    value={formData.areas_of_expertise}
+                                                    value={formData.areas_of_expertise_interest}
                                                     onChange={handleExpertiseChange}
                                                     renderInput={(params) => (
                                                         <TextField
@@ -418,6 +422,28 @@ const Registration = () => {
                                             </div>
                                         </div>
 
+                                    </div>
+                                ) : (
+                                    <div className="row">
+                                        {/* expertise */}
+                                        <div className='col-12'>
+                                            <div className="register-card mb-3">
+                                                <label className='fs-5 mb-1' htmlFor="expertise">Areas of Interest :</label><br />
+                                                <Autocomplete
+                                                    className='form-control p-0 rounded-1 mx-1'
+                                                    multiple
+                                                    options={ExpertiseDomains}
+                                                    value={formData.areas_of_expertise_interest}
+                                                    onChange={handleExpertiseChange}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            {...params}
+                                                            placeholder="Select Interest"
+                                                        />
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 )
                             }

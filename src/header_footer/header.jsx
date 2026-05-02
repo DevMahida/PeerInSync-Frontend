@@ -103,7 +103,7 @@ const Header = () => {
                         {/* logo part */}
                         <div>
                             <p className="h3 text-dark mt-3">
-                                <Link className="text-dark text-decoration-none" to="/">
+                                <Link className="text-dark text-decoration-none" to="/Dashboard">
                                     <img src={pis_logo1} alt="" width="100px" />
                                     {/* <span>PeerInSync</span> */}
                                 </Link>
@@ -135,7 +135,7 @@ const Header = () => {
                                 </li>
                                 <li className="nav-item d-flex">
                                     {/*Darsh*/}
-                                    <NavLink to="/Collaborate" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
+                                    <NavLink to="/alumni" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
                                         Collaborate
                                     </NavLink>
                                 </li>
@@ -230,7 +230,7 @@ const Header = () => {
                     <div className="offcanvas-body scrollpy scrollpy_nav">
                         <ul className="nav flex-column gap-4">
                             <li className="nav-item d-flex">
-                                <NavLink to="/dashboard" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
+                                <NavLink to="/Dashboard" className={({ isActive }) => `nav-link hover-effect fs-6 fw-medium text-dark px-0 ${isActive ? "active" : ""}`}>
                                     Dashboard
                                 </NavLink>
                             </li>
