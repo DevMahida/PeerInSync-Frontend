@@ -25,25 +25,25 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         try {
             setIsSubmitting(true);
-    
+
             await axios.post(
                 'https://peerinsync-backend-server.onrender.com/loginRegisterRoutes/login', JSON.stringify(formData),
-                 {
+                {
                     headers: {
                         "Content-Type": "application/json"
                     },
                     withCredentials: true
                 }
             );
-    
+
             toast.success("Logged in successfully");
             navigate('/Dashboard');
-    
+
             setFormData(initialFormData);
-    
+
         } catch (err) {
             console.log(err);
             toast.error("Error submitting data. " + err.message);
@@ -103,13 +103,10 @@ const Login = () => {
 
                         </div>
 
-                        {/* forgot password and login button */}
-                        <div>
-                            <p className='forgot-link mt-4 text-primary link-primary'>Forgot Password</p>
+                        {/* login button */}
 
-                            <div className='text-center'>
-                                <button className='btn btn-dark px-3' type='submit' disabled={isSubmitting}>Login</button>
-                            </div>
+                        <div className='text-center mt-3'>
+                            <button className='btn btn-dark px-3' type='submit' disabled={isSubmitting}>Login</button>
                         </div>
 
                     </form>

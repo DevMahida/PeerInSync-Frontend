@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../header_footer/header";
 import './Collaborate.css';
+import axios from "axios";
 
 const Collaborate = () => {
 
@@ -32,14 +33,28 @@ const Collaborate = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate('/Project', { state: formData });
-    }
+
+        axios.post(
+            "https://peerinsync-backend-server.onrender.com/projects/create",
+            {
+                name: formData.project_title,
+                fileName: formData.file_name,
+                language: formData.language
+            },
+            { withCredentials: true }
+        )
+            .then(res => {
+                const project = res.data;
+                navigate(`/project/${project._id}`);
+            })
+            .catch(err => console.log(err));
+    };
 
     return (
         <>
             <Header />
 
-            <div className = "container">
+            <div className="container">
                 <h2 align="center" className="pageTitle">Collaborate</h2>
 
                 <button onClick={showForm} className="createBtn">Create new project</button>
@@ -64,16 +79,16 @@ const Collaborate = () => {
 
                             <div className="projLang">
                                 <label htmlFor="language">Language:</label>
-                                    <select name="language" id="language" onChange={handleChange} required>
-                                        <option value="">Please Select The Development Language</option>
-                                        <option value="javascript">Javascript</option>
-                                        <option value="typescript">Typescript</option>
-                                        <option value="html">HTML</option>
-                                        <option value="css">CSS</option>
-                                        <option value="c">C</option>
-                                        <option value="java">Java</option>
-                                        <option value="python">Python</option>
-                                    </select>
+                                <select name="language" id="language" onChange={handleChange} required>
+                                    <option value="">Please Select The Development Language</option>
+                                    <option value="javascript">Javascript</option>
+                                    <option value="typescript">Typescript</option>
+                                    <option value="html">HTML</option>
+                                    <option value="css">CSS</option>
+                                    <option value="c">C</option>
+                                    <option value="java">Java</option>
+                                    <option value="python">Python</option>
+                                </select>
                             </div>
 
                             <div>
@@ -82,7 +97,7 @@ const Collaborate = () => {
                         </form>
                     </div>
                 </div>
-            </div> 
+            </div>
         </>
     );
 }

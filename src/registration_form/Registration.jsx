@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { FormControl, Select, MenuItem, Autocomplete, TextField, createFilterOptions } from "@mui/material";
 
 // CODE BY DARSH
 import axios from 'axios';
@@ -13,7 +14,6 @@ import BranchesByCourse from '../javaScript/BranchByCourse.js';
 import ExpertiseDomains from '../javaScript/ExpertiseDomains.js';
 
 
-import { FormControl, Select, MenuItem, Autocomplete, TextField, createFilterOptions } from "@mui/material";
 
 const Registration = () => {
     const navigate = useNavigate();

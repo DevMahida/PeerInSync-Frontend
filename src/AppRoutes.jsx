@@ -40,7 +40,7 @@ function AppRoutes() {
         <Route path='/Alumni_list' element={<Alumni_list />} /> 
         <Route path='/Event' element={<Event />} />
         <Route path="/Collaborate" element={<Collaborate />} />   {/*Darsh*/}
-        <Route path="/Project" element={<Project />} />   {/*Darsh*/}
+        <Route path="/project/:id" element={<Project />} />   {/*Darsh*/}
       </Routes>
 
       {/*Toast Container */}

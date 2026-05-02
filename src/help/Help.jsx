@@ -1,5 +1,6 @@
 // import react from "react;"
 import { useState } from "react";
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import PIS_logo from '../assets/images/PIS-logo.png';
@@ -33,14 +34,16 @@ const Help = () => {
             }
         })
             .then(() => {
-                window.alert("Your Issue Is Recorded");
+                // window.alert("Your Issue Is Recorded");
+                toast.success("Your Issue Is Recorded");
                 console.log("Form submitted:", JSON.stringify(formData));
                 setFormData(initialFormData);
             })
 
             .catch((err) => {
                 console.log(err);
-                window.alert("Error submiting data." + err.message);
+                // window.alert("Error submiting data." + err.message);
+                toast.error("Error submiting data." + err.message);
             });
     };
 

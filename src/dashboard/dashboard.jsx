@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import axios from 'axios';
 
@@ -15,16 +16,6 @@ import './dashboard.css';
 const Dashboard = () => {
 
     const navigate = useNavigate();
-
-    // to get tomorrow's date
-    const tomorrowDate = new Date();
-    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-    const tomorrow = tomorrowDate.toISOString().split("T")[0];
-
-    // to get 2 day's back date
-    const yesterdayDate = new Date();
-    yesterdayDate.setDate(yesterdayDate.getDate() - 2);
-    const yesterday = yesterdayDate.toISOString().split("T")[0];
 
     // to get today's date
     const today = new Date().toISOString().split("T")[0];
@@ -117,13 +108,15 @@ const Dashboard = () => {
 
         axios.post('https://peerinsync-backend-server.onrender.com/events/registerEvent/' + eventID, null, { withCredentials: true })
             .then(() => {
-                window.alert("Event Registered Successfully");
+                // window.alert("Event Registered Successfully");
+                toast.success("Event Registered Successfully");
                 fetchEvents();
                 getMyEvents();
             })
             .catch(err => {
                 console.log(err);
-                window.alert("Error registering for event: Event not found, already registered, or event is full | " + err.message);
+                // window.alert("Error registering for event: Event not found, already registered, or event is full | " + err.message);
+                toast.error("Error registering for event: Event not found, already registered, or event is full | " + err.message);
             })
 
     }
@@ -137,13 +130,15 @@ const Dashboard = () => {
 
         axios.put('https://peerinsync-backend-server.onrender.com/events/unregister/' + eventID, null, { withCredentials: true })
             .then(() => {
-                window.alert("Unregistered Successfully");
+                // window.alert("Unregistered Successfully");
+                toast.success("Unregistered Successfully");
                 fetchEvents();
                 getMyEvents();
             })
             .catch(err => {
                 console.log(err);
-                window.alert("Error unregistering for event: Event not found or already unregistered | " + err.message);
+                // window.alert("Error unregistering for event: Event not found or already unregistered | " + err.message);
+                toast.error("Error unregistering for event: Event not found or already unregistered | " + err.message);
             })
 
     }
