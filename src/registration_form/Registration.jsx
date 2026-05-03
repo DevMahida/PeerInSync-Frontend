@@ -64,19 +64,20 @@ const Registration = () => {
     };
 
     const handleExpertiseChange = (event, value) => {
-        setFormData({
-            ...formData,
+        setFormData((prev) => ({
+            ...prev,
             areas_of_expertise_interest: value
-        });
+        }));
     };
 
     const handlePasswordChange = (e) => {
         const value = e.target.value;
-        setFormData({
-            ...formData,
+    
+        setFormData((prev) => ({
+            ...prev,
             password: value
-        });
-
+        }));
+    
         const condition = {
             length: value.length >= 8 && value.length <= 16,
             upper: /[A-Z]/.test(value),
@@ -84,14 +85,14 @@ const Registration = () => {
             number: /\d/.test(value),
             special: /[!@#$%^&*]/.test(value),
         };
-
+    
         const unmetRules = [];
-        if (!condition.length) unmetRules.push("Minimun 8 and Maximum 16 characters");
-        if (!condition.upper) unmetRules.push("At least 1 uppercase latter");
-        if (!condition.lower) unmetRules.push("At least 1 lowercase latter");
+        if (!condition.length) unmetRules.push("Minimum 8 and Maximum 16 characters");
+        if (!condition.upper) unmetRules.push("At least 1 uppercase letter");
+        if (!condition.lower) unmetRules.push("At least 1 lowercase letter");
         if (!condition.number) unmetRules.push("At least 1 number");
         if (!condition.special) unmetRules.push("At least 1 special character");
-
+    
         setPasswordErrors(unmetRules);
     };
 

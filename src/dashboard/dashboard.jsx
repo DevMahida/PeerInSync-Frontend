@@ -359,7 +359,7 @@ const Dashboard = () => {
 
                                         return filteredAlumni
                                             .sort((a, b) => a.fName.localeCompare(b.fName))
-                                            .slice(0, 5)
+                                            .slice(0, 4)
                                             .map(alumni => (
                                                 <div key={alumni._id} className='col-md-6'>
                                                     <div className='alumni-list-card p-3 bg-cs-primary1 rounded-3'>

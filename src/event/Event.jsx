@@ -54,7 +54,8 @@ const Event = () => {
         project_title: '',
         description: '',
         date: '',
-        time: '',
+        start_time: '',
+        end_time: '',
         event_type: '',
         loc_link: ''
     };
@@ -679,10 +680,16 @@ const Event = () => {
                                     <input className="mb-3 mx-1 form-control" type="date" name="date" id="date" min={tomorrow} value={formData.date} onChange={handleChange} required />
                                 </div>
 
-                                {/* time */}
+                                {/* start time */}
                                 <div>
-                                    <label className="mb-1" htmlFor="time">Time :</label>
-                                    <input className="mb-3 mx-1 form-control" type="time" name="time" id="time" value={formData.time} onChange={handleChange} required />
+                                    <label className="mb-1" htmlFor="startTime">Start Time :</label>
+                                    <input className="mb-3 mx-1 form-control" type="time" name="start_time" id="startTime" value={formData.start_time} onChange={handleChange} required />
+                                </div>
+
+                                {/* end time */}
+                                <div>
+                                    <label className="mb-1" htmlFor="endTime">end Time :</label>
+                                    <input className="mb-3 mx-1 form-control" type="time" name="end_time" id="endTime" value={formData.end_time} onChange={handleChange} required />
                                 </div>
 
                                 {/* event type */}
