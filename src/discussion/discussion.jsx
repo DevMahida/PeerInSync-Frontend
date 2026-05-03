@@ -314,13 +314,10 @@ const Discussion = () => {
                                                                                     <h5 className="m-0 text-brown">{post.postTitle}</h5>
                                                                                     <span className="cs-badge-category px-2 rounded-5">{categoryOptions[post.postCategory]}</span>
                                                                                 </div>
-                                                                                <div>
-                                                                                    <span className="cs-badge-role p-2 rounded-5 text-capitalize">{post.postRole}</span>
-                                                                                </div>
                                                                             </div>
 
                                                                             <div>
-                                                                                <small className="text-secondary">Posted By: {userData.fName + " " + userData.lName} • {getTimeAgo(post.time)}</small>
+                                                                                <small className="text-secondary">Posted By: {post.authorName} • {getTimeAgo(post.time)}</small>
 
                                                                             </div>
 
