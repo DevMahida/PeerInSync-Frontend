@@ -200,11 +200,11 @@ const Discussion = () => {
                             <div className="row">
 
                                 {/* discussions */}
-                                <div className="col-8">
+                                <div className="col-lg-8 order-2 order-lg-1">
                                     <div className=" bg-cs-primary1 rounded-3 my-3 border-brown border-1">
 
                                         {/* title filter sorting */}
-                                        <div className="d-flex justify-content-between ps-3 pt-3 pe-3">
+                                        <div className="d-flex justify-content-between flex-wrap flex-sm-nowrap ps-3 pt-3 pe-3">
                                             <h3 className="text-brown">Community Discussions</h3>
 
                                             {/* filter and sorting */}
@@ -339,7 +339,7 @@ const Discussion = () => {
                                 </div>
 
                                 {/* start discussion */}
-                                <div className="col-4">
+                                <div className="col-lg-4 order-1 order-lg-2">
                                     <div className="st-dis bg-cs-primary1 p-3 rounded-3 my-3 border-brown border-1">
 
                                         {/* title */}
@@ -387,7 +387,6 @@ const Discussion = () => {
                                             {/* role */}
                                             <div className="col-12">
                                                 <input className="form-control bg-cs-secondary1 text-capitalize m-0 mt-2" type="text" name="postRole" value={userData.role} onChange={handleChange} disabled />
-                                                <input className="form-control m-0 mt-2" type="text" name="postRole" value={userData.role} hidden />
                                             </div>
 
                                             {/* Message */}

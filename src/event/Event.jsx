@@ -565,7 +565,7 @@ const Event = () => {
                                                         )}
 
                                                         <span><strong>Date : </strong>{new Date(events.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
-                                                        <span><strong>Time : </strong>{new Date(`1970-01-01T${events.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
+                                                        <span><strong>Time : </strong>{new Date(`1970-01-01T${events.start_time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })} - {new Date(`1970-01-01T${events.end_time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
                                                         <span><strong>Created On </strong>{new Date(events.creationDate).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
                                                     </div>
 
@@ -688,7 +688,7 @@ const Event = () => {
 
                                 {/* end time */}
                                 <div>
-                                    <label className="mb-1" htmlFor="endTime">end Time :</label>
+                                    <label className="mb-1" htmlFor="endTime">End Time :</label>
                                     <input className="mb-3 mx-1 form-control" type="time" name="end_time" id="endTime" value={formData.end_time} onChange={handleChange} required />
                                 </div>
 
@@ -766,7 +766,7 @@ const Event = () => {
                             {/* date - time */}
                             <div className="d-flex flex-column">
                                 <span><strong>Date : </strong>{new Date(selectedEvent?.date).toLocaleDateString("en-GB").replaceAll("/", "-")}</span>
-                                <span><strong>Time : </strong>{new Date(`1970-01-01T${selectedEvent?.time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
+                                <span><strong>Time : </strong>{new Date(`1970-01-01T${selectedEvent?.start_time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })} - {new Date(`1970-01-01T${selectedEvent?.end_time}`).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true, })}</span>
                             </div>
 
                             {/* location / link */}
