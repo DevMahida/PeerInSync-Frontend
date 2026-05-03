@@ -599,7 +599,7 @@ const Event = () => {
                                 <ul className="pagination mt-5 gap-2 justify-content-center">
                                     <li className="page-item">
                                         <button className="btn btn-outline-dark" disabled={currentPage === 1} onClick={() => { setCurrentPage(prev => prev - 1); scrollToTopPagination(); }}>
-                                            Preview
+                                            Prev
                                         </button>
                                     </li>
                                     <li className="page-item">
