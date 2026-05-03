@@ -1,0 +1,51 @@
+.border-grey {
+    border: 1px solid #c5c5c590;
+}
+
+.st-dis input:focus,
+.st-dis textarea:focus {
+    box-shadow: 1px 1px 5px #add0ff;
+}
+
+.cs-badge-category {
+    border: 2px solid #c0d4c5;
+    background-color: #e7f0e9;
+    color: #3f7792;
+}
+
+.cs-badge-role {
+    border: 2px solid #8d6f3d;
+    background-color: #fdf6ea;
+    color: #8d6f3d;
+}
+
+.discussion-wrapper {
+    height: 45vh;
+    overflow-y: auto; 
+}
+
+/* entire scrollbar */
+.discussion-wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 80%;
+}
+
+.posted-by{
+    font-size: 14px !important;
+}
+
+/* track (background) */
+.discussion-wrapper::-webkit-scrollbar-track {
+    background: #fdf6ea;
+}
+
+/* thumb (the draggable part) */
+.discussion-wrapper::-webkit-scrollbar-thumb {
+    background: #c5b496;
+    border-radius: 20px;
+}
+
+/* thumb on hover */
+.discussion-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

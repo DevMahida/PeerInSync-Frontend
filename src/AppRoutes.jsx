@@ -16,6 +16,7 @@ import Update from './update/update.jsx';
 import Dashboard from './dashboard/dashboard.jsx';
 import Alumni_list from "./alumni-list/alumni-list.jsx";
 import Event from './event/Event.jsx';
+import Discussion from './discussion/discussion.jsx';
 import Collaborate from './collaborate/Collaborate.jsx'  //Darsh
 import Project from './collaborate/Project.jsx'  //Darsh
 
@@ -39,6 +40,7 @@ function AppRoutes() {
         <Route path='/Dashboard' element={<Dashboard />} /> 
         <Route path='/Alumni_list' element={<Alumni_list />} /> 
         <Route path='/Event' element={<Event />} />
+        <Route path='/Discussion' element={<Discussion />} />
         <Route path="/Collaborate" element={<Collaborate />} />   {/*Darsh*/}
         <Route path="/project/:id" element={<Project />} />   {/*Darsh*/}
       </Routes>

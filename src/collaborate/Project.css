@@ -27,10 +27,17 @@
     padding: 8px;
     cursor: pointer;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .file-item:hover {
     background-color: #37373d;
+}
+
+.file-item span {
+    flex: 1;
 }
 
 /* Main editor area */
@@ -38,6 +45,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* Tabs */
@@ -66,9 +75,215 @@
 .editor-container {
     flex: 1;
     font-family: 'Fira Code', monospace;
+    overflow: hidden;
+}
+
+.editor-container>div {
+    height: 100% !important;
 }
 
 .back-btn {
     background-color: #1e1e1e;
     color: white;
+}
+
+.file-item i,
+.tab i {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.ri-javascript-fill {
+    color: #f7df1e;
+}
+
+.ri-html5-fill {
+    color: #e34c26;
+}
+
+.ri-css3-fill {
+    color: #264de4;
+}
+
+.ri-cup-fill {
+    color: #f89820;
+}
+
+
+.new-file-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    background: #252526;
+    color: white;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.new-file-btn:hover {
+    background: #202020;
+}
+
+.new-file-input input {
+    width: 100%;
+    padding: 4px 6px;
+    background-color: #202020;
+    border: 1px solid #555;
+    color: white;
+    outline: none;
+}
+
+.folder-name {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #ececec;
+    cursor: pointer;
+}
+
+.folder-block {
+    margin-bottom: 10px;
+}
+
+
+.delete-icon {
+    float: right;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.delete-icon:hover {
+    opacity: 1;
+    color: red;
+}
+
+.delete-icon {
+    opacity: 0;
+}
+
+.file-item:hover .delete-icon {
+    opacity: 1;
+}
+
+.close-tab {
+    margin-left: 8px;
+    font-size: 12px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.close-tab:hover {
+    opacity: 1;
+    color: red;
+}
+
+.run-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.run-btn:hover {
+    background: #218838;
+}
+
+.output-panel {
+    background-color: #1e1e1e;
+    border-top: 1px solid #333;
+    color: #00ff88;
+    display: flex;
+    flex-direction: column;
+    height: 180px;
+    resize: vertical;
+    overflow: auto;
+}
+
+.output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: #2d2d2d;
+    font-size: 13px;
+    border-bottom: 1px solid #333;
+}
+
+.output-header button {
+    background: transparent;
+    color: #ccc;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.output-header button:hover {
+    color: white;
+}
+
+.output-content {
+    flex: 1;
+    margin: 0;
+    padding: 10px;
+    color: #00ff88;
+    font-family: monospace;
+    overflow-y: auto;
+}
+
+.save-status {
+    margin-left: 15px;
+    font-size: 1rem;
+    color: #ccc;
+
+    transition: opacity 0.3s ease;
+}
+
+.resize-bar {
+    height: 5px;
+    cursor: row-resize;
+    background-color: #333;
+}
+
+.resize-bar:hover {
+    background-color: #555;
+}
+
+.resize-bar:active {
+    background-color: #888;
+}
+
+.file-item .ri-edit-line {
+    opacity: 0;
+}
+
+.file-item:hover .ri-edit-line {
+    opacity: 1;
+}
+
+.ri-edit-line:hover {
+    color: rgb(71, 157, 254);
+}
+
+.rename-input {
+    width: 100%;
+    padding: 4px 6px;
+    background-color: #202020;
+    border: 1px solid #555;
+    color: white;
+    outline: none;
+}
+
+.remote-cursor {
+    border-left: 2px solid rgb(255, 45, 94);
+}
+
+.remote-cursor-label::after {
+    content: "User";
+    background: rgb(255, 45, 94);
+    color: white;
+    font-size: 10px;
+    padding: 2px;
+    margin-left: 2px;
 }
