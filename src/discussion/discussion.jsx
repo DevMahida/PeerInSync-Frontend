@@ -314,6 +314,9 @@ const Discussion = () => {
                                                                                     <h5 className="m-0 text-brown">{post.postTitle}</h5>
                                                                                     <span className="cs-badge-category px-2 rounded-5">{categoryOptions[post.postCategory]}</span>
                                                                                 </div>
+                                                                                <div>
+                                                                                    <span className="cs-badge-role p-2 rounded-5 text-capitalize">{post.postRole}</span>
+                                                                                </div>
                                                                             </div>
 
                                                                             <div>
@@ -379,11 +382,6 @@ const Discussion = () => {
                                                         </Select>
                                                     </FormControl>
                                                 </div>
-                                            </div>
-
-                                            {/* role */}
-                                            <div className="col-12">
-                                                <input className="form-control bg-cs-secondary1 text-capitalize m-0 mt-2" type="text" name="postRole" value={userData.role} onChange={handleChange} disabled />
                                             </div>
 
                                             {/* Message */}
