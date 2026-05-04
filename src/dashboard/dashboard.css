@@ -21,7 +21,7 @@
 }
 
 .bg-cs-secondary1 {
-    background-color: var(--bg-cs-secondary);
+    background-color: var(--bg-cs-secondary) !important;
 }
 
 .bg-cs-tertory1 {

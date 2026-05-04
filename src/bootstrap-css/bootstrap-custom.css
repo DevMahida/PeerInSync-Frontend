@@ -2324,13 +2324,13 @@ progress {
 
 .table-light {
     --bs-table-color: #000;
-    --bs-table-bg: #f8f9fa;
+    --bs-table-bg: #f5e9d4;
     --bs-table-border-color: #c6c7c8;
-    --bs-table-striped-bg: #ecedee;
+    --bs-table-striped-bg: #ffe7bd;
     --bs-table-striped-color: #000;
     --bs-table-active-bg: #dfe0e1;
     --bs-table-active-color: #000;
-    --bs-table-hover-bg: #e5e6e7;
+    --bs-table-hover-bg: #ffe7bd;
     --bs-table-hover-color: #000;
     color: var(--bs-table-color);
     border-color: var(--bs-table-border-color)
@@ -3653,6 +3653,23 @@ fieldset:disabled .btn {
     --bs-btn-disabled-color: #6c757d;
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: #6c757d;
+    --bs-gradient: none
+}
+
+.btn-outline-success {
+    --bs-btn-color: #198754;
+    --bs-btn-border-color: #198754;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #198754;
+    --bs-btn-hover-border-color: #198754;
+    --bs-btn-focus-shadow-rgb: 25, 135, 84;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #198754;
+    --bs-btn-active-border-color: #198754;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #198754;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #198754;
     --bs-gradient: none
 }
 

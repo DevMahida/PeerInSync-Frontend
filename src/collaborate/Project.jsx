@@ -59,7 +59,7 @@ const Project = () => {
         axios.get(`https://peerinsync-backend-server.onrender.com/projects/getProject/${id}`, { withCredentials: true })
             .then(response => {
                 setFiles(response.data.files);
-                setProject_name(response.data.name);
+                setProject_name(response.data.project_title);
                 console.log(response.data);
             })
             .catch(err => console.log(err));

@@ -223,13 +223,13 @@ const Dashboard = () => {
                                         <div className="col-4">
                                             <div>
                                                 <span className="d-block text-center display-4 fw-medium">12</span>
-                                                <span className="d-block text-center fw-medium">Connection</span>
+                                                <span className="d-block text-center fw-medium">Projects</span>
                                             </div>
                                         </div>
                                         <div className="col-4">
                                             <div>
                                                 <span className="d-block text-center display-4 fw-medium">3</span>
-                                                <span className="d-block text-center lh-sm fw-medium">Unread Messages</span>
+                                                <span className="d-block text-center lh-sm fw-medium">Posts</span>
                                             </div>
                                         </div>
                                         <div className="col-4">
