@@ -59,6 +59,16 @@ const Dashboard = () => {
             .catch(err => console.log(err));
     };
 
+        const fetchProjects = () => {
+    
+            axios.get('https://peerinsync-backend-server.onrender.com/projects/myProjects', { withCredentials: true })
+                .then(response => {
+                    setProjectsList(response.data);
+                    console.log(response.data);
+                })
+                .catch(err => console.log(err));
+        }
+
     // used registered events
     const [myEvents, setMyEvents] = useState([]);
 

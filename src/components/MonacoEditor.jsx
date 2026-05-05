@@ -4,6 +4,7 @@ import Editor from "@monaco-editor/react";
 const MonacoEditor = ({
 
     value,
+    theme,
     onChange,
     language,
     height = "90vh",
@@ -14,8 +15,8 @@ const MonacoEditor = ({
         <Editor
             height={height}
             language={language}
-            theme="vs-dark"
             value={value}
+            theme={theme}
             
             onChange={(val) => onChange(val ?? "")}
             options = {{

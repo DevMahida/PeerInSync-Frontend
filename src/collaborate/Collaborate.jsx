@@ -23,6 +23,26 @@ const Collaborate = () => {
     const [projectsList, setProjectsList] = useState([]);
 
     const [initialCollaborator, setInitialCollaborator] = useState(null);
+    const [ownerNames, setOwnerNames] = useState({});
+
+    useEffect(() => {
+        const loadNames = async () => {
+            let map = {};
+
+            for (let project of projectsList) {
+                const res = await axios.get(
+                    `https://peerinsync-backend-server.onrender.com/me/getName/${project.owner}`,
+                    { withCredentials: true }
+                );
+
+                map[project.owner] = res.data.fullName;
+            }
+
+            setOwnerNames(map);
+        };
+
+        if (projectsList.length) loadNames();
+    }, [projectsList]);
 
     const fetchAlumniList = () => {
 
@@ -42,6 +62,19 @@ const Collaborate = () => {
                 console.log(response.data);
             })
             .catch(err => console.log(err));
+    }
+
+    const fetchCollaboratorOwnerName = async (colaborator_owner_id) => {
+
+        await axios.get(`https://peerinsync-backend-server.onrender.com/me/getName/${colaborator_owner_id}`, { withCredentials: true })
+            .then(response => {
+                // let fullName = JSON.stringify(response.data.fullName);
+                // console.log("name fetching triggered. name: " + fullName);
+                // return fullName;
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     const [formData, setFormData] = useState(initialFormData);
@@ -299,7 +332,7 @@ const Collaborate = () => {
                 {/* banner - create project */}
 
 
-                {/* Event list starts */}
+                {/* Project list starts */}
                 <section className="my-3">
                     <div className="container">
                         <div className="border-brown bg-cs-secondary1 p-3 rounded-4 text-brown">
@@ -341,7 +374,7 @@ const Collaborate = () => {
                                                     {/* Collaborators */}
                                                     <td>
                                                         <div className="mt-2 fw-bold text-brown text-capitalize">
-                                                            {Array.isArray(project.collaborators) &&
+                                                            {/* {Array.isArray(project.collaborators) &&
                                                                 project.collaborators.filter(c => c && c.id).length > 0
                                                                 ? project.collaborators
                                                                     .filter(c => c && c.id)
@@ -351,7 +384,27 @@ const Collaborate = () => {
                                                                             {index !== arr.length - 1 && ", "}
                                                                         </span>
                                                                     ))
-                                                                : "No collaborators"}
+                                                                : "No collaborators"} */}
+                                                            {userData.role?.toLowerCase().trim() === "alumni" ? (
+                                                                ownerNames[project.owner] || "Unknown Student"
+
+                                                            ) : (
+
+                                                                Array.isArray(project.collaborators) &&
+                                                                    project.collaborators.filter(c => c && c.id).length > 0 ? (
+                                                                    project.collaborators
+                                                                        .filter(c => c && c.id)
+                                                                        .map((c, index, arr) => (
+                                                                            <span key={c.id || index}>
+                                                                                {c.name || "No Collaborators"}
+                                                                                {index !== arr.length - 1 && ", "}
+                                                                            </span>
+                                                                        ))
+                                                                ) : (
+                                                                    "No collaborators"
+                                                                )
+
+                                                            )}
                                                         </div>
                                                     </td>
 
@@ -370,6 +423,8 @@ const Collaborate = () => {
                                                             <span className="btn btn-outline-danger" onClick={() => deleteProject(project._id)}>
                                                                 <i className="ri-delete-bin-6-line"></i>
                                                             </span>
+
+                                                            <span className="btn btn-outline-dark" onClick={() => navigate(`/project/${project._id}`)}>Open Project</span>
                                                         </div>
                                                     </td>
 
